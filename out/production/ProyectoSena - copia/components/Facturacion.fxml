@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane id="AnchorPane" prefHeight="744.0" prefWidth="1133.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FacturacionController">
+    <stylesheets>
+        <URL value="@/swing/facturacion.css" />
+    </stylesheets>
+   <children>
+      <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <left>
+            <AnchorPane maxHeight="744.0" maxWidth="1133.0" prefHeight="744.0" prefWidth="1133.0" BorderPane.alignment="CENTER">
+               <children>
+                  <BorderPane prefHeight="138.0" prefWidth="1133.0" style="-fx-background-color: #2E1B10;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <center>
+                        <ImageView fitHeight="131.0" fitWidth="423.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                           <image>
+                              <Image url="@../resources/Group%2011.png" />
+                           </image>
+                           <BorderPane.margin>
+                              <Insets />
+                           </BorderPane.margin></ImageView>
+                     </center>
+                  </BorderPane>
+                  <Pane layoutX="87.0" layoutY="171.0" prefHeight="70.0" prefWidth="1074.0" styleClass="header-info" stylesheets="@../swing/facturacion.css" AnchorPane.bottomAnchor="526.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="21.0" AnchorPane.topAnchor="148.0">
+                     <children>
+                        <Label fx:id="lbl_mesa" alignment="CENTER" contentDisplay="CENTER" prefHeight="70.0" prefWidth="1090.0" styleClass="mesa" stylesheets="@../swing/facturacion.css" />
+                     </children>
+                  </Pane>
+                  <AnchorPane layoutX="33.0" layoutY="272.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="21.0" AnchorPane.topAnchor="240.0">
+                     <children>
+                        <ComboBox fx:id="box_pago" layoutX="64.0" prefHeight="37.0" prefWidth="229.0" style="-fx-max-width: 229; -fx-max-height: 37;" styleClass="comboBoxselecMesera" stylesheets="@../swing/inicio_mesera.css" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="819.0" AnchorPane.topAnchor="40.0" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </left>
+      </BorderPane>
+   </children>
+</AnchorPane>

@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="ProyectoSena">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/dist/ProyectoSena.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

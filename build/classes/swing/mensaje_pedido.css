@@ -1,0 +1,102 @@
+.popupPane{
+   -fx-background-color: #FFFFFF;
+   -fx-background-radius: 70px 10px 10px 10px;
+}
+
+.glassPane {
+    -fx-background-color: rgba(0, 0, 0, 0.38); /* Fondo negro con 38% de opacidad */
+}
+
+.panePeople {
+    -fx-layout-x: 38px;
+    -fx-layout-y: 148px;
+    -fx-pref-width: 1074px;
+    -fx-pref-height: 70px;
+
+    -fx-background-color: #FFFFFF;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4);
+    -fx-background-radius: 30px;
+}
+
+.paneCriollo {
+    -fx-layout-x: 10px;
+    -fx-layout-y: 11px;
+    -fx-pref-width: 1133px;
+    -fx-pref-height: 138px;
+
+    -fx-background-color: #2E1B10;
+}
+
+.txtMesa {
+    -fx-font-family: 'Karla';
+    -fx-font-style: normal;
+    -fx-font-weight: bold;
+    -fx-font-size: 30px;
+    -fx-text-fill: #FEB01D;
+
+}
+
+.btn_categorias {
+    -fx-pref-width: 566px;
+    -fx-pref-height: 60px;
+    -fx-background-color: #FFB94F;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4);
+    -fx-border-radius: 30px;
+    -fx-background-radius: 30px;
+    -fx-layout-x: 38px;
+    -fx-layout-y: 232px;
+    -fx-font-family: 'Karla';
+    -fx-font-style: normal;
+    -fx-font-weight: bold; /* Equivalente a 700 */
+    -fx-font-size: 23px;
+    -fx-alignment: center;
+   
+}
+
+.btn_pedido {
+    -fx-pref-width: 566px;
+    -fx-pref-height: 60px;
+    -fx-background-color: #FFA150;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4);
+    -fx-border-radius: 30px; /* Radius for rounded corners */
+    -fx-background-radius: 30px; /* Ensures background also has rounded corners */
+    -fx-layout-x: 391px; /* Position from left */
+    -fx-layout-y: 155px; /* Position from top */
+    -fx-font-family: 'Karla';
+    -fx-font-style: normal;
+    -fx-font-weight: bold; /* Equivalente a 700 */
+    -fx-font-size: 23px;
+    -fx-alignment: center;
+}
+
+.bdr_pane{
+    -fx-background-color: rgba(217, 217, 217, 0.23);
+}
+
+.pane_pedidosmesera{
+    -fx-background-color:FBF6F6
+}
+
+.txt1 {
+    -fx-font-family: 'Karla';
+    -fx-font-style: normal;
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+    -fx-text-fill: #341C12;
+
+}
+
+
+.btn_defauld{
+    -fx-background-color: #DDDBDA; /* Fondo */
+    -fx-border-radius: 30px; /* Radio del borde */
+    -fx-background-radius: 30px; /* Radio del fondo */
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.25), 4, 0, 0, 4);
+    -fx-font-family: 'Karla';
+    -fx-font-style: normal;
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+    }
+
+
+

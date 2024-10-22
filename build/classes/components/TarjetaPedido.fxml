@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="TOP_CENTER" maxHeight="390.0" maxWidth="243.0" minHeight="390.0" minWidth="243.0" prefHeight="390.0" prefWidth="243.0" spacing="10.0" style="-fx-border-width: 1px;" stylesheets="@../swing/tarjetapedido.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.TarjetaPedidoController">
+    <children>
+        <HBox alignment="CENTER" prefHeight="37.0" prefWidth="213.0" spacing="10.0" styleClass="header" stylesheets="@../swing/tarjetapedido.css">
+            <children>
+                <Label text="⏰">
+                    <font>
+                        <Font name="Arial Bold" size="15.0" />
+                    </font>
+                </Label>
+                <Label fx:id="lbl_time">
+                    <font>
+                        <Font name="Arial Bold" size="15.0" />
+                    </font>
+                </Label>
+            </children>
+        </HBox>
+        <Label fx:id="lbl_numero_mesa" textAlignment="CENTER">
+            <font>
+                <Font name="Arial Bold" size="24.0" />
+            </font>
+        </Label>
+        <Label fx:id="lbl_nombre_mesera" prefHeight="17.0" prefWidth="215.0">
+            <font>
+                <Font name="Arial Bold" size="15.0" />
+            </font>
+        </Label>
+        <Label fx:id="lbl_order" alignment="TOP_LEFT" prefHeight="17.0" prefWidth="215.0">
+            <font>
+                <Font name="Arial Bold" size="15.0" />
+            </font>
+        </Label>
+      <Separator prefWidth="200.0" />
+        <VBox fx:id="orderItems" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" />
+      <Separator prefWidth="200.0" />
+        <Button fx:id="btn_facturar" contentDisplay="CENTER" minHeight="20.0" minWidth="94.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="94.0" stylesheets="@../swing/tarjetapedido.css" text="FACTURAR" textAlignment="CENTER">
+            <font>
+                <Font name="Arial Bold" size="11.0" />
+            </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+        </Button>
+    </children>
+    <padding>
+        <Insets bottom="20.0" />
+    </padding>
+   <styleClass>
+      <String fx:value="vbox" />
+      <String fx:value="root" />
+   </styleClass>
+</VBox>

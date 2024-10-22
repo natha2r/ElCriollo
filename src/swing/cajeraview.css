@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap');
+
+.boton {
+    -fx-background-color: #FEB01D;
+    -fx-background-radius: 10px;
+    -fx-border-color: #FEB01D;
+    -fx-border-width: 0.5px;
+    -fx-border-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4);
+    -fx-alignment: center;
+    -fx-spacing: 10px; /* Esto es similar al 'gap' en flexbox */
+    -fx-pref-width: 201px;
+    -fx-pref-height: 37px;
+    -fx-font-family: Karla;
+    -fx-font-weigth: bold;
+    -fx-font-size: 18px;
+    -fx-text-fill: #341C12
+}
+
+.boton:hover {
+    -fx-background-color: #C68711;
+    -fx-border-color: #C68711;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 6, 0, 0, 6);
+    -fx-text-fill: black;
+    -fx-font-family: Karla;
+    -fx-font-weigth: bold;
+    -fx-cursor: hand;
+    -fx-pref-width: 201px;
+    -fx-pref-height: 37px;
+}
+
+.borderMain{
+    -fx-border-color: black;
+    -fx-border-width: .1px;
+}
+
+.contenedor_botones{
+    -fx-width: 744px;
+    -fx-height: 50px;
+    -fx-background-color: transparent;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4);
+    -fx-background-radius: 30px;
+}
+
+.botones_inicio{
+    -fx-background-color: #FFA150;
+    -fx-background-radius: 30px;
+    -fx-border-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4);
+    -fx-alignment: center;
+    -fx-spacing: 10px; /* Esto es similar al 'gap' en flexbox */
+    -fx-font-family: Karla;
+    -fx-font-weigth: bold;
+    -fx-font-size: 18px;
+    -fx-text-fill: #341C12
+}
+
+.botones_inicio:hover{
+    -fx-background-color: #FFB94F;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 6, 0, 0, 6);
+    -fx-text-fill: black;
+    -fx-font-family: Karla;
+    -fx-font-weigth: bold;
+    -fx-cursor: hand;
+}
+
+.boton_reserva_cancelar{
+    -fx-font-size: 27px;
+    -fx-background-color: #D9D9D9;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0.0, 0, 4);
+    -fx-background-radius: 30px;
+    -fx-font-weigth: bold;
+    -fx-font-family: Karla;
+}
+
+.boton_reservar{
+    -fx-font-size: 27px;
+    -fx-background-color: #FEB01D;
+    -fx-border-color: #FEB01D;
+    -fx-border-width: 0.5px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0.0, 0, 4);
+    -fx-background-radius: 30px;
+    -fx-border-radius: 30px;
+    -fx-font-weigth: bold;
+    -fx-font-family: Karla;
+}
+
+.lbl_reserva{
+    -fx-font-size: 18px;    
+    -fx-font-weigth: bold;
+    -fx-font-family: Karla;
+}
+
+.lbl_reserva_titulo{
+    -fx-font-size: 20px;    
+    -fx-font-weigth: bold;
+    -fx-font-family: Karla;
+}

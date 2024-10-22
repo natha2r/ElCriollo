@@ -1,0 +1,158 @@
+/*
+ * Empty Stylesheet file.
+ */
+    
+.mainFxmlClass {
+    -fx-background-color: #2E1B10; /* Color de fondo del contenedor principal */
+}
+
+.btn_salir {
+    -fx-background-color: #FFB94F;
+    -fx-position: relative;
+    -fx-width: 1133px;
+    -fx-height: 744px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4); /* Sombra */
+    -fx-background-radius: 30px;
+}
+.btn_salir:hover{
+    -fx-background-color: #d79930;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 6, 0, 0, 6);
+    -fx-text-fill: black;
+    -fx-font-weigth: bold;
+    -fx-cursor: hand;
+}
+
+.btn_menu {
+    -fx-background-color: #FFB94F;
+    -fx-position: relative;
+    -fx-width: 1133px;
+    -fx-height: 744px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4);
+    -fx-background-radius: 30px;
+}
+.btn_menu:hover{
+    -fx-background-color: #d79930;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 6, 0, 0, 6);
+    -fx-text-fill: black;
+    -fx-font-weigth: bold;
+    -fx-cursor: hand;
+}
+
+.btn_curso {
+    -fx-background-color: #FAC26D;
+}
+.btn_curso:hover{
+    -fx-background-color: #d79930;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 6, 0, 0, 6);
+    -fx-text-fill: black;
+    -fx-font-weigth: bold;
+    -fx-cursor: hand;
+}
+
+.btn_terminado {
+    -fx-background-color: #9ECF78;
+}
+.btn_terminado:hover{
+    -fx-background-color: #4ea93b;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 6, 0, 0, 6);
+    -fx-text-fill: black;
+    -fx-font-weigth: bold;
+    -fx-cursor: hand;
+}
+
+.btn_configuracion {
+    -fx-background-color: #FFFFFF;
+}
+.btn_configuracion:hover{
+    -fx-background-color: transparent;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 6, 0, 0, 6);
+    -fx-text-fill: black;
+    -fx-font-weigth: bold;
+    -fx-cursor: hand;
+    -fx-background-radius: 50%;
+    -fx-border-width: 2px;
+    -fx-border-radius: 50%;
+}
+
+.glassPane {
+    -fx-background-color: rgba(0, 0, 0, 0.38); /* Fondo negro con 38% de opacidad */
+}
+
+.popupPane{
+   -fx-background-color: #FFFFFF;
+   -fx-background-radius: 70px 10px 10px 10px;
+}
+
+.txt_comenAlerta {
+    -fx-background-color: #F0F0F0;
+}
+
+.btn_aplicar {
+    -fx-background-color: #FFB94F;
+    -fx-position: relative;
+    -fx-width: 1133px;
+    -fx-height: 744px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4); /* Sombra */
+    -fx-background-radius: 30px;
+}
+.btn_aplicar:hover{
+    -fx-background-color: #d79930;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 6, 0, 0, 6);
+    -fx-text-fill: black;
+    -fx-font-weigth: bold;
+    -fx-cursor: hand;
+}
+
+.btn_cancelar {
+    -fx-background-color: #D9D9D9;
+    -fx-position: relative;
+    -fx-width: 1133px;
+    -fx-height: 744px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4); /* Sombra */
+    -fx-background-radius: 30px;
+}
+.btn_cancelar:hover{
+    -fx-background-color: #828282;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 6, 0, 0, 6);
+    -fx-text-fill: black;
+    -fx-font-weigth: bold;
+    -fx-cursor: hand;
+}
+
+.paneMenu {
+    -fx-background-color: #FFFFFF;
+    -fx-position: absolute;
+    -fx-width: 298px;
+    -fx-height: 744px;
+    -fx-background-radius: 0px 110px 0px 0px;
+    -fx-box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.btn_atras {
+    -fx-background-color: #FFFFFF;
+    -fx-position: relative;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4); /* Sombra */
+    -fx-background-radius: 30px;
+}
+.btn_atras:hover{
+    -fx-background-color: #FFFFFF;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 6, 0, 0, 6);
+    -fx-text-fill: black;
+    -fx-font-weigth: bold;
+    -fx-cursor: hand;
+}
+
+.paneCategoria {
+    -fx-background-color: #FFC976;
+    -fx-position: relative;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4); /* Sombra */
+    -fx-background-radius: 60px;
+    -fx-pref-width:350;
+    -fx-pref-height:38;
+    -fx-max-width: 350;
+    -fx-max-height: 50;
+}
+
+
+
+

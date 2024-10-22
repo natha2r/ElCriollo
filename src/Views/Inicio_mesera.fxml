@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="744.0" prefWidth="1133.0" styleClass="mainFxmlClass" stylesheets="@../swing/inicio_mesera.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Inicio_meseraController">
+   <children>
+      <BorderPane layoutX="263.0" prefHeight="138.0" prefWidth="871.0" style="-fx-background-color: #2E1B10;" AnchorPane.leftAnchor="263.0" AnchorPane.rightAnchor="0.0">
+         <center>
+            <ImageView fitHeight="86.0" fitWidth="200.0" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@../resources/Letra_Criollo.png" />
+               </image>
+            </ImageView>
+         </center>
+      </BorderPane>
+      <Pane prefHeight="744.0" prefWidth="263.0" style="-fx-background-color: FFB94F;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Pane layoutX="45.0" layoutY="18.0" prefHeight="179.0" prefWidth="174.0">
+               <children>
+                  <ImageView disable="true" fitHeight="179.0" fitWidth="174.0">
+                     <image>
+                        <Image url="@../resources/el_criollo-removebg%202.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <BorderPane layoutY="241.0" prefHeight="320.0" prefWidth="263.0">
+               <center>
+                  <VBox prefHeight="266.0" prefWidth="263.0" spacing="40.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Button fx:id="btn_inicio" alignment="TOP_CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" prefHeight="37.0" prefWidth="201.0" styleClass="boton" stylesheets="@../swing/inicio_mesera.css" text="INICIO">
+                           <VBox.margin>
+                              <Insets left="30.0" right="30.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </Button>
+                        <Button fx:id="btn_menu" contentDisplay="BOTTOM" depthTest="DISABLE" mnemonicParsing="false" prefHeight="44.0" prefWidth="80.0" styleClass="boton" stylesheets="@../swing/inicio_mesera.css" text="MENÚ">
+                           <VBox.margin>
+                              <Insets left="30.0" right="30.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="System Bold" size="22.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btn_salir" contentDisplay="BOTTOM" depthTest="DISABLE" mnemonicParsing="false" prefHeight="32.0" prefWidth="80.0" styleClass="boton" stylesheets="@../swing/inicio_mesera.css" text="SALIR">
+                           <VBox.margin>
+                              <Insets left="30.0" right="30.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font size="22.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets top="20.0" />
+                     </padding>
+                  </VBox>
+               </center>
+            </BorderPane>
+            <Separator layoutY="224.0" prefHeight="0.0" prefWidth="263.0" />
+         </children>
+      </Pane>
+      <Pane layoutX="463.0" layoutY="423.0" prefHeight="186.0" prefWidth="263.0" AnchorPane.bottomAnchor="-4.0" AnchorPane.leftAnchor="0.0">
+         <children>
+            <ImageView fitHeight="179.0" fitWidth="282.0" layoutX="-1.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/el%20criollo%202.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+     <Pane fx:id="pane_inicio" cache="true" depthTest="DISABLE" layoutX="263.0" layoutY="138.0" prefHeight="606.0" prefWidth="871.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="263.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="138.0">
+         <children>
+            <GridPane fx:id="gridPane" layoutX="131.0" layoutY="158.0" prefHeight="432.0" prefWidth="664.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <ImageView fx:id="mesa2" accessibleRole="BUTTON" cache="true" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="1">
+                     <image>
+                        <Image url="@../resources/Mesa2.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="mesa3" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="2">
+                     <image>
+                        <Image url="@../resources/Mesa3.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="mesa4" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="3">
+                     <image>
+                        <Image url="@../resources/Mesa4.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="mesa5" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.rowIndex="1">
+                     <image>
+                        <Image url="@../resources/Mesa5.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="mesa6" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <image>
+                        <Image url="@../resources/Mesa6.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="mesa7" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <image>
+                        <Image url="@../resources/Mesa7.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="mesa8" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                     <image>
+                        <Image url="@../resources/Mesa8.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="mesa9" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.rowIndex="2">
+                     <image>
+                        <Image url="@../resources/Mesa9.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="mesa10" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <image>
+                        <Image url="@../resources/Mesa10.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="mesa11" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="2" GridPane.rowIndex="2"> 
+                     <image>
+                        <Image url="@../resources/Mesa11.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="mesa12" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                     <image>
+                        <Image url="@../resources/Mesa12.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="mesa13" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.rowIndex="3">
+                     <image>
+                        <Image url="@../resources/Mesa13.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="mesa14" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <image>
+                        <Image url="@../resources/Mesa14.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="mesa15" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                     <image>
+                        <Image url="@../resources/Mesa15.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="mesa16" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                     <image>
+                        <Image url="@../resources/Mesa16.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="mesa1" accessibleRole="BUTTON" cache="true" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton">  
+                     <image>
+                        <Image url="@../resources/Mesa1.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </GridPane>
+            <Button fx:id="btn_pedidos" alignment="CENTER" contentDisplay="BOTTOM" layoutX="131.0" layoutY="27.0" mnemonicParsing="false" onAction="#closePopup" prefHeight="37.0" prefWidth="201.0" styleClass="btn_pedidos" stylesheets="@../swing/inicio_mesera.css" text="PEDIDOS">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </Button>
+            <Button fx:id="btn_mesas" alignment="CENTER" contentDisplay="BOTTOM" layoutX="422.0" layoutY="27.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="201.0" styleClass="btn_mesas" stylesheets="@../swing/inicio_mesera.css" text="MESAS">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </Button>
+         </children>
+      </Pane>
+      <Pane id="glassPane" fx:id="glassPane" prefHeight="744.0" prefWidth="1133.0" styleClass="glassPane" stylesheets="@../swing/mensaje_pedido.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Pane id="popupPane" fx:id="popupPane" layoutX="437.0" layoutY="259.0" prefHeight="328.0" prefWidth="517.0" styleClass="popupPane">
+               <stylesheets>
+                  <URL value="@../swing/mensaje_pedido.css" />
+                  <URL value="@../swing/mensaje_pedido.css" />
+               </stylesheets>
+               <children>
+                  <Button layoutX="39.0" layoutY="259.0" mnemonicParsing="false" onAction="#closePopup" styleClass="btn_cancelar" stylesheets="@../swing/inicio_mesera.css" text="Cancelar">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
+                  <Label id="popupLabel" fx:id="popupLabel" layoutX="219.0" layoutY="18.0" styleClass="popupLabel" stylesheets="@../swing/mensaje_pedido.css" text="Label" />
+                  <Button id="btn_tomarPedido" fx:id="btn_toma" layoutX="283.0" layoutY="259.0" mnemonicParsing="false" styleClass="btn_tomarPedido" stylesheets="@../swing/mensaje_pedido.css" text="Tomar Pedido">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
+                  <ComboBox id="comboBoxselecMesera" fx:id="comboBoxselecMesera" layoutX="40.0" layoutY="71.0" prefWidth="150.0" styleClass="comboBoxselecMesera" stylesheets="@../swing/inicio_mesera.css">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></ComboBox>
+                  <ComboBox id="comboBoxselecMesera" fx:id="comboBoxselecMesera1" layoutX="40.0" layoutY="139.0" prefWidth="150.0" styleClass="comboBoxselecMesera" stylesheets="@../swing/inicio_mesera.css">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></ComboBox>
+                  <Button fx:id="btn_plus" layoutX="203.0" layoutY="187.0" mnemonicParsing="false" onAction="#incrementQuantity" prefWidth="63.0" styleClass="btn_simbols" text="+" />
+                  <Button fx:id="btn_minus" layoutX="260.0" layoutY="187.0" mnemonicParsing="false" onAction="#decrementQuantity" styleClass="btn_simbols" text="-" />
+                  <Label fx:id="txt_cantidad" alignment="CENTER" contentDisplay="CENTER" layoutX="256.0" layoutY="208.0" styleClass="texto1" text="0" />
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+
+   </children>
+</AnchorPane>

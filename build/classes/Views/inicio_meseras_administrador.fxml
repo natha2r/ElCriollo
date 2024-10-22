@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane id="AnchorPane" minHeight="720.0" minWidth="1280.0" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Inicio_meseras_administradorController">
+    <stylesheets>
+        <URL value="@/swing/inicio_meseras_administrador.css" />
+    </stylesheets>
+   <children>
+      <Pane id="panel_2" prefHeight="200.0" prefWidth="1280.0" stylesheets="@../swing/inicio_administrador.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Pane id="panel" layoutY="237.0" minWidth="264.0" prefHeight="744.0" prefWidth="264.0" style="-fx-background-color: #FFB94F;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+   </children>
+</AnchorPane>

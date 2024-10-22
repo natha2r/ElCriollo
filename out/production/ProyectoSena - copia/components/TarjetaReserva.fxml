@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" prefWidth="280.0" styleClass="vbox" stylesheets="@../swing/tarjetareserva.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.TarjetaReservaController">
+    <children>
+        <HBox alignment="CENTER" prefHeight="40.0" prefWidth="280.0" styleClass="hbox" stylesheets="@../swing/tarjetareserva.css">
+            <children>
+            <Label text="🕑" />
+                <Label fx:id="lbl_hora" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="80.0" textFill="black">
+                    <font>
+                        <Font name="System Bold" size="16.0" />
+                    </font>
+                </Label>
+            </children>
+        </HBox>
+        <Label alignment="CENTER" prefHeight="40.0" prefWidth="280.0" styleClass="reserva" stylesheets="@../swing/tarjetareserva.css" text="RESERVA" textFill="white">
+            <font>
+                <Font name="System Bold" size="24.0" />
+            </font>
+        </Label>
+      <Separator prefWidth="200.0" />
+        <Label fx:id="lbl_nombre" graphicTextGap="0.0" maxHeight="100.0" minWidth="10.0" prefHeight="0.0" prefWidth="200.0" styleClass="labelv" stylesheets="@../swing/tarjetareserva.css" textFill="white">
+            <font>
+                <Font name="System Bold" size="16.0" />
+            </font>
+         <padding>
+            <Insets left="10.0" />
+         </padding>
+         <VBox.margin>
+            <Insets left="20.0" top="20.0" />
+         </VBox.margin>
+        </Label>
+        <Label fx:id="lbl_telefono" graphicTextGap="0.0" prefHeight="12.0" prefWidth="200.0" styleClass="labelv" stylesheets="@../swing/tarjetareserva.css" textFill="white">
+            <font>
+                <Font name="System Bold" size="16.0" />
+            </font>
+         <padding>
+            <Insets left="10.0" />
+         </padding>
+         <VBox.margin>
+            <Insets left="20.0" />
+         </VBox.margin>
+        </Label>
+        <Label fx:id="lbl_personas" graphicTextGap="0.0" prefHeight="12.0" prefWidth="200.0" styleClass="labelv" stylesheets="@../swing/tarjetareserva.css" textFill="white">
+            <font>
+                <Font name="System Bold" size="16.0" />
+            </font>
+         <padding>
+            <Insets left="10.0" />
+         </padding>
+         <VBox.margin>
+            <Insets left="20.0" />
+         </VBox.margin>
+        </Label>
+        <Label fx:id="lbl_motivo" graphicTextGap="0.0" prefHeight="12.0" prefWidth="200.0" styleClass="labelv" stylesheets="@../swing/tarjetareserva.css" textFill="white">
+            <font>
+                <Font name="System Bold" size="16.0" />
+            </font>
+         <padding>
+            <Insets left="10.0" />
+         </padding>
+         <VBox.margin>
+            <Insets left="20.0" />
+         </VBox.margin>
+        </Label>
+      <Label fx:id="lbl_fecha" graphicTextGap="0.0" prefHeight="12.0" prefWidth="200.0" styleClass="labelv" stylesheets="@../swing/tarjetareserva.css">
+         <padding>
+            <Insets left="10.0" />
+         </padding>
+         <VBox.margin>
+            <Insets left="20.0" />
+         </VBox.margin></Label>
+      <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0" VBox.vgrow="ALWAYS">
+         <children>
+            <Button mnemonicParsing="false" style="-fx-pref-width: 115; -fx-font-size: 15; -fx-background-color: #9ada7c;" styleClass="boton" stylesheets="@../swing/cajeraview.css" text="Editar">
+               <graphic>
+                  <ImageView fitHeight="24.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/nota%20(1).png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="btn_deletereserva" mnemonicParsing="false" style="-fx-pref-width: 115; -fx-font-size: 15; -fx-background-color: #e56060;" styleClass="boton" stylesheets="@../swing/cajeraview.css" text="Eliminar">
+               <graphic>
+                  <ImageView fitHeight="24.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/calendario.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+         <VBox.margin>
+            <Insets top="20.0" />
+         </VBox.margin>
+      </HBox>
+    </children>
+   <padding>
+      <Insets bottom="20.0" />
+   </padding>
+</VBox>

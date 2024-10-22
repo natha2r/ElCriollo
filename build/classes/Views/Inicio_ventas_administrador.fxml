@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="rootPane" minHeight="744.0" minWidth="1135.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Inicio_ventas_administradorController">
+   <children>
+      <Pane id="panel_2" layoutX="264.0" minHeight="138.0" minWidth="871.0" prefHeight="200.0" prefWidth="1135.0" style="-fx-background-color: #2E1B10;" styleClass="mainFxmlClass" stylesheets="@../swing/inicio_administrador.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Pane layoutY="1.0" minWidth="264.0" prefHeight="744.0" prefWidth="264.0" style="-fx-background-color: #FFB94F;" stylesheets="@../swing/inicio_administrador.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <ImageView fitHeight="192.0" fitWidth="196.0" layoutX="32.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/el_criollo-removebg%202.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <BorderPane layoutX="264.0" prefHeight="200.0" prefWidth="871.0" AnchorPane.leftAnchor="264.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <ImageView fitHeight="130.0" fitWidth="342.0" pickOnBounds="true" preserveRatio="true" styleClass="mainFxmlClass" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@../resources/Letra_Criollo.png" />
+               </image>
+               <viewport>
+                  <Rectangle2D />
+               </viewport>
+            </ImageView>
+         </center>
+      </BorderPane>
+      <GridPane prefHeight="463.0" prefWidth="265.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="281.0">
+        <columnConstraints>
+          <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints fillHeight="false" maxHeight="68.0" minHeight="10.0" prefHeight="65.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="85.0" minHeight="10.0" prefHeight="65.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="85.0" minHeight="10.0" prefHeight="65.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="85.0" minHeight="10.0" prefHeight="65.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="85.0" minHeight="10.0" prefHeight="65.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="85.0" minHeight="10.0" prefHeight="65.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="124.0" minHeight="10.0" prefHeight="120.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button id="boton" fx:id="btn_inicio" minHeight="40.0" minWidth="220.0" mnemonicParsing="false" onAction="#handleBtnInicioAction" styleClass="boton" stylesheets="@../swing/inicio_administrador.css" text="INICIO">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+               <effect>
+                  <DropShadow />
+               </effect>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button id="boton" fx:id="btn_configuracion" minHeight="40.0" minWidth="220.0" mnemonicParsing="false" onAction="#handleBtnConfiguracionAction" styleClass="boton" stylesheets="@../swing/inicio_administrador.css" text="CONFIGURACIÓN" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+               <effect>
+                  <DropShadow />
+               </effect>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button id="boton" fx:id="btn_inventario" minHeight="40.0" minWidth="220.0" mnemonicParsing="false" styleClass="boton" stylesheets="@../swing/inicio_administrador.css" text="INVENTARIO" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+               <effect>
+                  <DropShadow />
+               </effect>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button id="boton" fx:id="btn_reportes" minHeight="40.0" minWidth="220.0" mnemonicParsing="false" styleClass="boton" stylesheets="@../swing/inicio_administrador.css" text="REPORTES" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+               <effect>
+                  <DropShadow />
+               </effect>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button id="boton" fx:id="btn_mesas" minHeight="40.0" minWidth="220.0" mnemonicParsing="false" styleClass="boton" stylesheets="@../swing/inicio_administrador.css" text="MESAS" GridPane.rowIndex="4">
+               <effect>
+                  <DropShadow />
+               </effect>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+            <Line endX="97.0" startX="-169.0" stroke="WHITE" GridPane.valignment="TOP" />
+            <Line endX="97.0" startX="-169.0" stroke="WHITE" GridPane.rowIndex="6" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets top="12.0" />
+               </GridPane.margin></Line>
+            <Button id="boton" fx:id="btn_salir" minHeight="40.0" minWidth="220.0" mnemonicParsing="false" onAction="#salir" styleClass="boton" stylesheets="@../swing/inicio_administrador.css" text="SALIR" GridPane.rowIndex="6">
+               <GridPane.margin>
+                  <Insets top="20.0" />
+               </GridPane.margin>
+               <effect>
+                  <DropShadow />
+               </effect>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+            <Button id="boton" fx:id="btn_caja" minHeight="40.0" minWidth="220.0" mnemonicParsing="false" styleClass="boton" stylesheets="@../swing/inicio_administrador.css" text="CAJA" GridPane.rowIndex="5">
+               <effect>
+                  <DropShadow />
+               </effect>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+         </children>
+      </GridPane>
+      <BorderPane layoutX="264.0" layoutY="281.0" prefHeight="48.0" prefWidth="871.0" AnchorPane.leftAnchor="264.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="281.0">
+         <center>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="VENTAS HOY" wrappingWidth="142.63687133789062" BorderPane.alignment="CENTER">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+         </center>
+         <bottom>
+            <Line endX="100.0" startX="-100.0" BorderPane.alignment="CENTER" />
+         </bottom>
+      </BorderPane>
+      <BorderPane layoutX="700.0" layoutY="219.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="330.0" prefHeight="48.0" prefWidth="473.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="219.0">
+         <left>
+            <Button alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="330.0" styleClass="boton_redondo" stylesheets="@../swing/inicio_administrador.css" text="MESERAS" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Button>
+         </left>
+      </BorderPane>
+      <BorderPane layoutX="263.0" layoutY="219.0" prefHeight="48.0" prefWidth="473.0" AnchorPane.leftAnchor="263.0" AnchorPane.topAnchor="219.0">
+         <right>
+            <Button id="boton_redondo" alignment="CENTER" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="361.0" styleClass="boton_redondo" stylesheets="@../swing/inicio_administrador.css" text="VENTAS" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Button>
+         </right>
+      </BorderPane>
+   </children>
+</AnchorPane>

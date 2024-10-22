@@ -1,0 +1,149 @@
+.boton {
+    -fx-background-color: #FEB01D;
+    -fx-background-radius: 10px;
+    -fx-border-color: #FEB01D;
+    -fx-border-width: 0.5px;
+    -fx-border-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4);
+    -fx-alignment: center;
+    -fx-spacing: 10px; /* Esto es similar al 'gap' en flexbox */
+    -fx-pref-width: 201px;
+    -fx-pref-height: 37px;
+    -fx-font-family: Karla;
+    -fx-font-weigth: bold;
+    -fx-font-size: 18px;
+    -fx-text-fill: #341C12
+    
+}
+
+.boton:hover {
+    -fx-background-color: #C68711;
+    -fx-border-color: #C68711;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 6, 0, 0, 6);
+    -fx-text-fill: black;
+    -fx-font-family: Karla;
+    -fx-font-weigth: bold;
+    -fx-cursor: hand;
+    -fx-pref-width: 201px;
+    -fx-pref-height: 37px;
+    
+}
+
+
+.btn_pedidos {
+    -fx-pref-width: 330px;
+    -fx-pref-height: 50px;
+    -fx-background-color: #FFA150;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4);
+    -fx-border-radius: 30px; /* Radius for rounded corners */
+    -fx-background-radius: 30px; /* Ensures background also has rounded corners */
+    -fx-layout-x: 391px; /* Position from left */
+    -fx-layout-y: 155px; /* Position from top */
+}
+
+.btn_mesas {
+    -fx-pref-width: 330px;
+    -fx-pref-height: 50px;
+    -fx-background-color: #FFB94F;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4);
+    -fx-background-radius: 30px; /* Radio para esquinas redondeadas */
+    -fx-border-radius: 30px; /* Asegúrate de que el borde también tenga esquinas redondeadas */
+}
+
+
+
+
+.popupLabel{
+    -fx-font-family: 'Karla';
+    -fx-font-style: normal;
+    -fx-font-weight: bold; /* Equivalente a font-weight: 700 */
+    -fx-font-size: 27px;
+    -fx-alignment: center; 
+    -fx-text-fill: #FFA150; 
+}
+
+.btn_cancelar{
+    -fx-background-color: #DDDBDA;
+    -fx-background-radius: 30px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4);
+    -fx-pref-width: 198px;
+    -fx-pref-height: 35px;
+    -fx-font-family: 'Karla';
+    -fx-font-style: normal;
+    -fx-font-size: 20px
+}
+
+.btn_tomarPedido{
+    -fx-background-color: #FFB94F;
+    -fx-background-radius: 30px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4);
+    -fx-pref-width: 198px;
+    -fx-pref-height: 35px;
+    -fx-font-family: 'Karla';
+    -fx-font-style: normal;
+    -fx-font-size: 20px;
+}
+
+.texto{
+    -fx-font-family: 'Karla';
+    -fx-font-style: normal;
+    -fx-font-size: 20px
+}
+
+.comboBoxselecMesera{
+    -fx-pref-width: 437px;
+    -fx-pref-height: 50px;
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #000000; /* Color del borde */
+    -fx-border-width: 0.5px;
+    -fx-background-radius: 19px; /* Radio del borde para el fondo */
+    -fx-border-radius: 19px; /* Radio del borde para el borde */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4);
+    -fx-fill: #FFB94F;
+}
+
+.comboBoxselecMesera .arrow {
+    -fx-background-color: #FFA41B;
+    -fx-background-radius: 0;
+    -fx-padding: 5 5 10 30; /* Ajusta el tamaño de la flecha */
+}
+   
+.btn_simbols{
+    -fx-pref-width: 15px;
+    -fx-pref-height: 15px;
+    
+    -fx-font-family: 'Karla';
+    -fx-font-style: normal;
+    -fx-font-weight: bold; /* Equivalente a 700 */
+    -fx-font-size: 30px;
+    -fx-alignment: center; /* Centrado de texto */
+
+    -fx-text-fill: #FFB94F; /* Color del texto */
+    -fx-background-color: transparent; /* Fondo transparente */
+    -fx-border-color: transparent; /* Sin borde */
+    -fx-cursor: hand; /* Cursor de puntero */
+}
+
+.texto1{
+    -fx-font-family: 'Karla';
+    -fx-font-style: normal;
+    -fx-font-size: 20px;
+    -fx-text-fill: #341C12
+}
+
+
+.btn-pedidos-active {
+    -fx-background-color: #FFB94F; /* Color que toma cuando se hace clic en btn_mesas */
+}
+
+.btn-mesas-active {
+    -fx-background-color: #FFA150; /* Color que toma cuando se hace clic en btn_pedidos */
+}
+
+/* Estilos por defecto de los botones */
+.btn_default {
+    -fx-background-color: #DDDDDD; /* Color de fondo por defecto */
+    -fx-text-fill: black; /* Color del texto por defecto */
+}
+
+

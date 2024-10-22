@@ -1,0 +1,70 @@
+/*
+ * Empty Stylesheet file.
+ */
+    
+.mainFxmlClass {
+    -fx-background-color: #2E1B10; /* Color de fondo del contenedor principal */
+}
+
+.btn_salir {
+    -fx-background-color: #FFB94F;
+    -fx-position: relative;
+    -fx-width: 1133px;
+    -fx-height: 744px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4); /* Sombra */
+    -fx-background-radius: 30px;
+}
+.btn_salir:hover{
+    -fx-background-color: #d79930;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 6, 0, 0, 6);
+    -fx-text-fill: black;
+    -fx-font-weigth: bold;
+    -fx-cursor: hand;
+}
+
+.btn_menu {
+    -fx-background-color: #FFB94F;
+    -fx-position: relative;
+    -fx-width: 1133px;
+    -fx-height: 744px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4);
+    -fx-background-radius: 30px;
+}
+.btn_menu:hover{
+    -fx-background-color: #d79930;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 6, 0, 0, 6);
+    -fx-text-fill: black;
+    -fx-font-weigth: bold;
+    -fx-cursor: hand;
+}
+
+.btn_curso {
+    -fx-background-color: #FAC26D;
+}
+.btn_curso:hover{
+    -fx-background-color: #d79930;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 6, 0, 0, 6);
+    -fx-text-fill: black;
+    -fx-font-weigth: bold;
+    -fx-cursor: hand;
+}
+
+.btn_terminado {
+    -fx-background-color: #9ECF78;
+}
+.btn_terminado:hover{
+    -fx-background-color: #d79930;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 6, 0, 0, 6);
+    -fx-text-fill: black;
+    -fx-font-weigth: bold;
+    -fx-cursor: hand;
+}
+
+.btnConfiguracion {
+    -fx-background-image: url("Mask group.png"); /* Reemplaza "configuracion.png" con la ruta a tu imagen */
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+    -fx-background-size: contain;
+    -fx-min-width: 30px;
+    -fx-min-height: 30px;
+}
