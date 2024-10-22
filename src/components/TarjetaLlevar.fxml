@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<VBox maxHeight="390.0" maxWidth="243.0" minHeight="390.0" minWidth="243.0" prefHeight="390.0" prefWidth="243.0" spacing="10.0" style="-fx-border-width: 1px;" stylesheets="@../swing/tarjetallevar.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+   <styleClass>
+      <String fx:value="vbox" />
+      <String fx:value="root" />
+   </styleClass>
+   <children>
+      <HBox alignment="CENTER" prefHeight="37.0" prefWidth="213.0" spacing="10.0" styleClass="header" stylesheets="@../swing/tarjetallevar.css">
+         <children>
+            <Label text="⏰">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbl_tiempo">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <Label fx:id="lbl_numeroMesa">
+         <font>
+            <Font name="Arial" size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbl_nombreMesera" prefHeight="17.0" prefWidth="215.0">
+         <font>
+            <Font name="Arial" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbl_orden" prefHeight="17.0" prefWidth="215.0">
+         <font>
+            <Font name="Arial" size="15.0" />
+         </font>
+      </Label>
+      <Separator prefWidth="200.0" />
+      <VBox fx:id="ordenItems" prefHeight="200.0" prefWidth="100.0" spacing="10.0" />
+      <Separator prefWidth="200.0" />
+   </children>
+   <padding>
+      <Insets bottom="20.0" />
+   </padding>
+</VBox>

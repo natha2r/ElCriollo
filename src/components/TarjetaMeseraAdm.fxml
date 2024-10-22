@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="345.0" prefWidth="229.0" styleClass="mainFxmlClass" stylesheets="@../swing/tarjetameseraadm.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane layoutX="14.0" layoutY="57.0" prefHeight="220.0" prefWidth="200.0" styleClass="tarjeta_meseras" stylesheets="@../swing/tarjetameseraadm.css">
+         <children>
+            <ImageView fx:id="img_empleado" fitHeight="107.0" fitWidth="124.0" layoutX="47.0" layoutY="-30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/prueba_mesera.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="lbl_nombre" alignment="CENTER" contentDisplay="CENTER" layoutX="41.0" layoutY="99.0" prefHeight="23.0" prefWidth="123.0" styleClass="name" textAlignment="CENTER" />
+            <Label fx:id="lbl_edad" alignment="CENTER" contentDisplay="CENTER" layoutX="41.0" layoutY="131.0" prefHeight="23.0" prefWidth="123.0" styleClass="age" textAlignment="CENTER" />
+            <Label fx:id="lbl_mesas" alignment="CENTER" contentDisplay="CENTER" layoutX="39.0" layoutY="165.0" prefHeight="23.0" prefWidth="123.0" styleClass="name" textAlignment="CENTER" />
+         </children>
+      </Pane>
+   </children>
+</Pane>

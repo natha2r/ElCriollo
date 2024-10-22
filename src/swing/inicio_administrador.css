@@ -1,0 +1,756 @@
+/*@import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap');*/
+.mainFxmlClass {
+    
+
+    
+    /*CSS DE LA VISTA DE INICIO*/
+
+
+    #panel {
+        -fx-background-color: #FFB94F;
+    }
+
+    #panel_2 {
+        -fx-background-color: #2E1B10;
+    }
+
+
+
+    /* el_criollo-removebg 2 */
+    #el_criollo {
+        -fx-background-image: url('el_criollo-removebg.png');
+    }
+
+    
+    
+    .boton {
+    -fx-background-color: #FEB01D;
+    -fx-background-radius: 10px;
+    -fx-border-color: #FEB01D;
+    -fx-border-width: 0.5px;
+    -fx-border-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4);
+    -fx-alignment: center;
+    -fx-spacing: 10px; /* Esto es similar al 'gap' en flexbox */
+    -fx-pref-width: 201px;
+    -fx-pref-height: 37px;
+    -fx-font-family: 'Karla-bold';
+    -fx-font-weigth: bold;
+    -fx-font-size: 18px;
+    -fx-text-fill: #341C12;
+    -fx-cursor: hand;  
+    
+
+}
+
+.boton:hover {
+    -fx-background-color: #C68711;
+    -fx-border-color: #C68711;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 6, 0, 0, 6);
+    -fx-text-fill: black;
+    -fx-font-family: 'Karla';
+    -fx-font-weigth: bold;
+    -fx-cursor: hand;
+    -fx-pref-width: 201px;
+    -fx-pref-height: 37px;
+
+}
+
+
+.boton_redondo {
+
+    -fx-background-color: #FEB01D;
+    -fx-background-radius: 10px;
+    -fx-border-color: #FEB01D;
+    -fx-border-width: 0.5px;
+    -fx-border-radius: 30px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4);
+
+    -fx-spacing: 10px; /* Esto es similar al 'gap' en flexbox */
+    -fx-pref-width: 330px;
+    -fx-pref-height: 50px;
+    -fx-font-family: 'Karla-bold';
+    -fx-font-weigth: bold;
+    -fx-font-size: 18px;
+    -fx-text-fill: #341C12;
+    
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4);
+    -fx-background-radius: 30px;
+    -fx-view-order: 1; /* Valor mayor, estará detrás */
+}
+
+
+.boton_redondo:hover {
+    -fx-background-color: #C68711;
+    -fx-border-color: #C68711;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 6, 0, 0, 6);
+    -fx-text-fill: black;
+    -fx-font-family: 'Karla';
+    -fx-font-weigth: bold;
+    -fx-cursor: hand;
+    -fx-pref-width: 330px;
+    -fx-pref-height: 50px;
+    -fx-view-order: 1; /* Valor mayor, estará detrás */
+
+}
+
+
+.boton_redondo_inventario {
+
+    -fx-background-color: #FEB01D;
+   
+    -fx-border-color: #FEB01D;
+    -fx-border-width: 0.5px;
+    -fx-border-radius: 30px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4);
+
+    -fx-spacing: 10px; /* Esto es similar al 'gap' en flexbox */
+    -fx-pref-width: 170px;
+    -fx-pref-height: 40px;
+    -fx-font-family: 'Karla-bold';
+    -fx-font-weigth: bold;
+    -fx-font-size: 18px;
+    -fx-text-fill: #341C12;
+    
+    
+    -fx-background-radius: 30px;
+    
+}
+
+
+.boton_redondo_inventario:hover {
+    -fx-background-color: #C68711;
+    -fx-border-color: #C68711;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 6, 0, 0, 6);
+    -fx-text-fill: black;
+    -fx-font-family: 'Karla';
+    -fx-font-weigth: bold;
+    -fx-cursor: hand;
+    -fx-pref-width: 180px;
+    -fx-pref-height: 50px;
+    -fx-view-order: 1; /* Valor mayor, estará detrás */
+
+}
+
+
+.boton_redondo2 {
+
+    -fx-background-color: #FEB01D;
+    -fx-background-radius: 10px;
+    -fx-border-color: #FEB01D;
+    -fx-border-width: 0.5px;
+    -fx-border-radius: 30px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4);
+
+    -fx-spacing: 10px; /* Esto es similar al 'gap' en flexbox */
+    -fx-pref-width: 330px;
+    -fx-pref-height: 50px;
+    -fx-font-family: 'Karla-bold';
+    -fx-font-weigth: bold;
+    -fx-font-size: 18px;
+    -fx-text-fill: #341C12;
+    -fx-background-color: #FFA150;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4);
+    -fx-background-radius: 30px;
+    -fx-view-order: 0; /* Valor mayor, estará detrás */
+}
+
+
+.boton_redondo2:hover {
+    -fx-background-color: #C68711;
+    -fx-border-color: #C68711;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 6, 0, 0, 6);
+    -fx-text-fill: black;
+    -fx-font-family: 'Karla';
+    -fx-font-weigth: bold;
+    -fx-cursor: hand;
+    -fx-pref-width: 330px;
+    -fx-pref-height: 50px;
+    -fx-view-order: 0; /* Valor mayor, estará detrás */
+
+}
+
+
+
+/* Rectangle 74 */
+.rectangulo {
+    -fx-box-border: true;
+
+    -fx-position: absolute;
+    -fx-width: 216px;
+    -fx-height: 86px;
+    -fx-layout-x: 297px;
+    -fx-layout-y: 291px;
+
+    -fx-background-color: TRANSPARENT;
+    -fx-border-color: #000000;
+    -fx-border-width: 1px;
+    -fx-border-radius: 40px 0px;
+}
+
+
+
+
+/* Estilo para el Slider */
+.slider {
+    -fx-padding: 2; /* Espacio entre el borde y el contenido */
+    -fx-cursor: hand; /* Cursor en forma de mano */
+}
+
+/* Estilo para la pista del Slider */
+.slider .track {
+    -fx-background-color: #FFC107; /* Color de la pista naranja claro */
+    -fx-border-color: #FFA07A; /* Color de borde de la pista naranja oscuro */
+    -fx-border-width: 1; /* Ancho de borde de la pista delgado */
+    -fx-background-radius: 10; /* Radio de curvatura de la pista */
+}
+
+/* Estilo para la thumb del Slider */
+.slider .thumb {
+    -fx-background-color: #FF69B4; /* Color de la thumb rosa claro */
+    -fx-border-color: #FFC0CB; /* Color de borde de la thumb rosa oscuro */
+    -fx-border-width: 1; /* Ancho de borde de la thumb delgado */
+    -fx-padding: 2; /* Espacio entre el borde y el contenido de la thumb */
+    -fx-shape: "M 0 0 L 10 0 L 10 10 L 0 10 Z"; /* Forma de la thumb en forma de rombo */
+}
+
+/* Estilo para la pista cuando el Slider está enfocado */
+.slider:focused .track {
+    -fx-background-color: #FFA07A; /* Color de la pista cuando está enfocado */
+}
+
+/* Estilo para la thumb cuando el Slider está enfocado */
+.slider:focused .thumb {
+    -fx-background-color: #FF69B4; /* Color de la thumb cuando está enfocado */
+    -fx-scale-x: 1.1; /* Escala de la thumb cuando está enfocado */
+    -fx-scale-y: 1.1; /* Escala de la thumb cuando está enfocado */
+}
+
+/* Estilo para la sombra del Slider */
+.slider .track:horizontal .track-background {
+    -fx-background-color: rgba(0, 0, 0, 0.2); /* Sombra del Slider */
+    -fx-background-radius: 10; /* Radio de curvatura de la sombra */
+}
+
+
+
+/* Estilo para la ListView */
+.listview {
+    -fx-background-color: #F7F7F7; /* Fondo blanco claro */
+    -fx-padding: 10; /* Espacio entre el borde y el contenido */
+    -fx-border-color: #CCCCCC; /* Color de borde gris claro */
+    -fx-border-width: 1; /* Ancho de borde delgado */
+    -fx-corner-radius: 10; /* Radio de curvatura de las esquinas */
+}
+
+/* Estilo para los items de la ListView */
+.listview .list-cell {
+    -fx-padding: 10; /* Espacio entre el borde y el contenido del item */
+    -fx-text-fill: #333333; /* Color de texto negro */
+    -fx-font-size: 14; /* Tamaño de la fuente */
+    -fx-font-family: "Open Sans"; /* Tipo de letra */
+}
+
+/* Estilo para los items seleccionados de la ListView */
+.listview .list-cell:selected {
+    -fx-background-color: #FFC107; /* Fondo amarillo claro cuando se selecciona */
+    -fx-text-fill: #FFFFFF; /* Color de texto blanco cuando se selecciona */
+}
+
+/* Estilo para la scrollbar de la ListView */
+.listview .scroll-bar {
+    -fx-background-color: #CCCCCC; /* Fondo gris claro de la scrollbar */
+    -fx-padding: 2; /* Espacio entre el borde y el contenido de la scrollbar */
+}
+
+/* Estilo para la thumb de la scrollbar de la ListView */
+.listview .scroll-bar .thumb {
+    -fx-background-color: #666666; /* Color de la thumb gris oscuro */
+    -fx-padding: 2; /* Espacio entre el borde y el contenido de la thumb */
+    -fx-min-width: 20; /* Ancho mínimo de la thumb */
+    -fx-max-width: 20; /* Ancho máximo de la thumb */
+}
+
+
+
+
+
+
+
+
+
+/*CSS DE TODA LA VISTA DE CONFIGURACION*/
+
+
+/*CSS DE LOS DOS BOTONES DE LA VISTA DE CONFIGURACION*/
+
+.btn_personal_registro {
+    -fx-background-color: #FEB01D;
+    /*-fx-background-color: linear-gradient(#ffcc00, #ff9900);*/
+    -fx-text-fill: black;
+    -fx-background-radius: 30px;
+    -fx-border-radius: 30px;
+    -fx-font-size: 18px;
+    -fx-pref-width: 500px;
+    -fx-pref-height: 60px;
+    -fx-aligment:center;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 1);
+
+
+    -fx-padding: 10px;
+    -fx-font-family: 'Karla-bold';  /* Fuente */
+    -fx-font-size: 18px;            /* Tamaño de fuente */
+    -fx-text-fill: black;           /* Color del texto */
+    -fx-cursor: hand;               /* Cambio de cursor cuando el mouse pasa por encima */
+}
+
+.btn_personal_registro:hover {
+    -fx-background-color: #ff9900;
+    /*-fx-background-color: linear-gradient(#ff9900, #ff6600);*/
+    -fx-translate-y: 3px;
+    
+}
+
+/*.btn_personal_registro:pressed {
+     -fx-background-color: #C68100;
+    -fx-background-color: linear-gradient(#ff6600, #ff3300);
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 10, 0, 0, 2);
+    -fx-padding: 8;
+    
+    -fx-translate-y: 3px;
+}*/
+
+
+
+/*CSS DE LA VISTA PERSONAL Y ROLES*/ 
+
+
+.root_personal {
+    -fx-background-color: f0f0f0;
+}
+
+/* Estilo del contenedor */
+.hbox {
+    -fx-spacing: 123;
+    -fx-padding: 5px 30px 20px 38px;
+    -fx-alignment: center;
+}
+.hbox2 {
+    -fx-spacing: 0;
+    -fx-padding: 10px 0px 10px 0px;
+    -fx-alignment: center;
+}
+
+.vbox {
+    -fx-spacing: 10;
+    -fx-padding: 0px 0px 0px 0px;
+    -fx-alignment: center;
+}
+
+.vbox-modifcar-info {
+    -fx-spacing: 10;
+    -fx-padding: 0px 0px 0px 0px;
+    -fx-alignment: center;
+}
+
+/* Estilo de los botones */
+.btn_config_personal {
+    -fx-background-color: #ffffff;
+    /*-fx-background-color: linear-gradient(#4facfe, #00f2fe);*/
+    -fx-background-radius: 20;
+    -fx-padding: 0px 0px 20px 0px;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+    -fx-min-width: 230px;
+    -fx-min-height: 320px;
+    -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 10, 0.1, 0, 4);
+    /*-fx-border-radius: 50px 0px 50px 0px; /* Solo redondea las esquinas superiores */
+    -fx-background-radius: 50px 0px 50px 0px; /* Hace que el fondo coincida con el borde */    
+    -fx-graphic-text-gap: 40px;    /* Espacio entre la imagen y el texto */
+    -fx-wrap-text: true;
+    /* Color del borde */
+    -fx-border-width: 4px;
+    -fx-cursor: hand;  
+}
+
+.btn_config_personal:hover {
+    -fx-background-color: #fef8ee;
+    -fx-font-size: 16.2px;
+    /*-fx-background-color: linear-gradient(#ff9900, #ff6600);*/
+    -fx-translate-y: -5px;
+    -fx-cursor: hand;
+    
+}
+
+/* Estilo de las imágenes */
+.image-view {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 10, 0.1, 0, 4);
+    -fx-translate-y: -5px;
+}
+
+/* Estilo del texto */
+.label2 {
+    -fx-text-fill: #333;
+    -fx-font-size: 20px;
+    /*-fx-font-weight: bold;*/
+    -fx-padding: 0 0 0 0;
+    -fx-alignment: center;
+}
+
+.label3 {
+    
+    -fx-font-size: 17px;
+    /*-fx-font-weight: bold;*/
+    -fx-padding: 0 0 0 0;
+    
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-min-width: 100px;
+}
+
+.pane_config_personal_roles {
+    -fx-background-color: #ffffff;
+    /*-fx-background-color: linear-gradient(#4facfe, #00f2fe);*/
+    -fx-background-radius: 20;
+    -fx-border-radius: 50px 0px 50px 0px; /* Solo redondea las esquinas superiores */
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+    /*-fx-background-radius: 50px 0px 50px 0px; /* Hace que el fondo coincida con el borde */ 
+    -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 10, 0.1, 0, 4);
+         /* Color del borde */
+    -fx-border-width: 4px;
+}
+
+.pane_interno_registrar_informacion {
+    -fx-background-color: #ffffff;
+    /*-fx-background-color: linear-gradient(#4facfe, #00f2fe);*/
+    -fx-background-radius: 20;
+    /*-fx-padding: 0px 0px 20px 0px;*/
+    /*-fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;*/
+    /*-fx-min-width: 230px;
+    -fx-min-height: 320px;*/
+    -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 10, 0.1, 0, 4);
+    /*-fx-border-radius: 50px 0px 50px 0px; /* Solo redondea las esquinas superiores */
+    -fx-background-radius: 50px 0px 50px 0px; /* Hace que el fondo coincida con el borde */    
+    -fx-graphic-text-gap: 40px;    /* Espacio entre la imagen y el texto */
+    -fx-wrap-text: true;
+    /* Color del borde */
+    -fx-border-width: 4px;
+    
+}
+
+.foto_personal {
+    -fx-background-color: #ffffff;
+    /*-fx-background-color: linear-gradient(#4facfe, #00f2fe);*/
+    -fx-background-radius: 20;
+    /*-fx-padding: 0px 0px 20px 0px;*/
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    
+    /*-fx-min-width: 230px;
+    -fx-min-height: 320px;*/
+    
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 10, 0.1, 0, 4);
+    /*-fx-border-radius: 50px 0px 50px 0px; /* Solo redondea las esquinas superiores */
+    -fx-background-radius: 50px 0px 0px 0px; /* Hace que el fondo coincida con el borde */    
+    -fx-graphic-text-gap: 40px;    /* Espacio entre la imagen y el texto */
+    /*-fx-wrap-text: true;*/
+    /* Color del borde */
+    -fx-border-width: 4px;
+    -fx-background-color: transparent;
+    -fx-border-color: gray;
+    -fx-border-radius: 50px 0px 0px 0px;
+   
+    -fx-border-width: 2;
+    -fx-padding: 30;
+    
+    
+}
+
+
+
+
+.boton-registrar {
+    -fx-background-color: #9ada7c; /* Color de fondo */
+    -fx-font-weight: bold;
+    -fx-text-fill: black; /* Color del texto */
+    -fx-font-size: 14px; /* Tamaño de la fuente */
+     
+    -fx-background-radius: 30; /* Borde redondeado */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 4); /* Sombra */
+    -fx-border-color: BLACK; /* Sin borde visible */
+    -fx-border-RADIUS: 30;
+    -fx-cursor: hand; /* Cursor cambia a mano al pasar sobre el botón */
+    -fx-border-width: .2px;
+}
+
+.boton-registrar:hover {
+    -fx-background-color: #83bf66; /* Color más oscuro al pasar el mouse */
+    /*-fx-translate-y: 3px;*/
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 2); /* Sombra */
+    -fx-cursor: hand;
+}
+
+.boton-registrar:pressed {
+    -fx-background-color: #6bb04a; /* Color más oscuro al presionar */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 3); /* Sombra más intensa */
+    -fx-cursor: hand;
+}
+
+
+
+
+.boton-cancelar {
+    -fx-background-color: #e56060; /* Color de fondo */
+    -fx-font-weight: bold;
+    -fx-text-fill: black; /* Color del texto */
+    -fx-font-size: 14px; /* Tamaño de la fuente */
+     
+    -fx-background-radius: 30; /* Borde redondeado */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 4); /* Sombra */
+    -fx-border-color: BLACK; 
+    -fx-border-RADIUS: 30; 
+    -fx-cursor: hand; /* Cursor cambia a mano al pasar sobre el botón */
+    -fx-border-width: .2px;
+}
+
+.boton-cancelar:hover {
+    -fx-background-color: #d15f5f; /* Color más oscuro al pasar el mouse */
+    /*-fx-translate-y: -3px;*/
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 2); /* Sombra */
+    -fx-cursor: hand;
+}
+
+.boton-cancelar:pressed {
+    -fx-background-color: #c74d4d; /* Color más oscuro al presionar */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 3); /* Sombra más intensa */
+    -fx-cursor: hand;
+}
+
+
+
+.boton-modificar {
+    -fx-background-color: #6ecad4; /* Color de fondo */
+    -fx-font-weight: bold;
+    -fx-text-fill: black; /* Color del texto */
+    -fx-font-size: 14px; /* Tamaño de la fuente */
+     
+    -fx-background-radius: 30; /* Borde redondeado */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 4); /* Sombra */
+    -fx-border-color: BLACK; /* Sin borde visible */
+    -fx-border-RADIUS: 30;
+    -fx-cursor: hand; /* Cursor cambia a mano al pasar sobre el botón */
+    -fx-border-width: .2px;
+}
+
+.boton-modificar:hover {
+    -fx-background-color: #64a5c9; /* Color más oscuro al pasar el mouse */
+    /*-fx-translate-y: 3px;*/
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 2); /* Sombra */
+    -fx-cursor: hand;
+}
+
+.boton-modificar:pressed {
+    -fx-background-color: #5f98b9; /* Color más oscuro al presionar */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 3); /* Sombra más intensa */
+    -fx-cursor: hand;
+}
+
+
+
+
+.boton-limpiar {
+    -fx-background-color: #f9fff7; /* Color de fondo */
+    -fx-font-weight: bold;
+    -fx-text-fill: #59a94e; /* Color del texto */
+    -fx-font-size: 14px; /* Tamaño de la fuente */
+     
+    -fx-background-radius: 30; /* Borde redondeado */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 4); /* Sombra */
+    -fx-border-color: #59a94e; /* Sin borde visible */
+    -fx-border-RADIUS: 30;
+    -fx-cursor: hand; /* Cursor cambia a mano al pasar sobre el botón */
+    -fx-border-width: 2px;
+}
+
+.boton-limpiar:hover {
+    -fx-background-color: #b5eca1; /* Color más oscuro al pasar el mouse */
+    /*-fx-translate-y: 3px;*/
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 2); /* Sombra */
+    -fx-cursor: hand;
+    -fx-border-color: #678a4d;
+    -fx-border-width: 1px;
+}
+
+.boton-limpiar:pressed {
+    -fx-background-color: #9fd88a; /* Color más oscuro al presionar */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 3); /* Sombra más intensa */
+    -fx-cursor: hand;
+    -fx-border-color: #539321;
+    -fx-border-width: .2px;
+}
+
+.boton-salir {
+    -fx-background-color: white; /* Color de fondo */
+    -fx-border-color: #ff0000; /* Sin borde visible */
+    -fx-font-weight: bold;
+    -fx-text-fill: #ff0000; /* Color del texto */
+    -fx-font-size: 14px; /* Tamaño de la fuente */
+     
+    -fx-background-radius: 30; /* Borde redondeado */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 4); /* Sombra */
+    -fx-border-RADIUS: 30;
+    -fx-cursor: hand; /* Cursor cambia a mano al pasar sobre el botón */
+    -fx-border-width: 2px;
+}
+
+.boton-salir:hover {
+    -fx-background-color: #f28c8c; /* Color de fondo */
+    /*-fx-translate-y: 3px;*/
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 2); /* Sombra */
+    -fx-cursor: hand;
+}
+
+.boton-salir:pressed {
+    -fx-background-color: #f17676; /* Color más oscuro al presionar */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 3); /* Sombra más intensa */
+    -fx-cursor: hand;
+}
+
+
+
+
+/*---------------------------------------------------------------------------------*/
+
+
+/* Estilo general para el TableView empleados */
+.table-view-empleados {
+    -fx-background-color: #ffefd7; /* Fondo blanco para el TableView */
+    -fx-font-family: "Verdana"; /* Fuente más elegante */
+    -fx-font-size: 12px; /* Tamaño de la fuente */
+    -fx-border-color: #ccc; /* Color del borde */
+    -fx-border-width: 1px; /* Grosor del borde */
+}
+
+/* Estilo para las cabeceras de la tabla empleados */
+.table-view-empleados .column-header {
+    -fx-background-color: #FFB94F; /* Color amarillo para las cabeceras */
+    -fx-text-fill: white; /* Color de texto blanco */
+    -fx-font-weight: bold; /* Negrita */
+    -fx-font-size: 14px; /* Tamaño de la fuente de las cabeceras */
+}
+
+/* Estilo para las filas de la tabla empleados */
+.table-view-empleados .table-row-cell {
+    -fx-background-color: transparent; /* Fondo transparente */
+}
+
+/* Estilo para filas pares de empleados */
+.table-view-empleados .table-row-cell:nth-child(even) {
+    -fx-background-color: #f2f2f2; /* Color gris claro para filas pares */
+}
+
+/* Estilo para filas impares de empleados */
+.table-view-empleados .table-row-cell:nth-child(odd) {
+    -fx-background-color: #ffffff; /* Color blanco para filas impares */
+}
+
+/* Estilo para la fila seleccionada en empleados */
+.table-view-empleados .table-row-cell:selected {
+    -fx-background-color: #FF9800; /* Color naranja para la fila seleccionada */
+    -fx-text-fill: white; /* Color de texto blanco en la selección */
+}
+
+/* Estilo para los TextField */
+.text-field {
+    -fx-background-color: #ffffff; /* Fondo blanco para los TextField */
+    -fx-border-color: #FFB94F; /* Borde verde oscuro */
+    -fx-border-width: .8px; /* Grosor del borde */
+    -fx-border-RADIUS: 30;
+    -fx-background-radius: 30; /* Borde redondeado */
+    -fx-prompt-text-fill: #a9a9a9; /* Color del texto de aviso */
+}
+
+/* Estilo para el TextField en foco */
+.text-field:focused {
+    -fx-border-color: #FF9800; /* Cambiar el color del borde al naranja */
+}
+
+.comboBoxCargo{
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #FFB94F; /* Color del borde */
+    -fx-border-width: .8px;
+    -fx-background-radius: 19px; /* Radio del borde para el fondo */
+    -fx-border-radius: 19px; /* Radio del borde para el borde */
+    -fx-max-height: 27px;
+   
+}
+
+.comboBoxCargo .combo-box .text {
+    -fx-fill: #a9a9a9; /* Cambia el color del texto del prompt */
+}
+
+.comboBoxCargo .arrow {
+    -fx-background-color: #FFA41B;
+    -fx-background-radius: 0;
+    -fx-padding: 3 3 7 15; /* Ajusta el tamaño de la flecha */
+}
+
+
+
+/* Estilo general del TableView inventario */
+.table-view-inventario {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-table-cell-border-color: lightgray;
+    -fx-padding: 10;
+}
+
+/* Estilo de las filas del inventario */
+.table-view-inventario .table-row-cell {
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: lightgray;
+    -fx-background-color: white;
+    -fx-alignment: CENTER_LEFT;
+}
+
+/* Estilo para la fila seleccionada en inventario */
+.table-view-inventario .table-row-cell:selected {
+    -fx-background-color: #E3F2FD; /* Color azul claro */
+}
+
+/* Estilo de las celdas del inventario */
+.table-view-inventario .table-cell {
+    -fx-padding: 5 10;
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+    -fx-alignment: CENTER_LEFT;
+}
+
+/* Estilo de los encabezados de columna en inventario */
+.table-view-inventario .column-header {
+    -fx-background-color: #FFF3E0; /* Color de fondo */
+    -fx-border-color: lightgray;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+}
+
+/* Estilo de la columna de imagen en inventario */
+.table-view-inventario .table-cell .image-view {
+    -fx-padding: 5;
+}
+
+
+
+
+}
+
+

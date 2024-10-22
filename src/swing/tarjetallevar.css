@@ -1,0 +1,23 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+
+.root {
+-fx-background-color: #f5f5f5;
+}
+
+.header {
+    -fx-background-color: FF6F1D;
+}
+
+.order-item {
+    -fx-background-color: lightgreen;
+    -fx-padding: 10px;
+}
+
+.vbox{
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4);    
+}
+}

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="744.0" prefWidth="1133.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
+    <stylesheets>
+        <URL value="@/swing/login.css" />
+    </stylesheets>
+   <children>
+      <Pane id="panel_main" maxHeight="514.0" maxWidth="575.0" minHeight="514.0" minWidth="575.0" prefHeight="514.0" prefWidth="575.0" styleClass="panel_main" stylesheets="@../swing/login.css" AnchorPane.bottomAnchor="115.0" AnchorPane.leftAnchor="279.0" AnchorPane.rightAnchor="279.0" AnchorPane.topAnchor="115.0">
+         <children>
+            <Label fx:id="lb_mensaje" alignment="CENTER" contentDisplay="CENTER" layoutX="151.0" layoutY="482.0" prefHeight="24.0" prefWidth="274.0" />
+         </children></Pane>
+      <Pane layoutX="35.0" layoutY="34.0" AnchorPane.bottomAnchor="394.0" AnchorPane.leftAnchor="279.0" AnchorPane.rightAnchor="279.0" AnchorPane.topAnchor="115.0">
+         <children>
+            <ImageView fitHeight="235.0" fitWidth="575.0">
+               <image>
+                  <Image url="@../resources/banner.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" x="404.0" y="400.0">
+         <image>
+            <Image url="@../resources/usuario%201.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="40.0" fitWidth="40.0" layoutY="9.0" x="404.0" y="469.0">
+         <image>
+            <Image url="@../resources/bloquear%201.png" />
+         </image>
+      </ImageView>
+      <TextField id="txts" fx:id="txt_usuario" blendMode="MULTIPLY" layoutX="452.0" layoutY="398.0" prefHeight="32.0" prefWidth="274.0" promptText="Usuario" style="-fx-border-color: black; -fx-font-family: karla; -fx-font-size: 20;" styleClass="txts" stylesheets="@../swing/login.css">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </TextField>
+      <Button id="boton" fx:id="btn_ingresar" alignment="TOP_CENTER" blendMode="SRC_ATOP" defaultButton="true" layoutX="465.0" layoutY="541.0" mnemonicParsing="false" onAction="#initialize" prefHeight="37.0" prefWidth="201.0" style="-fx-font-size: 20;" styleClass="boton" stylesheets="@../swing/login.css" text="INGRESAR" textAlignment="CENTER">
+         <font>
+            <Font size="65.0" />
+         </font>
+      </Button>
+      <PasswordField id="txts" fx:id="txt_contraseña" blendMode="MULTIPLY" layoutX="453.0" layoutY="474.0" prefHeight="44.0" prefWidth="274.0" promptText="Contraseña" style="-fx-border-color: black; -fx-font-family: karla; -fx-font-size: 20;" styleClass="txts" stylesheets="@../swing/login.css">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </PasswordField>
+   </children>
+</AnchorPane>

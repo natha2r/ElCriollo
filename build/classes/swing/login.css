@@ -1,0 +1,44 @@
+
+.panel_main {
+    -fx-background-color: linear-gradient(
+        from 0% 0% to 0% 100%,
+        #FF6F1D 35%,   /* Color FF6F1D con opacidad del 100% */
+        #FFA41B 68%    /* Color FFA41B con opacidad del 100% */
+    );
+    -fx-opacity: 0.77;  /* Opacidad global del panel al 77% */
+    -fx-background-radius: 70px 10px 10px 10px; /* Opcional: bordes redondeados */
+    -fx-padding: 15px; /* Opcional: padding interno */
+}
+
+.txts{
+    -fx-border-color: transparent transparent #ffff transparent; /* Borde inferior de color */
+    -fx-border-width: 0 0 0.5px 0; /* Ancho del borde: solo inferior */
+    -fx-background-radius: 0; /* Opcional: quitar bordes redondeados */
+    -fx-background-color: transparent; /* Opcional: fondo transparente si es necesario */
+}
+
+.boton{
+    -fx-background-color: #FEB01D;               /* Fondo de color #FEB01D */
+    -fx-border-color: #FEB01D;                   /* Color del borde #FEB01D */
+    -fx-border-width: 0.5px;                     /* Ancho del borde de 0.5px */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4); /* Sombra */
+    -fx-background-radius: 10px;                 /* Bordes redondeados */
+    -fx-border-radius: 10px;
+    -fx-text-fill: black;  
+    -fx-font-size: 25;
+    -fx-font-size: 0;
+    -fx-font-family: Karla;
+    -fx-font-weight: bold; 
+}
+
+
+.boton:hover {
+    -fx-background-color: #FFA41B;  /* Cambia el fondo al pasar el mouse */
+    -fx-border-color: #FFA41B;      /* Cambia el borde al pasar el mouse */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 6, 0, 0, 6); /* Aumenta la sombra */
+    -fx-text-fill: black;  
+    -fx-font-family: Karla;
+    -fx-font-weight: bold; 
+    -fx-cursor: hand;
+}
+
