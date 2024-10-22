@@ -1,7 +1,7 @@
 
 create database if not exists ElCriollo;
 	use ElCriollo;
-    
+
 	create table if not exists sesiones(
 		usuario varchar(50) not null primary key,
 		fechaInicio datetime,
@@ -85,6 +85,12 @@ create database if not exists ElCriollo;
 		categoriaPlatosId varchar(10),
 		foreign key (categoriaPlatosId) references categoriaPlatos(idCategoriaPlatos)
 	);
+    
+    
+-- Tabla modificada 22/10/24 -  se creo columna disponible
+ALTER TABLE platos ADD COLUMN disponible BOOLEAN DEFAULT TRUE;
+select * from platos;
+
 
 	create table if not exists detallesPedido(
 		pedidosId varchar(10),
@@ -113,6 +119,7 @@ create database if not exists ElCriollo;
 		nombreTipoReporte varchar(50),
 		descripcion text
 	);
+    select * from categoriaplatos;
 
 	create table if not exists reportes(
 		idReportes varchar(10) not null primary key,
