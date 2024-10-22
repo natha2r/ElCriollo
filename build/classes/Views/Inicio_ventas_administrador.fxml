@@ -695,12 +695,12 @@
                               </HBox>
                               <TableView fx:id="tablaInventario" layoutX="22.0" layoutY="130.0" prefHeight="400.0" prefWidth="825.0" styleClass="table-view-inventario" stylesheets="@../swing/inicio_administrador.css">
                                  <columns>
-                                    <TableColumn prefWidth="77.0" text="ID" />
-                                    <TableColumn prefWidth="164.0" text="Producto" />
-                                    <TableColumn prefWidth="166.0" text="Categoría" />
-                                    <TableColumn prefWidth="114.0" text="Stock" />
-                                    <TableColumn prefWidth="144.0" text="Precio" />
-                                    <TableColumn prefWidth="158.0" text="Proveedor" />
+                                    <TableColumn fx:id="columnaID" prefWidth="77.0" text="ID" />
+                                    <TableColumn fx:id="columnaProducto" prefWidth="164.0" text="Producto" />
+                                    <TableColumn fx:id="columnaCategoria" prefWidth="166.0" text="Categoría" />
+                                    <TableColumn fx:id="columnaStock" prefWidth="114.0" text="Stock" />
+                                    <TableColumn fx:id="columnaPrecio" prefWidth="144.0" text="Precio" />
+                                    <TableColumn fx:id="columnaProveedor" prefWidth="158.0" text="Proveedor" />
                                  </columns>
                               </TableView>
                            </children></Pane>

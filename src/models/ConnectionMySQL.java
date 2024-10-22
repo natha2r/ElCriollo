@@ -11,7 +11,7 @@ public class ConnectionMySQL {
     private String database_name = "ElCriollo";
     private String url = "jdbc:mysql://localhost:3306/";
     private String user = "root";
-    private String password = "123456789";
+    private String password = "1234";
     private String driver = "com.mysql.cj.jdbc.Driver";
     Connection conn = null;
     

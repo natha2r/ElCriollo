@@ -1,63 +1,51 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package models;
-
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javax.swing.JOptionPane;
 
-public class ProductoDao {
+public class ProductosDao {
 
     //  Instanciar la conexión 
     ConnectionMySQL cn = new ConnectionMySQL();
     Connection conn;
     PreparedStatement pst;
-    java.sql.ResultSet rs;
-    
-    // Obtener todos las categorias
-    public List<Productos> getAllProductos() {
-    List<Productos> productos = new ArrayList<>();
-    String query = "SELECT * FROM productos";
-    
-    try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
-        java.sql.ResultSet rs = pst.executeQuery();
-        
-        while (rs.next()) {
-            Productos producto = new Productos();
-            producto.setIdProductos(rs.getString("idProductos"));
-            producto.setNombreProducto(rs.getString("nombreProductos"));
-            productos.add(producto);
-        }
-    } catch (SQLException e) {
-        // Handle the SQL exception
-        e.printStackTrace();
-    }
-    
-    return productos;
-}
-   public List<Productos> getProductosByCategoria(String idCategoria) {
-    List<Productos> productos = new ArrayList<>();
-    String query = "SELECT * FROM productos WHERE idCategoria = ?";
+    ResultSet rs;
 
-    try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
-        pst.setString(1, idCategoria);
-        java.sql.ResultSet rs = pst.executeQuery();
+    public ObservableList<Productos> obtenerTodosLosProductos() {
+        ObservableList<Productos> productos = FXCollections.observableArrayList();
+        String query = "SELECT p.idProductos, p.nombreProducto, p.descripcionProducto, p.categoria, p.precio, i.stock, pr.nombreEmpresa "
+                + "FROM productos p "
+                + "JOIN inventario i "
+                + "ON p.idProductos = i.productosId "
+                + "JOIN proveedores pr ON i.proveedorId = pr.idProveedores";
 
-        while (rs.next()) {
-            Productos producto = new Productos();
-            producto.setIdProductos(rs.getString("idProductos"));
-            producto.setNombreProducto(rs.getString("nombreProductos"));
-            productos.add(producto);
+        try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query); ResultSet rs = pst.executeQuery()) {
+
+            while (rs.next()) {
+                Productos producto = new Productos();
+                producto.setIdProductos(rs.getString("idProductos"));
+                producto.setNombreProducto(rs.getString("nombreProducto"));
+                producto.setDescripcionProducto(rs.getString("descripcionProducto"));
+                producto.setPrecio(rs.getDouble("precio"));
+                producto.setCategoria(rs.getString("categoria"));
+                producto.setStock(rs.getString("stock"));
+                producto.setProveedor(rs.getString("nombreEmpresa"));
+                
+       
+                
+                productos.add(producto); // Agregar a la lista
+            }
+        } catch (SQLException e) {
+            // Aquí podrías lanzar una excepción personalizada
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al obtener productos: " + e.getMessage());
         }
-    } catch (SQLException e) {
-        // Handle the SQL exception
-        e.printStackTrace();
+        return productos;
     }
-    return productos;
-   }
+
 }

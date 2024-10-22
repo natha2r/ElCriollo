@@ -49,6 +49,7 @@ import models.CategoriasDao;
 import models.Pedidos;
 import models.PedidosDao;
 import models.Productos;
+import models.ProductosDao;
 
 public class Inicio_ventas_administradorController {
 
@@ -188,12 +189,28 @@ public class Inicio_ventas_administradorController {
     /*SON SUBRECURSOS PARA LA TABLA INVENTARIO*/
     @FXML
     private ComboBox<Categorias> comboBoxCategoria;
-    @FXML
-    private TableView<Productos> tableViewProductos;
 
+    // ObservableList para gestionar la lista de productos
+    //private ObservableList<Productos> ProductList = FXCollections.observableArrayList();
+    
+    /*OTROS RECURSOS PARA LA TABLAVIEW DE PRODUCTOS*/
+    @FXML
+    private TableView<Productos> tablaInventario;
+    @FXML
+    private TableColumn<Productos, String> columnaID;
+    @FXML
+    private TableColumn<Productos, String> columnaProducto;
+    @FXML
+    private TableColumn<Productos, String> columnaCategoria;
+    @FXML
+    private TableColumn<Productos, Integer> columnaStock;
+    @FXML
+    private TableColumn<Productos, Double> columnaPrecio;
+    @FXML
+    private TableColumn<Productos, String> columnaProveedor;
     
     
-    
+
     
     @FXML
     private Button btn_reportes;
@@ -290,10 +307,6 @@ public class Inicio_ventas_administradorController {
         // Configurar el ComboBox con los cargos
         combo_Cargo.getItems().addAll(roles);
 
-        
-        
-        
-
         // Obtener los empleados de la base de datos y agregarlos al ObservableList
         employeeList.addAll(employeesDao.obtenerTodosLosEmpleados());
         System.out.println(employeesDao.obtenerTodosLosEmpleados());
@@ -304,8 +317,10 @@ public class Inicio_ventas_administradorController {
             if (newValue != null) {
                 cargarDatos(newValue);
             }
-        })
-                ;
+        });
+
+        configurarColumnasProductos();
+        cargarProductos();
 
     }
 
@@ -1161,12 +1176,26 @@ public void handleBtnVolverConfigAction() {
     
     
     private void cargarCategorias() {
-    CategoriasDao categoriaDao = new CategoriasDao();
-    ObservableList<Categorias> listaCategorias = FXCollections.observableArrayList(categoriaDao.obtenerTodasLasCategorias());
-    comboBoxCategoria.setItems(listaCategorias);
-}
-    
-    
+        CategoriasDao categoriaDao = new CategoriasDao();
+        ObservableList<Categorias> listaCategorias = FXCollections.observableArrayList(categoriaDao.obtenerTodasLasCategorias());
+        comboBoxCategoria.setItems(listaCategorias);
+    }
+
+    private void configurarColumnasProductos() {
+        columnaID.setCellValueFactory(new PropertyValueFactory<>("idProductos"));
+        columnaProducto.setCellValueFactory(new PropertyValueFactory<>("nombreProducto"));
+        columnaCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
+        columnaStock.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        columnaPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
+        columnaProveedor.setCellValueFactory(new PropertyValueFactory<>("proveedor"));
+
+    }
+
+    private void cargarProductos() {
+        ProductosDao productoDao = new ProductosDao();
+        ObservableList<Productos> listaProductos = productoDao.obtenerTodosLosProductos();
+        tablaInventario.setItems(listaProductos);
+    }
     
     
 }
