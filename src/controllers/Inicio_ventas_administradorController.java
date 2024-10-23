@@ -188,7 +188,7 @@ public class Inicio_ventas_administradorController {
     
     /*SON SUBRECURSOS PARA LA TABLA INVENTARIO*/
     @FXML
-    private ComboBox<Categorias> comboBoxCategoria;
+    private ComboBox<String> cmb_cargar_categoria;
 
     // ObservableList para gestionar la lista de productos
     //private ObservableList<Productos> ProductList = FXCollections.observableArrayList();
@@ -321,6 +321,10 @@ public class Inicio_ventas_administradorController {
 
         configurarColumnasProductos();
         cargarProductos();
+        
+        
+        cargarCategorias();
+        filtrarProductosPorCategoria("Todas las categorías");
 
     }
 
@@ -494,6 +498,11 @@ public void handleBtnInventarioAction() {
         mostrarPanelInventario();
         enFormulario = false; // Estado correcto para evitar conflictos
     }
+    
+    cmb_cargar_categoria.setOnAction(event -> {
+    String categoriaSeleccionada = cmb_cargar_categoria.getSelectionModel().getSelectedItem();
+    filtrarProductosPorCategoria(categoriaSeleccionada);
+});
 }
 
 private void mostrarPanelInventario() {
@@ -1175,12 +1184,24 @@ public void handleBtnVolverConfigAction() {
     }
     
     
+    // En InventarioController.java
     private void cargarCategorias() {
-        CategoriasDao categoriaDao = new CategoriasDao();
-        ObservableList<Categorias> listaCategorias = FXCollections.observableArrayList(categoriaDao.obtenerTodasLasCategorias());
-        comboBoxCategoria.setItems(listaCategorias);
+    ProductosDao productosDao = new ProductosDao();
+    ObservableList<String> categorias = productosDao.obtenerCategorias();
+    cmb_cargar_categoria.setItems(categorias);
+    cmb_cargar_categoria.getSelectionModel().select("Todas las categorías"); // Seleccionar por defecto
+    }
+    
+
+    // En InventarioController.java
+    private void filtrarProductosPorCategoria(String categoriaSeleccionada) {
+    ProductosDao productosDao = new ProductosDao();
+    ObservableList<Productos> productosFiltrados = productosDao.obtenerProductosPorCategoria(categoriaSeleccionada);
+    tablaInventario.setItems(productosFiltrados);
     }
 
+    
+    
     private void configurarColumnasProductos() {
         columnaID.setCellValueFactory(new PropertyValueFactory<>("idProductos"));
         columnaProducto.setCellValueFactory(new PropertyValueFactory<>("nombreProducto"));

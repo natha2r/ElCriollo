@@ -693,7 +693,7 @@
                                     </Button>
                                  </children>
                               </HBox>
-                              <TableView fx:id="tablaInventario" layoutX="22.0" layoutY="130.0" prefHeight="400.0" prefWidth="825.0" styleClass="table-view-inventario" stylesheets="@../swing/inicio_administrador.css">
+                              <TableView fx:id="tablaInventario" layoutX="22.0" layoutY="138.0" prefHeight="400.0" prefWidth="825.0" styleClass="table-view-inventario" stylesheets="@../swing/inicio_administrador.css">
                                  <columns>
                                     <TableColumn fx:id="columnaID" prefWidth="77.0" text="ID" />
                                     <TableColumn fx:id="columnaProducto" prefWidth="164.0" text="Producto" />
@@ -703,6 +703,7 @@
                                     <TableColumn fx:id="columnaProveedor" prefWidth="158.0" text="Proveedor" />
                                  </columns>
                               </TableView>
+                              <ComboBox fx:id="cmb_cargar_categoria" layoutX="687.0" layoutY="92.0" prefWidth="150.0" promptText="Categorias" styleClass="comboBoxCargo" />
                            </children></Pane>
                         <Pane fx:id="pane_nuevo_producto" prefHeight="200.0" prefWidth="200.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                         <Pane fx:id="pane_reponer_producto" prefHeight="200.0" prefWidth="200.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />

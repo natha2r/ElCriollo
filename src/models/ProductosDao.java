@@ -1,5 +1,6 @@
 package models;
 
+import java.beans.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -47,5 +48,68 @@ public class ProductosDao {
         }
         return productos;
     }
+    
+    public ObservableList<String> obtenerCategorias() {
+        ObservableList<String> categorias = FXCollections.observableArrayList();
+        categorias.add("Todas las categorías"); // Opción para mostrar todos
+        String query = "SELECT DISTINCT categoria FROM productos";
+        try (Connection conn = cn.getConnection(); 
+             java.sql.Statement stmt = conn.createStatement(); 
+             ResultSet rs = stmt.executeQuery(query)) {
+            while (rs.next()) {
+                categorias.add(rs.getString("categoria"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al obtener categorías: " + e.getMessage());
+        }
+        return categorias;
+    }
+    
+    public ObservableList<Productos> obtenerProductosPorCategoria(String categoria) {
+        ObservableList<Productos> productosFiltrados = FXCollections.observableArrayList();
+        String query;
+        if ("Todas las categorías".equals(categoria)) {
+            query = "SELECT p.idProductos, p.nombreProducto, p.descripcionProducto, p.categoria, p.precio, i.stock, pr.nombreEmpresa "
+                  + "FROM productos p "
+                  + "JOIN inventario i "
+                  + "ON p.idProductos = i.productosId "
+                  + "JOIN proveedores pr ON i.proveedorId = pr.idProveedores";
+        } else {
+            query = "SELECT p.idProductos, p.nombreProducto, p.descripcionProducto, p.categoria, p.precio, i.stock, pr.nombreEmpresa "
+                  + "FROM productos p "
+                  + "JOIN inventario i "
+                  + "ON p.idProductos = i.productosId "
+                  + "JOIN proveedores pr ON i.proveedorId = pr.idProveedores "
+                  + "WHERE p.categoria = ?";
+        }
 
+        try (Connection conn = cn.getConnection(); 
+             PreparedStatement pst = conn.prepareStatement(query)) {
+
+            if (!"Todas las categorías".equals(categoria)) {
+                pst.setString(1, categoria);
+            }
+            
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                Productos producto = new Productos();
+                producto.setIdProductos(rs.getString("idProductos"));
+                producto.setNombreProducto(rs.getString("nombreProducto"));
+                producto.setDescripcionProducto(rs.getString("descripcionProducto"));
+                producto.setPrecio(rs.getDouble("precio"));
+                producto.setCategoria(rs.getString("categoria"));
+                producto.setStock(rs.getString("stock"));
+                producto.setProveedor(rs.getString("nombreEmpresa"));
+                
+                productosFiltrados.add(producto); // Agregar a la lista
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al filtrar productos: " + e.getMessage());
+        }
+        return productosFiltrados;
+    }
+    
+    
 }

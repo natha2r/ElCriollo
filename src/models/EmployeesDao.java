@@ -308,24 +308,60 @@ public class EmployeesDao {
     Connection connection = null;
     PreparedStatement pstmtEmpleado = null;
     PreparedStatement pstmtSesion = null;
+    PreparedStatement pstmtPedidos = null;
+    PreparedStatement pstmtCajapago = null;
+    PreparedStatement pstmtReportes = null;
+    PreparedStatement pstmtMesasAtendidas = null;
+    PreparedStatement pstmtHistorialVentas = null;
+    
 
     try {
         connection = cn.getConnection();
         connection.setAutoCommit(false); // Inicia la transacción
+        
+        
+    
+        
+        // Eliminar de la tabla cajapago
+        String sqlEliminarCajapago = "DELETE FROM cajapago WHERE pedidoId IN (SELECT idPedidos FROM pedidos WHERE empleadosId = ?)";
+        pstmtCajapago = connection.prepareStatement(sqlEliminarCajapago);
+        pstmtCajapago.setString(1, idEmpleado);
+        pstmtCajapago.executeUpdate();
 
-        // Primero, eliminar de la tabla empleados
+        // Eliminar de las tablas relacionadas
+        String sqlEliminarMesasAtendidas = "DELETE FROM mesasAtendidas WHERE empleadosId = ?";
+        pstmtMesasAtendidas = connection.prepareStatement(sqlEliminarMesasAtendidas);
+        pstmtMesasAtendidas.setString(1, idEmpleado);
+        pstmtMesasAtendidas.executeUpdate();
+
+        String sqlEliminarHistorialVentas = "DELETE FROM historialVentas WHERE empleadosId = ?";
+        pstmtHistorialVentas = connection.prepareStatement(sqlEliminarHistorialVentas);
+        pstmtHistorialVentas.setString(1, idEmpleado);
+        pstmtHistorialVentas.executeUpdate();
+
+        String sqlEliminarReportes = "DELETE FROM reportes WHERE empleadosId = ?";
+        pstmtReportes = connection.prepareStatement(sqlEliminarReportes);
+        pstmtReportes.setString(1, idEmpleado);
+        pstmtReportes.executeUpdate();
+
+        String sqlEliminarPedidos = "DELETE FROM pedidos WHERE empleadosId = ?";
+        pstmtPedidos = connection.prepareStatement(sqlEliminarPedidos);
+        pstmtPedidos.setString(1, idEmpleado);
+        pstmtPedidos.executeUpdate();
+
+        // Eliminar de la tabla empleados
         String sqlEliminarEmpleado = "DELETE FROM empleados WHERE idEmpleados = ?";
         pstmtEmpleado = connection.prepareStatement(sqlEliminarEmpleado);
         pstmtEmpleado.setString(1, idEmpleado);
         pstmtEmpleado.executeUpdate();
 
-        // Luego, eliminar de la tabla 'sesiones'
+        // Eliminar de la tabla sesiones
         String sqlEliminarSesion = "DELETE FROM sesiones WHERE usuario = ?";
         pstmtSesion = connection.prepareStatement(sqlEliminarSesion);
         pstmtSesion.setString(1, usuario);
         pstmtSesion.executeUpdate();
 
-        connection.commit(); // Confirmar transacciones
+        connection.commit(); // Confirmar las transacciones
         eliminado = true;
     } catch (SQLException e) {
         if (connection != null) {
@@ -339,6 +375,11 @@ public class EmployeesDao {
     } finally {
         // Cerrar recursos
         try {
+            if (pstmtCajapago != null) pstmtCajapago.close();
+            if (pstmtMesasAtendidas != null) pstmtMesasAtendidas.close();
+            if (pstmtHistorialVentas != null) pstmtHistorialVentas.close();
+            if (pstmtReportes != null) pstmtReportes.close();
+            if (pstmtPedidos != null) pstmtPedidos.close();
             if (pstmtEmpleado != null) pstmtEmpleado.close();
             if (pstmtSesion != null) pstmtSesion.close();
             if (connection != null) connection.close();
@@ -348,6 +389,8 @@ public class EmployeesDao {
     }
     return eliminado;
 }
+
+
 
 
 
