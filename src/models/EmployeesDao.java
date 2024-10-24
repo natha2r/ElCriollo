@@ -303,66 +303,51 @@ public class EmployeesDao {
     
 
 
-    public boolean eliminarEmpleadoYSesion(String idEmpleado, String usuario) {
-    boolean eliminado = false;
+    public boolean inactivarEmpleadoYSesion(String idEmpleado, String usuario) {
+    boolean inactivado = false;
     Connection connection = null;
     PreparedStatement pstmtEmpleado = null;
     PreparedStatement pstmtSesion = null;
     PreparedStatement pstmtPedidos = null;
-    PreparedStatement pstmtCajapago = null;
     PreparedStatement pstmtReportes = null;
-    PreparedStatement pstmtMesasAtendidas = null;
     PreparedStatement pstmtHistorialVentas = null;
-    
 
     try {
         connection = cn.getConnection();
         connection.setAutoCommit(false); // Inicia la transacción
         
-        
-    
-        
-        // Eliminar de la tabla cajapago
-        String sqlEliminarCajapago = "DELETE FROM cajapago WHERE pedidoId IN (SELECT idPedidos FROM pedidos WHERE empleadosId = ?)";
-        pstmtCajapago = connection.prepareStatement(sqlEliminarCajapago);
-        pstmtCajapago.setString(1, idEmpleado);
-        pstmtCajapago.executeUpdate();
-
-        // Eliminar de las tablas relacionadas
-        String sqlEliminarMesasAtendidas = "DELETE FROM mesasAtendidas WHERE empleadosId = ?";
-        pstmtMesasAtendidas = connection.prepareStatement(sqlEliminarMesasAtendidas);
-        pstmtMesasAtendidas.setString(1, idEmpleado);
-        pstmtMesasAtendidas.executeUpdate();
-
-        String sqlEliminarHistorialVentas = "DELETE FROM historialVentas WHERE empleadosId = ?";
-        pstmtHistorialVentas = connection.prepareStatement(sqlEliminarHistorialVentas);
-        pstmtHistorialVentas.setString(1, idEmpleado);
-        pstmtHistorialVentas.executeUpdate();
-
-        String sqlEliminarReportes = "DELETE FROM reportes WHERE empleadosId = ?";
-        pstmtReportes = connection.prepareStatement(sqlEliminarReportes);
-        pstmtReportes.setString(1, idEmpleado);
-        pstmtReportes.executeUpdate();
-
-        String sqlEliminarPedidos = "DELETE FROM pedidos WHERE empleadosId = ?";
-        pstmtPedidos = connection.prepareStatement(sqlEliminarPedidos);
-        pstmtPedidos.setString(1, idEmpleado);
-        pstmtPedidos.executeUpdate();
-
-        // Eliminar de la tabla empleados
-        String sqlEliminarEmpleado = "DELETE FROM empleados WHERE idEmpleados = ?";
-        pstmtEmpleado = connection.prepareStatement(sqlEliminarEmpleado);
+        // Inactivar el empleado en la tabla empleados
+        String sqlInactivarEmpleado = "UPDATE empleados SET activo = 0 WHERE idEmpleados = ?";
+        pstmtEmpleado = connection.prepareStatement(sqlInactivarEmpleado);
         pstmtEmpleado.setString(1, idEmpleado);
         pstmtEmpleado.executeUpdate();
 
-        // Eliminar de la tabla sesiones
-        String sqlEliminarSesion = "DELETE FROM sesiones WHERE usuario = ?";
-        pstmtSesion = connection.prepareStatement(sqlEliminarSesion);
+        // Inactivar la sesión en la tabla sesiones
+        String sqlInactivarSesion = "UPDATE sesiones SET activo = 0 WHERE usuario = ?";
+        pstmtSesion = connection.prepareStatement(sqlInactivarSesion);
         pstmtSesion.setString(1, usuario);
         pstmtSesion.executeUpdate();
 
+        // Inactivar los registros relacionados en pedidos
+        String sqlInactivarPedidos = "UPDATE pedidos SET empleadoInactivo = 1 WHERE empleadosId = ?";
+        pstmtPedidos = connection.prepareStatement(sqlInactivarPedidos);
+        pstmtPedidos.setString(1, idEmpleado);
+        pstmtPedidos.executeUpdate();
+
+        // Inactivar los registros en reportes
+        String sqlInactivarReportes = "UPDATE reportes SET empleadoInactivo = 1 WHERE empleadosId = ?";
+        pstmtReportes = connection.prepareStatement(sqlInactivarReportes);
+        pstmtReportes.setString(1, idEmpleado);
+        pstmtReportes.executeUpdate();
+
+        // Inactivar los registros en historialVentas
+        String sqlInactivarHistorialVentas = "UPDATE historialVentas SET empleadoInactivo = 1 WHERE empleadosId = ?";
+        pstmtHistorialVentas = connection.prepareStatement(sqlInactivarHistorialVentas);
+        pstmtHistorialVentas.setString(1, idEmpleado);
+        pstmtHistorialVentas.executeUpdate();
+
         connection.commit(); // Confirmar las transacciones
-        eliminado = true;
+        inactivado = true;
     } catch (SQLException e) {
         if (connection != null) {
             try {
@@ -375,19 +360,17 @@ public class EmployeesDao {
     } finally {
         // Cerrar recursos
         try {
-            if (pstmtCajapago != null) pstmtCajapago.close();
-            if (pstmtMesasAtendidas != null) pstmtMesasAtendidas.close();
-            if (pstmtHistorialVentas != null) pstmtHistorialVentas.close();
-            if (pstmtReportes != null) pstmtReportes.close();
-            if (pstmtPedidos != null) pstmtPedidos.close();
             if (pstmtEmpleado != null) pstmtEmpleado.close();
             if (pstmtSesion != null) pstmtSesion.close();
+            if (pstmtPedidos != null) pstmtPedidos.close();
+            if (pstmtReportes != null) pstmtReportes.close();
+            if (pstmtHistorialVentas != null) pstmtHistorialVentas.close();
             if (connection != null) connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    return eliminado;
+    return inactivado;
 }
 
 
@@ -397,11 +380,13 @@ public class EmployeesDao {
 
     public List<Employees> obtenerTodosLosEmpleados() {
     List<Employees> empleadosList = new ArrayList<>();
-    try (Connection connection = cn.getConnection(); PreparedStatement pstmt = connection.prepareStatement(
+    try (Connection connection = cn.getConnection(); 
+         PreparedStatement pstmt = connection.prepareStatement(
             "SELECT e.idEmpleados, e.nombreEmpleado, e.edad, e.direccion, e.telefono, e.email, e.rol, "
             + "e.usuario, s.contraseña "
             + "FROM empleados e "
-            + "LEFT JOIN sesiones s ON e.usuario = s.usuario")) {  // Cambia 's.idEmpleado' por la columna correcta
+            + "LEFT JOIN sesiones s ON e.usuario = s.usuario "
+            + "WHERE e.activo = 1")) {  // Filtra solo los empleados activos
 
         ResultSet rs = pstmt.executeQuery();
 
@@ -429,5 +414,6 @@ public class EmployeesDao {
     }
     return empleadosList;
 }
+
 
 }

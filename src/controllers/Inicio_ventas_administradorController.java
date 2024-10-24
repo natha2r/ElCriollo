@@ -101,6 +101,12 @@ public class Inicio_ventas_administradorController {
 
     @FXML
     private Button btn_interno_registrar_informacion;
+    
+    @FXML
+    private Button btn_inactivos;
+    
+    @FXML
+    private Button btn_atras_informacion;
 
     /*SON RECURSOS PAR METODOS DE LA VISTA DE REGISTRAR EN CONFIGURACION*/
     @FXML
@@ -122,7 +128,9 @@ public class Inicio_ventas_administradorController {
     @FXML
     private TextField txt_Usuario;
 
-    /*SUBRECURSOS PARA METODOS DE LA VISTA DE MODIFICAR EN CONFIGURACION*/
+    /*SUBRECURSOS PARA METODOS DE LA VISTA DE MODIFICAR EN CONFIGURACION Y SE 
+    REUTILIZAN EN EL APARTADO DE INACTIVOS*/
+    
     @FXML
     private TextField txt_modificar_Id;
     @FXML
@@ -261,6 +269,9 @@ public class Inicio_ventas_administradorController {
     @FXML
     private Pane pane_reponer_producto;
     
+    @FXML
+    private Pane pane_modificar_inactivos_informacion;
+    
     
     @FXML
     private boolean enFormulario = false;
@@ -351,7 +362,8 @@ public class Inicio_ventas_administradorController {
         btn_modificar_informacion.setOnAction(e -> handleBtnModificarInformacion());
         btn_cancelar_registro_informacion.setOnAction(e -> handleBtnCancelarRegistroInformacion());
         btn_interno_registrar_informacion.setOnAction(e -> handleBtnInternoRegistroInformacion());
-        
+        btn_inactivos.setOnAction(e -> handleBtnInactivosAction());
+        btn_atras_informacion.setOnAction(e -> handleBtnAtrasInformacionAction());
         
         //subbotones de la vista de inventario
         btn_nuevo_prod.setOnAction(e -> handleBtnNuevoProdAction());
@@ -411,6 +423,7 @@ private void mostrarPanelInicio() {
     pane_inventario.setVisible(false);
     pane_nuevo_producto.setVisible(false);
     pane_reponer_producto.setVisible(false);
+    pane_modificar_inactivos_informacion.setVisible(false);
 
 }
 
@@ -459,6 +472,7 @@ private void mostrarPanelConfiguracion() {
     pane_inventario.setVisible(false);
     pane_nuevo_producto.setVisible(false);
     pane_reponer_producto.setVisible(false);
+    pane_modificar_inactivos_informacion.setVisible(false);
 
     // Llamar al método para agregar el efecto 3D si es necesario
     agregarEfecto3D(btn_personal_roles);
@@ -521,6 +535,7 @@ private void mostrarPanelInventario() {
     pane_configuracion.setVisible(false);
     pane_registrar_informacion.setVisible(false);
     pane_modificar_informacion.setVisible(false);
+    pane_modificar_inactivos_informacion.setVisible(false);
 }
 
     
@@ -765,6 +780,7 @@ private void mostrarPanelInventario() {
         anchorPane_inicio.setVisible(false);
         pane_personal_roles.setVisible(true);
         pane_registrar_informacion.setVisible(false);
+        pane_modificar_inactivos_informacion.setVisible(false);
         /*anchor_configuracion.setVisible(false);*/
 
     }
@@ -795,6 +811,7 @@ public void handleBtnVolverConfigAction() {
             anchor_configuracion.setVisible(true);
             pane_registrar_informacion.setVisible(false);
             pane_modificar_informacion.setVisible(false);
+            pane_modificar_inactivos_informacion.setVisible(false);
 
             limpiarCampos();  // Limpiar todos los campos
             limpiarCamposmodificados();
@@ -808,6 +825,7 @@ public void handleBtnVolverConfigAction() {
         anchor_configuracion.setVisible(true);
         pane_registrar_informacion.setVisible(false);
         pane_modificar_informacion.setVisible(false);
+        pane_modificar_inactivos_informacion.setVisible(false);
          enFormulario = false; // Asegurarse de que no estamos en un formulario
         
         
@@ -827,6 +845,7 @@ public void handleBtnVolverConfigAction() {
         pane_personal_roles.setVisible(false);
         anchor_configuracion.setVisible(true);
         pane_registrar_informacion.setVisible(true);
+        pane_modificar_inactivos_informacion.setVisible(false);
 
     }
 
@@ -842,6 +861,7 @@ public void handleBtnVolverConfigAction() {
             pane_personal_roles.setVisible(true);
             anchor_configuracion.setVisible(true);
             pane_registrar_informacion.setVisible(false);
+            pane_modificar_inactivos_informacion.setVisible(false);
 
             limpiarCampos(); // Limpia los campos solo después de un registro exitoso
         }
@@ -866,6 +886,7 @@ public void handleBtnVolverConfigAction() {
             pane_personal_roles.setVisible(true);
             anchor_configuracion.setVisible(true);
             pane_registrar_informacion.setVisible(false);
+            pane_modificar_inactivos_informacion.setVisible(false);
 
             limpiarCampos(); // Limpia los campos solo si se confirma la cancelación
         }
@@ -880,11 +901,37 @@ public void handleBtnVolverConfigAction() {
         anchor_configuracion.setVisible(true);
         pane_registrar_informacion.setVisible(false);
         pane_modificar_informacion.setVisible(true);
+        pane_modificar_inactivos_informacion.setVisible(false);
         tablaEmpleados.getSelectionModel().clearSelection();
 
         limpiarCampos();
     }
-
+    
+    @FXML
+    private void handleBtnInactivosAction() {
+        pane_modificar_inactivos_informacion.setVisible(true);
+        pane_configuracion.setVisible(false);
+        anchorPane_inicio.setVisible(false);
+        pane_personal_roles.setVisible(false);
+        anchor_configuracion.setVisible(true);
+        pane_registrar_informacion.setVisible(false);
+        pane_modificar_informacion.setVisible(false);
+        
+    }
+    
+    @FXML
+    private void handleBtnAtrasInformacionAction() {
+        
+        pane_configuracion.setVisible(false);
+        anchorPane_inicio.setVisible(false);
+        pane_personal_roles.setVisible(false);
+        anchor_configuracion.setVisible(true);
+        pane_registrar_informacion.setVisible(false);
+        pane_modificar_informacion.setVisible(true);
+        pane_modificar_inactivos_informacion.setVisible(false);
+    }
+    
+    
     @FXML
     private boolean guardarEmpleado() {
         EmployeesDao employeesDao = new EmployeesDao();
@@ -1115,34 +1162,34 @@ public void handleBtnVolverConfigAction() {
     }
 
     @FXML
-    private void handleBorrarEmpleado() {
-        Employees empleadoSeleccionado = tablaEmpleados.getSelectionModel().getSelectedItem();
+private void handleInactivarEmpleado() {
+    Employees empleadoSeleccionado = tablaEmpleados.getSelectionModel().getSelectedItem();
 
-        if (empleadoSeleccionado != null) {
-            // Confirmación antes de eliminar
-            Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
-            confirmacion.setTitle("Confirmar eliminación");
-            confirmacion.setHeaderText("¿Está seguro de que desea eliminar este empleado?");
-            confirmacion.setContentText("Esta acción no se puede deshacer.");
+    if (empleadoSeleccionado != null) {
+        // Confirmación antes de inactivar
+        Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmacion.setTitle("Confirmar inactivación");
+        confirmacion.setHeaderText("¿Está seguro de que desea inactivar este empleado?");
+        confirmacion.setContentText("El empleado no se eliminará, pero se marcará como inactivo.");
 
-            Optional<ButtonType> resultado = confirmacion.showAndWait();
-            if (resultado.isPresent() && resultado.get() == ButtonType.OK) {
-                // Eliminar de la base de datos
-                EmployeesDao employeesDao = new EmployeesDao();
-                boolean eliminado = employeesDao.eliminarEmpleadoYSesion(empleadoSeleccionado.getIdEmpleados(), empleadoSeleccionado.getSesion().getUsuario());
+        Optional<ButtonType> resultado = confirmacion.showAndWait();
+        if (resultado.isPresent() && resultado.get() == ButtonType.OK) {
+            // Inactivar en la base de datos
+            EmployeesDao employeesDao = new EmployeesDao();
+            boolean inactivado = employeesDao.inactivarEmpleadoYSesion(empleadoSeleccionado.getIdEmpleados(), empleadoSeleccionado.getSesion().getUsuario());
 
-                if (eliminado) {
-                    // Eliminar de la lista y del TableView
-                    tablaEmpleados.getItems().remove(empleadoSeleccionado);
-                    mostrarAlerta(AlertType.INFORMATION, "Éxito", "Empleado eliminado", "El empleado ha sido eliminado correctamente.");
-                } else {
-                    mostrarAlerta(AlertType.ERROR, "Error", "Error al eliminar", "No se pudo eliminar al empleado.");
-                }
+            if (inactivado) {
+                // Eliminar de la lista y del TableView
+                tablaEmpleados.getItems().remove(empleadoSeleccionado);
+                mostrarAlerta(AlertType.INFORMATION, "Éxito", "Empleado inactivado", "El empleado ha sido marcado como inactivo.");
+            } else {
+                mostrarAlerta(AlertType.ERROR, "Error", "Error al inactivar", "No se pudo inactivar al empleado.");
             }
-        } else {
-            mostrarAlerta(AlertType.ERROR, "Error", "Error al eliminar", "Por favor seleccione un empleado para eliminar.");
         }
+    } else {
+        mostrarAlerta(AlertType.ERROR, "Error", "Error al inactivar", "Por favor seleccione un empleado para inactivar.");
     }
+}
 
     @FXML
     public void mostrarAlerta(AlertType tipo, String titulo, String encabezado, String contenido) {
@@ -1152,8 +1199,8 @@ public void handleBtnVolverConfigAction() {
         alerta.setContentText(contenido);
         alerta.showAndWait();
     }
-
     
+   
     
     
     
@@ -1217,6 +1264,6 @@ public void handleBtnVolverConfigAction() {
         ObservableList<Productos> listaProductos = productoDao.obtenerTodosLosProductos();
         tablaInventario.setItems(listaProductos);
     }
-    
+
     
 }

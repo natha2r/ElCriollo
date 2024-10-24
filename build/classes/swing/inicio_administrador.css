@@ -536,6 +536,35 @@
 
 
 
+.boton-inactivar {
+    -fx-background-color: #ddbe90; /* Color de fondo */
+    -fx-font-weight: bold;
+    -fx-text-fill: black; /* Color del texto */
+    -fx-font-size: 14px; /* Tamaño de la fuente */
+     
+    -fx-background-radius: 30; /* Borde redondeado */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 4); /* Sombra */
+    -fx-border-color: BLACK; 
+    -fx-border-RADIUS: 30; 
+    -fx-cursor: hand; /* Cursor cambia a mano al pasar sobre el botón */
+    -fx-border-width: .2px;
+}
+
+.boton-inactivar:hover {
+    -fx-background-color: #c0a172; /* Color más oscuro al pasar el mouse */
+    /*-fx-translate-y: -3px;*/
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 2); /* Sombra */
+    -fx-cursor: hand;
+}
+
+.boton-inactivar:pressed {
+    -fx-background-color: #a2885f; /* Color más oscuro al presionar */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 3); /* Sombra más intensa */
+    -fx-cursor: hand;
+}
+
+
+
 .boton-modificar {
     -fx-background-color: #6ecad4; /* Color de fondo */
     -fx-font-weight: bold;
