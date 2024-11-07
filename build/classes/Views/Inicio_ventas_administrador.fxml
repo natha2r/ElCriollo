@@ -34,7 +34,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane minHeight="744.0" minWidth="1135.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Inicio_ventas_administradorController">
+<AnchorPane minHeight="744.0" minWidth="1135.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Inicio_ventas_administradorController">
     <children>
         <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <center>
@@ -155,7 +155,7 @@
                                 </Button>
                             </children>
                         </GridPane>
-                        <AnchorPane fx:id="anchorPane_inicio" layoutX="264.0" layoutY="200.0" prefHeight="544.0" prefWidth="869.0" styleClass="root_personal" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="264.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="200.0">
+                        <AnchorPane fx:id="anchorPane_inicio" layoutX="264.0" layoutY="200.0" prefHeight="544.0" prefWidth="869.0" styleClass="root_personal" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="264.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="200.0">
                             <children>
                                 <ScrollPane fx:id="scroll_inicio_meseras" layoutY="80.0" prefHeight="464.0" prefWidth="871.0" visible="false">
                                     <content>
@@ -806,7 +806,7 @@
                         </Pane>
                             </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="anchor_inventario" layoutX="265.0" layoutY="200.0" prefHeight="544.0" prefWidth="870.0" styleClass="root_personal" stylesheets="@../swing/inicio_administrador.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="264.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="200.0">
+                        <AnchorPane fx:id="anchor_inventario" layoutX="265.0" layoutY="200.0" prefHeight="544.0" prefWidth="870.0" styleClass="root_personal" stylesheets="@../swing/inicio_administrador.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="264.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="200.0">
                             <children>
                         <Pane fx:id="pane_inventario" prefHeight="200.0" prefWidth="200.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
@@ -1272,7 +1272,7 @@
                                              <children>
                                                 <HBox prefHeight="55.0" prefWidth="255.0" spacing="20.0">
                                                    <children>
-                                                      <Button fx:id="btn_interno_reponer_prod" prefHeight="44.0" prefWidth="154.0" styleClass="boton-modificar" text="Reponer" />
+                                                      <Button fx:id="btn_interno_reponer_prod" onAction="#handleBtnInternoReponerProd" prefHeight="44.0" prefWidth="154.0" styleClass="boton-modificar" text="Reponer" />
                                                    </children>
                                                    <VBox.margin>
                                                       <Insets left="30.0" right="50.0" top="20.0" />
@@ -1283,8 +1283,8 @@
                                                 </HBox>
                                                 <HBox prefHeight="62.0" prefWidth="255.0" spacing="20.0">
                                                    <children>
-                                                      <Button fx:id="btn_limpiar_reponer_prod" mnemonicParsing="false" onAction="#limpiarCamposmodificados2" prefHeight="44.0" prefWidth="117.0" styleClass="boton-limpiar" text="Limpiar" />
-                                                      <Button fx:id="btn_salir_reponer_prod" mnemonicParsing="false" onAction="#handleBtnVolverConfigAction" prefHeight="44.0" prefWidth="117.0" styleClass="boton-salir" text="Salir" />
+                                                      <Button fx:id="btn_limpiar_reponer_prod" mnemonicParsing="false" onAction="#handleBtnLimpiarReponerProd" prefHeight="44.0" prefWidth="117.0" styleClass="boton-limpiar" text="Limpiar" />
+                                                      <Button fx:id="btn_salir_reponer_prod" mnemonicParsing="false" onAction="#handleBtnSalirReponerProd" prefHeight="44.0" prefWidth="117.0" styleClass="boton-salir" text="Salir" />
                                                    </children>
                                                    <padding>
                                                       <Insets top="20.0" />

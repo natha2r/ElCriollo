@@ -47,6 +47,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javax.swing.JOptionPane;
 import models.Categorias;
 import models.CategoriasDao;
 import models.Pedidos;
@@ -534,10 +535,7 @@ public class Inicio_ventas_administradorController {
             }
         });
         
-        cmb_cargar_categoria.setOnAction(event -> {
-        String categoriaSeleccionada = cmb_cargar_categoria.getSelectionModel().getSelectedItem();
-        filtrarProductosPorCategoria(categoriaSeleccionada);
-        });
+        
         
         
         configurarColumnasProductos();
@@ -545,16 +543,27 @@ public class Inicio_ventas_administradorController {
         
         
         cargarCategorias();
-        filtrarProductosPorCategoria("Todas las categorías");
+        filtrarProductosPorCategoria();
         
         cargarCategoriasproductos();
         cargarProveedores();
         
         cargarCategoriasreponer();
-        filtrarProductosPorCategoriareponer("Todas las categorías");
+        filtrarPorCategoria();
         
         cargarProductosreponer();
         configurarColumnasProductosreponer();
+        
+        
+        buscarProducto();
+        actualizarProducto();
+        // Listener para llenar campos de texto al seleccionar un producto
+        tablaInventario_reponer.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                cargarDatosProductoSeleccionado(newSelection);
+            }
+        });
+        
     }
 
     @FXML
@@ -600,9 +609,10 @@ public class Inicio_ventas_administradorController {
         btn_interno_agregar_categoria.setOnAction(e -> handleBtnAgregarCategoria());
         btn_interno_limpiar_categoria.setOnAction(e -> handleBtnLimpiarCategoria());
         btn_interno_cancelar_categoria.setOnAction(e -> handleBtnCancelarCategoria());
+        btn_interno_reponer_prod.setOnAction(e -> handleBtnInternoReponerProd());
+        btn_limpiar_reponer_prod.setOnAction(e -> handleBtnLimpiarReponerProd());
+        btn_salir_reponer_prod.setOnAction(e -> handleBtnSalirReponerProd());
         
-        
-
     }
 
     
@@ -1720,10 +1730,12 @@ private void handleInactivarEmpleado() {
     
 
     // En InventarioController.java
-    private void filtrarProductosPorCategoria(String categoriaSeleccionada) {
-    ProductosDao productosDao = new ProductosDao();
-    ObservableList<Productos> productosFiltrados = productosDao.obtenerProductosPorCategoria(categoriaSeleccionada);
-    tablaInventario.setItems(productosFiltrados);
+    private void filtrarProductosPorCategoria() {
+    String categoriaSeleccionada = cmb_cargar_reponer_categoria.getSelectionModel().getSelectedItem();
+        if (categoriaSeleccionada != null) {
+            ObservableList<Productos> productosFiltrados = productoDao.obtenerProductosPorCategoria(categoriaSeleccionada);
+            tablaInventario_reponer.setItems(productosFiltrados);
+        }
     }
 
     
@@ -2196,21 +2208,10 @@ private void handleBtnAgregarCategoria() {
     /*-------------ESTO ES PARA LA VISTA DE REPONER PRODUCTO-------------------*/
     
     
-    // En InventarioController.java
-    private void cargarCategoriasreponer() {
-    ProductosDao productosDao = new ProductosDao();
-    ObservableList<String> categorias = productosDao.obtenerCategorias();
-    cmb_cargar_reponer_categoria.setItems(categorias);
-    cmb_cargar_reponer_categoria.getSelectionModel().select("Todas las categorías"); // Seleccionar por defecto
-    }
+    
     
 
-    // En InventarioController.java
-    private void filtrarProductosPorCategoriareponer(String categoriaSeleccionada) {
-    ProductosDao productosDao = new ProductosDao();
-    ObservableList<Productos> productosFiltrados = productosDao.obtenerProductosPorCategoria(categoriaSeleccionada);
-    tablaInventario_reponer.setItems(productosFiltrados);
-    }
+    
 
     
     
@@ -2230,6 +2231,116 @@ private void handleBtnAgregarCategoria() {
         tablaInventario_reponer.setItems(listaProductos);
     }
     
+    // En InventarioController.java
+    private void cargarCategoriasreponer() {
+    ProductosDao productosDao = new ProductosDao();
+    ObservableList<String> categorias = productosDao.obtenerCategorias();
+    cmb_cargar_reponer_categoria.setItems(categorias);
+    cmb_cargar_reponer_categoria.getSelectionModel().select("Todas las categorías"); // Seleccionar por defecto
+    }
+    
+    
+    
+    private void cargarDatosProductoSeleccionado(Productos producto) {
+        txt_reponer_id_prod.setText(producto.getIdProductos());
+        txt_reponer_producto.setText(producto.getNombreProducto());
+        txt_reponer_categoria_prod.setText(producto.getCategoria());
+        txt_reponer_stock_prod.setText(String.valueOf(producto.getStock()));
+        txt_reponer_precio_prod.setText(String.valueOf(producto.getPrecio()));
+        txt_reponer_proveedor_prod.setText(producto.getProveedor());
+
+        // Deshabilitar campos que no deben editarse
+        txt_reponer_id_prod.setDisable(true);
+        txt_reponer_producto.setDisable(true);
+        txt_reponer_categoria_prod.setDisable(true);
+        txt_reponer_proveedor_prod.setDisable(true);
+        
+        // Habilitar solo los campos que se pueden modificar
+        txt_reponer_stock_prod.setDisable(false);
+        txt_reponer_precio_prod.setDisable(false);
+    }
+    
+    
+    @FXML
+    private void filtrarPorCategoria() {
+        String categoriaSeleccionada = cmb_cargar_reponer_categoria.getSelectionModel().getSelectedItem();
+        if (categoriaSeleccionada != null) {
+            ObservableList<Productos> productosFiltrados = productoDao.obtenerProductosPorCategoria(categoriaSeleccionada);
+            tablaInventario_reponer.setItems(productosFiltrados);
+        }
+    }
+    
+    @FXML
+    private void buscarProducto() {
+        String nombreProducto = buscarReponerProducto.getText().trim();
+        if (!nombreProducto.isEmpty()) {
+            ObservableList<Productos> productosFiltrados = productoDao.buscarProductoPorNombre(nombreProducto);
+            tablaInventario_reponer.setItems(productosFiltrados);
+        }
+    }
+    
+    
+    
+    
+    @FXML
+private void actualizarProducto() {
+    String idProducto = txt_reponer_id_prod.getText();
+    String nuevoStock = txt_reponer_stock_prod.getText(); // Obtén el valor del campo de stock
+    String precioTexto = txt_reponer_precio_prod.getText(); // Obtén el valor del campo de precio
+
+    if (precioTexto != null && !precioTexto.isEmpty()) {  // Verifica que el precio no esté vacío
+        try {
+            double nuevoPrecio = Double.parseDouble(precioTexto); // Convierte el precio a double
+            // Actualiza el producto solo si el precio es válido
+            boolean actualizado = productoDao.actualizarProducto(idProducto, nuevoStock, nuevoPrecio);
+            if (actualizado) {
+                cargarProductosreponer(); // Actualizar la tabla
+                limpiarCamposreponer();
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al actualizar el producto.");
+            }
+        } catch (NumberFormatException e) {
+            // Si el precio no es válido, no haces nada o solo registras el error sin mostrar el mensaje
+            // Deja que el método termine sin hacer nada si la conversión falla
+            System.out.println("Precio no válido, no se actualizó el producto."); // O simplemente loguea el error
+        }
+    } else {
+        // Si el campo de precio está vacío, puedes manejarlo de otra forma sin mostrar el mensaje innecesario
+        System.out.println("Precio vacío, no se actualizó el producto."); // O simplemente no hacer nada
+    }
+}
+
+
+    
+    private void limpiarCamposreponer() {
+        txt_reponer_id_prod.clear();
+        txt_reponer_producto.clear();
+        txt_reponer_categoria_prod.clear();
+        txt_reponer_stock_prod.clear();
+        txt_reponer_precio_prod.clear();
+        txt_reponer_proveedor_prod.clear();
+    }
+    
+    
+    @FXML
+    private void handleBtnInternoReponerProd() {
+        actualizarProducto();
+    }
+    
+    @FXML
+    private void handleBtnLimpiarReponerProd() {
+        limpiarCamposreponer();
+    }
+    
+    @FXML
+    private void handleBtnSalirReponerProd() {
+        
+    }
+    
+    
+    
+    
+    
     
     
     
@@ -2240,6 +2351,8 @@ private void handleBtnAgregarCategoria() {
     
     
     /*--------------------------------------------------------------------------*/
+
+   
 
    
     

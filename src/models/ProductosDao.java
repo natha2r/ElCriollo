@@ -23,36 +23,37 @@ public class ProductosDao {
     ResultSet rs;
 
     public ObservableList<Productos> obtenerTodosLosProductos() {
-    ObservableList<Productos> productos = FXCollections.observableArrayList();
-    String query = "SELECT p.idProductos, p.nombreProducto, p.precio, "
-                 + "c.nombreCategoria, i.stock, pr.nombreEmpresa "
-                 + "FROM productos p "
-                 + "JOIN inventario i ON p.idProductos = i.productosId "
-                 + "JOIN proveedores pr ON i.proveedorId = pr.idProveedores "
-                 + "JOIN categoria c ON p.categoria = c.idCategoria";
+        ObservableList<Productos> productos = FXCollections.observableArrayList();
+        String query = """
+            SELECT p.idProductos, p.nombreProducto, p.precio, c.nombreCategoria AS categoria, 
+                   i.stock, i.fechaRecepcion, pr.nombreEmpresa AS proveedor
+            FROM productos p
+            LEFT JOIN inventario i ON p.idProductos = i.productosId
+            LEFT JOIN proveedores pr ON i.proveedorId = pr.idProveedores
+            LEFT JOIN categoria c ON p.categoria = c.idCategoria;
+            """;
 
-    try (Connection conn = cn.getConnection(); 
-         PreparedStatement pst = conn.prepareStatement(query); 
-         ResultSet rs = pst.executeQuery()) {
+        try (Connection conn = cn.getConnection();
+             PreparedStatement pst = conn.prepareStatement(query);
+             ResultSet rs = pst.executeQuery()) {
 
-        while (rs.next()) {
-            Productos producto = new Productos();
+            while (rs.next()) {
+                Productos producto = new Productos();
             producto.setIdProductos(rs.getString("idProductos"));
             producto.setNombreProducto(rs.getString("nombreProducto"));
             
             producto.setPrecio(rs.getDouble("precio"));
-            producto.setCategoria(rs.getString("nombreCategoria")); // Obtiene el nombre de la categoría
+            producto.setCategoria(rs.getString("categoria")); // Obtiene el nombre de la categoría
             producto.setStock(rs.getString("stock"));
-            producto.setProveedor(rs.getString("nombreEmpresa")); // Obtiene el nombre del proveedor
+            producto.setProveedor(rs.getString("proveedor")); // Obtiene el nombre del proveedor
 
             productos.add(producto);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Error al obtener productos: " + e.getMessage());// Manejar excepción
+        return productos;
     }
-    return productos;
-}
 
 
     
@@ -73,32 +74,28 @@ public class ProductosDao {
         return categorias;
     }
     
+    /**
+     * Obtener productos por categoría.
+     */
+    
     public ObservableList<Productos> obtenerProductosPorCategoria(String categoria) {
-        ObservableList<Productos> productosFiltrados = FXCollections.observableArrayList();
-        String query;
-        if ("Todas las categorías".equals(categoria)) {
-            query = "SELECT p.idProductos, p.nombreProducto, p.descripcionProducto, p.categoria, p.precio, i.stock, pr.nombreEmpresa "
-                  + "FROM productos p "
-                  + "JOIN inventario i "
-                  + "ON p.idProductos = i.productosId "
-                  + "JOIN proveedores pr ON i.proveedorId = pr.idProveedores";
-        } else {
-            query = "SELECT p.idProductos, p.nombreProducto, p.descripcionProducto, p.categoria, p.precio, i.stock, pr.nombreEmpresa "
-                  + "FROM productos p "
-                  + "JOIN inventario i "
-                  + "ON p.idProductos = i.productosId "
-                  + "JOIN proveedores pr ON i.proveedorId = pr.idProveedores "
-                  + "WHERE p.categoria = ?";
-        }
+        ObservableList<Productos> productosfiltrados = FXCollections.observableArrayList();
+        String query = """
+            SELECT p.idProductos, p.nombreProducto, p.precio, c.nombreCategoria AS categoria,
+                   i.stock, i.fechaRecepcion, pr.nombreEmpresa AS proveedor
+            FROM productos p
+            LEFT JOIN inventario i ON p.idProductos = i.productosId
+            LEFT JOIN proveedores pr ON i.proveedorId = pr.idProveedores
+            LEFT JOIN categoria c ON p.categoria = c.idCategoria
+            WHERE c.nombreCategoria = ?;
+            """;
 
-        try (Connection conn = cn.getConnection(); 
+        try (Connection conn = cn.getConnection();
              PreparedStatement pst = conn.prepareStatement(query)) {
 
-            if (!"Todas las categorías".equals(categoria)) {
-                pst.setString(1, categoria);
-            }
-            
+            pst.setString(1, categoria);
             ResultSet rs = pst.executeQuery();
+
             while (rs.next()) {
                 Productos producto = new Productos();
                 producto.setIdProductos(rs.getString("idProductos"));
@@ -107,16 +104,101 @@ public class ProductosDao {
                 producto.setPrecio(rs.getDouble("precio"));
                 producto.setCategoria(rs.getString("categoria"));
                 producto.setStock(rs.getString("stock"));
-                producto.setProveedor(rs.getString("nombreEmpresa"));
+                producto.setProveedor(rs.getString("proveedor"));
                 
-                productosFiltrados.add(producto); // Agregar a la lista
+                productosfiltrados.add(producto); // Agregar a la lista
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error al filtrar productos: " + e.getMessage());
         }
-        return productosFiltrados;
+        return productosfiltrados;
     }
+    
+    
+    
+    /**
+     * Buscar productos por nombre.
+     * @param nombreProducto Nombre o parte del nombre del producto a buscar.
+     * @return Lista de productos que coinciden con el nombre especificado.
+     */
+    public ObservableList<Productos> buscarProductoPorNombre(String nombreProducto) {
+        ObservableList<Productos> productos = FXCollections.observableArrayList();
+        String query = """
+            SELECT p.idProductos, p.nombreProducto, p.precio, c.nombreCategoria AS categoria, 
+                   i.stock, i.fechaRecepcion, pr.nombreEmpresa AS proveedor
+            FROM productos p
+            LEFT JOIN inventario i ON p.idProductos = i.productosId
+            LEFT JOIN proveedores pr ON i.proveedorId = pr.idProveedores
+            LEFT JOIN categoria c ON p.categoria = c.idCategoria
+            WHERE p.nombreProducto LIKE ?;
+            """;
+
+        try (Connection conn = cn.getConnection();
+             PreparedStatement pst = conn.prepareStatement(query)) {
+
+            pst.setString(1, "%" + nombreProducto + "%");
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                Productos producto = new Productos();
+                producto.setIdProductos(rs.getString("idProductos"));
+                producto.setNombreProducto(rs.getString("nombreProducto"));
+                producto.setDescripcionProducto(rs.getString("descripcionProducto"));
+                producto.setPrecio(rs.getDouble("precio"));
+                producto.setCategoria(rs.getString("categoria"));
+                producto.setStock(rs.getString("stock"));
+                producto.setProveedor(rs.getString("proveedor"));
+                
+                productos.add(producto); // Agregar a la lista
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return productos;
+    }
+    
+    
+    public boolean actualizarProducto(String idProducto, String nuevoStock, double nuevoPrecio) {
+    // Actualizamos la tabla productos para el precio
+    String query = "UPDATE productos SET precio = ? WHERE idProductos = ?";
+
+    try (Connection conn = cn.getConnection();
+         PreparedStatement pst = conn.prepareStatement(query)) {
+
+        // Establecemos el nuevo precio para el producto
+        pst.setDouble(1, nuevoPrecio);
+        pst.setString(2, idProducto);
+
+        int rowsAffected = pst.executeUpdate();
+        
+        if (rowsAffected > 0) {
+            // Luego actualizamos el inventario solo con el stock
+            query = "UPDATE inventario SET stock = ? WHERE productosId = ?";
+
+            try (PreparedStatement pstInventario = conn.prepareStatement(query)) {
+                pstInventario.setString(1, nuevoStock);
+                pstInventario.setString(2, idProducto);
+
+                int rowsAffectedInventario = pstInventario.executeUpdate();
+                return rowsAffectedInventario > 0;
+            }
+        }
+        return false;
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
+    }
+}
+
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
