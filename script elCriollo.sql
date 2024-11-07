@@ -86,7 +86,7 @@ create database if not exists ElCriollo;
 		foreign key (categoriaPlatosId) references categoriaPlatos(idCategoriaPlatos)
 	);
 
-	create table if not exists detallesPedido(
+	create table if not exists detallesPedido( -- AGREGAR COMENTARIOS DE PEDIDO
 		pedidosId varchar(10),
 		platosId varchar(10),
 		cantidad int,
@@ -500,4 +500,17 @@ DELIMITER ;
 /*****************************  FINALIZACION DE CAMBIOS HYRUM MOLINA  *********************************/
 
 -- ----------------------------------------------------------------------------------------------------
+SELECT 
+    p.idPedidos,
+    p.mesasId,
+    pl.nombreplato AS platoNombre,
+    dp.cantidad,
+    dp.comentario,
+    dp.precioUnitario,
+    pr.nombre AS principioNombre
+FROM pedidos p
+JOIN detallesPedido dp ON p.idPedidos = dp.pedidosId
+JOIN platos pl ON dp.platosId = pl.idPlato
+LEFT JOIN principios pr ON pl.principioId = pr.idPrincipio
+WHERE p.idPedidos = 'pedido001';  -- Reemplaza con el ID del pedido que desees ver
 

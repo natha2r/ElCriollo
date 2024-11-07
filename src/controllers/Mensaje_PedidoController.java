@@ -44,7 +44,9 @@ public class Mensaje_PedidoController implements Initializable {
     @FXML
     private ListView<String> listViewPlatos;
     @FXML
-    private TextArea textAreaComentario;    
+    private TextArea textAreaComentario;
+    @FXML
+    private Button btn_enviarCocina;
     @FXML
     private ComboBox<Principio> ComboBoxPrincipio; // Agrega el ComboBox aquí
     @FXML
@@ -73,6 +75,7 @@ public class Mensaje_PedidoController implements Initializable {
         btn_Back.setVisible(false);
         glassPane1.setVisible(false);
         btn_aceptarItems.setOnAction(e -> handleAceptarItemsClick());
+        btn_enviarCocina.setOnAction(e -> handleEnviarCocinaClick());
     }
 
     // Método para mostrar el número de mesa
@@ -205,61 +208,88 @@ public class Mensaje_PedidoController implements Initializable {
         cargarCategorias();
     }
 
+    @FXML
+    private void handleAceptarItemsClick() {
+        String platoSeleccionado = listViewPlatos.getSelectionModel().getSelectedItem();
+        Principio principioSeleccionado = ComboBoxPrincipio.getSelectionModel().getSelectedItem();
+        String comentarioSeleccionado = textAreaComentario.getText().trim(); // Obtener texto del TextArea
 
+        // Validación de selección
+        if (platoSeleccionado == null || principioSeleccionado == null) {
+            System.out.println("Por favor, seleccione un plato y un principio.");
+            return;
+        }
 
-@FXML
-private void handleAceptarItemsClick() {
-    String platoSeleccionado = listViewPlatos.getSelectionModel().getSelectedItem();
-    Principio principioSeleccionado = ComboBoxPrincipio.getSelectionModel().getSelectedItem();
-    String comentarioSeleccionado = textAreaComentario.getText().trim(); // Obtener texto del TextArea
+        // Obtener precio del plato (supón que tienes un método para obtener el precio)
+        String precio = obtenerPrecioPlato(platoSeleccionado);
 
-    // Validación de selección
-    if (platoSeleccionado == null || principioSeleccionado == null) {
-        System.out.println("Por favor, seleccione un plato y un principio.");
-        return;
+        // Crear el VBox del pedido
+        VBox pedidoVBox = crearPedidoVBox(platoSeleccionado, principioSeleccionado.getNombre(), comentarioSeleccionado);
+
+        // Agregar el VBox y el precio al GridPane
+        gridPanePedidos.add(pedidoVBox, 0, rowIndex); // Columna 0 para los detalles del pedido
+        gridPanePedidos.add(new Label(precio), 1, rowIndex); // Columna 1 para el precio
+
+        rowIndex++; // Incrementa la fila para el siguiente pedido
+
+        // Limpiar selecciones y comentario
+        listViewPlatos.getSelectionModel().clearSelection();
+        ComboBoxPrincipio.getSelectionModel().clearSelection();
+        textAreaComentario.clear(); // Limpiar el TextArea después de enviar
+        glassPane1.setVisible(false);
+
     }
-
-    // Obtener precio del plato (supón que tienes un método para obtener el precio)
-    String precio = obtenerPrecioPlato(platoSeleccionado);
-
-    // Crear el VBox del pedido
-    VBox pedidoVBox = crearPedidoVBox(platoSeleccionado, principioSeleccionado.getNombre(), comentarioSeleccionado);
-
-    // Agregar el VBox y el precio al GridPane
-    gridPanePedidos.add(pedidoVBox, 0, rowIndex); // Columna 0 para los detalles del pedido
-    gridPanePedidos.add(new Label(precio), 1, rowIndex); // Columna 1 para el precio
-
-    rowIndex++; // Incrementa la fila para el siguiente pedido
-
-    // Limpiar selecciones y comentario
-    listViewPlatos.getSelectionModel().clearSelection();
-    ComboBoxPrincipio.getSelectionModel().clearSelection();
-    textAreaComentario.clear(); // Limpiar el TextArea después de enviar
-}
 
 // Método auxiliar para crear el VBox del pedido
-private VBox crearPedidoVBox(String plato, String principio, String comentario) {
-    VBox vbox = new VBox();
-    vbox.setSpacing(3.0);
+    private VBox crearPedidoVBox(String plato, String principio, String comentario) {
+        VBox vbox = new VBox();
+        vbox.setSpacing(3.0);
+        vbox.setStyle("-fx-padding: 5px"); // Aplica el estilo del VBox
 
-    Label txtPlato = new Label("Plato: " + plato);
-    Label txtPrincipio = new Label("Principio: " + principio);
-    Label txtComentario = new Label("Comentario: " + (comentario.isEmpty() ? "Sin comentario" : comentario));
+        Label txtPlato = new Label(plato);
+        Label txtPrincipio = new Label(principio);
+        Label txtComentario = new Label((comentario.isEmpty() ? "Sin comentario" : comentario));
 
-    vbox.getChildren().addAll(txtPlato, txtPrincipio, txtComentario);
-    return vbox;
-}
+        txtPlato.getStyleClass().add("label");
+        txtPrincipio.getStyleClass().add("label");
+        txtComentario.getStyleClass().add("label");
+
+        vbox.getChildren().addAll(txtPlato, txtPrincipio, txtComentario);
+        return vbox;
+    }
 
 // Método auxiliar para obtener el precio del plato
-private String obtenerPrecioPlato(String plato) {
-    // Aquí deberías implementar la lógica para obtener el precio desde la base de datos o desde un mapa de precios
-    // Ejemplo básico:
-    if ("Plato 1".equals(plato)) {
-        return "$10";
-    } else if ("Plato 2".equals(plato)) {
-        return "$15";
+    private String obtenerPrecioPlato(String plato) {
+        // Llama al método del DAO para obtener el precio desde la base de datos
+        String precio = platosDao.obtenerPrecioPorNombre(plato);
+
+        // Si el precio es vacío, retorna un mensaje predeterminado
+        return precio.isEmpty() ? "$0" : "$" + precio;
     }
-    // Agrega más lógica según tus necesidades
-    return "$0";
-}
+
+    @FXML
+    private void handleEnviarCocinaClick() {
+        // Lógica para enviar el pedido a la cocina
+        //enviarPedidoACocina();
+
+        // Obtener el Stage actual y cerrarlo
+        Stage stage = (Stage) btn_enviarCocina.getScene().getWindow();
+        stage.close();
+
+        // Abrir la vista de inicio_mesera
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/Inicio_mesera.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+
+            // Obtener el Stage principal y cambiar la escena
+            Stage primaryStage = new Stage();
+            primaryStage.setScene(scene);
+            primaryStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

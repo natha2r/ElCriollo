@@ -560,8 +560,4 @@ public class Inicio_meseraController implements Initializable {
             txt_verdura.setText("Seleccione un grano");
         }
     }
-
-    private void prueba() {
-        txt_verdura.setText("Seleccione una verdura");
-    }
 }

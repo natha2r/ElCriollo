@@ -78,7 +78,7 @@ public class PlatosDao {
             e.printStackTrace();
             // Manejo de excepciones
         }
-    }   
+    }
 
     // Método para obtener los platos según la categoría seleccionada
     public ObservableList<String> getPlatosByCategoriaM(String nombreCategoria) {
@@ -117,5 +117,27 @@ public class PlatosDao {
 
         return platos;
     }
+
+    // ************************************************** 07/11/24 *******************************************************
     
+    // Método para obtener el precio de un plato por su nombre
+    public String obtenerPrecioPorNombre(String nombrePlato) {
+        String precio = "";
+        String query = "SELECT precio FROM platos WHERE nombrePlato = ?";
+
+        try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
+            pst.setString(1, nombrePlato);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                precio = rs.getString("precio");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Manejo de excepciones
+        }
+
+        return precio;
+    }
+
 }
