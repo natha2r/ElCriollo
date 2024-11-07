@@ -213,16 +213,6 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button alignment="TOP_LEFT" layoutX="157.0" layoutY="102.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="174.0" styleClass="btn-linea" text="LOCAL">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Button alignment="TOP_LEFT" layoutX="376.0" layoutY="102.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="174.0" styleClass="btn-linea" text="RESERVAS">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
          </children>
       </Pane>
       <Pane id="glassPane" fx:id="glassPane" prefHeight="744.0" prefWidth="1133.0" styleClass="glassPane" stylesheets="@../swing/mensaje_pedido.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
