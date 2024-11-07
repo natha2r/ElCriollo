@@ -1,18 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="744.0" prefWidth="1133.0" styleClass="paneCriollo" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Inicio_meseraController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="744.0" prefWidth="1133.0" styleClass="paneCriollo" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Mensaje_PedidoController">
    <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0" styleClass="paneCriollo" stylesheets="@../swing/mensaje_pedido.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
@@ -26,7 +35,7 @@
       
       <BorderPane id="bdrpane" layoutX="975.0" layoutY="295.0" prefHeight="424.0" prefWidth="140.0" styleClass="bdr_Pane" stylesheets="@../swing/mensaje_pedido.css" />
       <Button id="btn_categorias" layoutX="538.0" layoutY="223.0" mnemonicParsing="false" styleClass="btn_pedido" stylesheets="@../swing/mensaje_pedido.css" text="PEDIDO GENERAL" />
-      <Button id="btn_categorias" layoutX="30.0" layoutY="223.0" mnemonicParsing="false" styleClass="btn_categorias" stylesheets="@../swing/mensaje_pedido.css" text="CATEGORIAS" />
+      <Button id="btn_categorias" fx:id="btn_txtCategorias" alignment="CENTER" layoutX="30.0" layoutY="223.0" mnemonicParsing="false" styleClass="btn_categorias" stylesheets="@../swing/mensaje_pedido.css" text="CATEGORIAS" textAlignment="CENTER" />
       <GridPane layoutX="22.0" layoutY="301.0" prefHeight="424.0" prefWidth="1091.0" styleClass="bdr_pane" stylesheets="@../swing/mensaje_pedido.css" AnchorPane.bottomAnchor="19.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="301.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="554.0" minWidth="10.0" prefWidth="546.0" />
@@ -37,10 +46,13 @@
           <RowConstraints maxHeight="205.0" minHeight="10.0" prefHeight="112.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" prefHeight="44.0" prefWidth="230.0" styleClass="btn_defauld" text="Cancelar" GridPane.rowIndex="1">
+            <Button fx:id="btn_cancelarTM" mnemonicParsing="false" onAction="#handleCancelarPedidoClick" prefHeight="44.0" prefWidth="230.0" styleClass="btn_defauld" text="Cancelar" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="30.0" />
                </GridPane.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
             <Button mnemonicParsing="false" prefHeight="44.0" prefWidth="230.0" styleClass="btn_defauld" text="Enviar a cocina" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
@@ -52,7 +64,7 @@
                   <Insets left="30.0" top="9.5" />
                </GridPane.margin>
             </Label>
-            <Label styleClass="txt1" text="12,000" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Label styleClass="txt1" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -68,7 +80,163 @@
                   <Insets />
                </opaqueInsets>
             </Separator>
+            <ListView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
+           <ScrollPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="310.0" prefWidth="543.0">
+                     <children>
+                        <GridPane fx:id="gridPanePedidos" hgap="5.0" layoutX="52.0" layoutY="14.0" prefHeight="60.0" prefWidth="440.0" vgap="5.0">
+                          <columnConstraints>
+                            <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="252.0" minWidth="10.0" prefWidth="252.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="95.0" minWidth="0.0" prefWidth="79.0" />
+                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="31.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" valignment="CENTER" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <VBox prefHeight="200.0" prefWidth="100.0" spacing="3.0">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <children>
+                                    <Label fx:id="txt_plato" styleClass="txt1" />
+                                    <Label fx:id="txt_principio" style="-fx-font-size: 16;" styleClass="txt1" />
+                                    <Label fx:id="txt_comentario" style="-fx-font-size: 16;" styleClass="txt1" />
+                                 </children>
+                                 <padding>
+                                    <Insets top="5.0" />
+                                 </padding>
+                              </VBox>
+                              <Label fx:id="txt_precio" styleClass="txt1" text="\$12.000" GridPane.columnIndex="1" />
+                              <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" />
+                           </children>
+                        </GridPane>
+                     </children></AnchorPane>
+              </content>
+            </ScrollPane>
+
+            <ListView fx:id="listViewCategorias" prefHeight="311.0" prefWidth="532.0" />
+            <ListView fx:id="listViewPlatos" prefHeight="311.0" prefWidth="532.0" />
          </children>
       </GridPane>
+      <Pane layoutX="30.0" layoutY="144.0" prefHeight="60.0" prefWidth="1078.0" styleClass="panePeople" stylesheets="@../swing/mensaje_pedido.css">
+         <children>
+            <Label fx:id="txt_mesa" layoutX="485.0" layoutY="13.0" styleClass="txtMesa" text="MESA" />
+         </children>
+      </Pane>
+      <Pane fx:id="glassPane1" prefHeight="744.0" prefWidth="1133.0" styleClass="glassPane" stylesheets="@../swing/mensaje_pedido.css" visible="false">
+         <children>
+            <VBox alignment="TOP_CENTER" layoutX="291.0" layoutY="159.0" prefHeight="444.0" prefWidth="552.0" styleClass="popupPane">
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <VBox prefHeight="100.0" prefWidth="272.0">
+                           <children>
+                              <VBox alignment="CENTER" prefHeight="124.0" prefWidth="272.0">
+                                 <children>
+                                    <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="70.0" styleClass="txt1" text="TIPO">
+                                       <VBox.margin>
+                                          <Insets top="30.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <ComboBox prefHeight="46.0" prefWidth="150.0" promptText="Seleccione" styleClass="seleccion" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="100.0" prefWidth="274.0">
+                           <children>
+                              <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="128.0" styleClass="txt1" text="CONSUMO">
+                                 <VBox.margin>
+                                    <Insets top="30.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <HBox alignment="CENTER" prefHeight="1.0" prefWidth="274.0">
+                                 <children>
+                                    <ImageView disable="true" fitHeight="40.0" fitWidth="40.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../resources/mesa-circular%201.png" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets right="10.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                    <CheckBox alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" styleClass="custom-checkbox">
+                                       <HBox.margin>
+                                          <Insets right="90.0" />
+                                       </HBox.margin>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </CheckBox>
+                                    <CheckBox mnemonicParsing="false" styleClass="custom-checkbox">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor></CheckBox>
+                                    <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../resources/imagen-llevar.png" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="130.0" styleClass="txt1" text="PRINCIPIO">
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </Label>
+                  <ComboBox fx:id="ComboBoxPrincipio" prefHeight="46.0" prefWidth="424.0" promptText="Seleccione" styleClass="seleccion">
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </ComboBox>
+                  <TextArea fx:id="textAreaComentario" prefHeight="121.0" prefWidth="388.0" promptText="Agrega comentario">
+                     <VBox.margin>
+                        <Insets left="85.0" right="85.0" />
+                     </VBox.margin>
+                  </TextArea>
+                  <HBox alignment="CENTER" prefHeight="72.0" prefWidth="552.0">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <children>
+                        <Button fx:id="btn_cancelarItems" mnemonicParsing="false" onAction="#handleCancelarItem" prefHeight="39.0" prefWidth="154.0" styleClass="btn_defauld" text="Cancelar">
+                           <HBox.margin>
+                              <Insets right="90.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="btn_aceptarItems" mnemonicParsing="false" prefHeight="39.0" prefWidth="154.0" styleClass="btn_defauld" text="Aceptar" />
+                     </children>
+                  </HBox>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets top="20.0" />
+               </padding>
+            </VBox>
+         </children>
+      </Pane>
+      <Button fx:id="btn_Back" contentDisplay="GRAPHIC_ONLY" layoutX="64.0" layoutY="229.0" mnemonicParsing="false" style="-fx-background-color: TRANSPARENT;">
+         <graphic>
+            <ImageView accessibleRole="BUTTON" fitHeight="43.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/left-arrow.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>

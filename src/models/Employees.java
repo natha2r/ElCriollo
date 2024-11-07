@@ -1,6 +1,7 @@
 package models;
 
 import java.util.Date;
+import models.Sesiones;
 
 public class Employees {
     private String idEmpleados;
@@ -12,11 +13,17 @@ public class Employees {
     private String direccion;
     private String email;
     private String usuario;
+    private int edad;
+    
+    private boolean activo; // Campo para indicar si el empleado está activo o inactivo
+
+    // Relación con la clase Sesiones
+    Sesiones sesion = new Sesiones();
 
     public Employees() {
     }
 
-    public Employees(String idEmpleados, String nombreEmpleado, String rol, Date fechaContratacion, float salario, String telefono, String direccion, String email, String usuario) {
+    public Employees(String idEmpleados, String nombreEmpleado, String rol, Date fechaContratacion, float salario, String telefono, String direccion, String email, String usuario, int edad, boolean activo) {
         this.idEmpleados = idEmpleados;
         this.nombreEmpleado = nombreEmpleado;
         this.rol = rol;
@@ -26,6 +33,8 @@ public class Employees {
         this.direccion = direccion;
         this.email = email;
         this.usuario = usuario;
+        this.edad = edad;
+        this.activo = activo;
     }
 
     public String getIdEmpleados() {
@@ -100,8 +109,37 @@ public class Employees {
         this.usuario = usuario;
     }
 
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
     
+    
+    
+    
+    
+    // Getters y Setters de los campos anteriores
 
+    public Sesiones getSesion() {
+        return sesion;
+    }
 
+    public void setSesion(Sesiones sesion) {
+        this.sesion = sesion;
+    }
+    
+    
+    
 }   
 

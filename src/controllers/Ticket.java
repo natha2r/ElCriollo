@@ -3,6 +3,8 @@ package controllers;
 import br.com.adilson.util.PrinterMatrix;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import javax.print.PrintService;
@@ -38,20 +40,23 @@ public class Ticket {
         factura.append("  Mesa: ").append(mesa).append("\n");
         factura.append("------------------------------\n");
 
-        // Detalles del pedido
-        double total = 0;
+        BigDecimal total = new BigDecimal("0");
+        String precioFormateado = "";
         for (DetallesPedidos detalle : detalles) {
             String linea = String.format("%d %-20s %8.2f\n",
                     detalle.getCantidad(),
                     detalle.getPlatosId(),
                     detalle.getPrecioUnitario());
             factura.append(linea);
-            total += detalle.getCantidad() * detalle.getPrecioUnitario();
+            BigDecimal cantidadBD = BigDecimal.valueOf(detalle.getCantidad());
+            total = total.add(detalle.getPrecioUnitario().multiply(cantidadBD));
+            DecimalFormat df = new DecimalFormat("#,###"); // Formato para mostrar con comas y dos decimales
+            precioFormateado = df.format(total);
         }
 
         factura.append("------------------------------\n");
         // Agregar la sección de total
-        factura.append(String.format("%-22s %8.2f\n", "Total", total));
+        factura.append(String.format("%-22s %8.2f \n", "Total", total));
         factura.append("------------------------------\n");
 
         // Mensaje de agradecimiento

@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -71,7 +72,11 @@ public class TarjetaPedidoController implements Initializable {
             hbox.setStyle("-fx-font-family: 'Karla'; -fx-font-style: normal; -fx-font-weight: bold; -fx-font-size: 15px; -fx-text-fill: #FEB01D;");
             Label lbl_plato = new Label(detalle.getPlatosId() + "  ");
             Label lbl_cantidad = new Label(" x" + detalle.getCantidad() + "  ");
-            Label lbl_precio = new Label("$" + detalle.getPrecioUnitario());
+            
+            DecimalFormat df = new DecimalFormat("#,###"); // Formato para mostrar con comas y dos decimales
+            String precioFormateado = df.format(detalle.getPrecioUnitario());
+            
+            Label lbl_precio = new Label("$" + precioFormateado);
 
             hbox.setId(detalle.getPedidosId());
 
@@ -116,7 +121,7 @@ public class TarjetaPedidoController implements Initializable {
             facturacionController.getlbl_nMesa().setText("MESA " + nMesa);
 
             // Pasar el ID de la reserva seleccionada al controlador de facturación
-            facturacionController.mostrarFacturaParaPedido(pedidoCard);
+            facturacionController.mostrarFacturaParaPedido(pedidoCard, nMesa);
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.setTitle("Facturación");

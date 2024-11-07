@@ -8,18 +8,80 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class PlatosDao {
 
+    // Instanciar la conexión 
+    //  Instanciar la conexión 
     ConnectionMySQL cn = new ConnectionMySQL();
     Connection conn;
     PreparedStatement pst;
     ResultSet rs;
 
+    // Obtener todos los productos
+    public List<Platos> getAllPlatos() {
+        List<Platos> platos = new ArrayList<>();
+        String query = "SELECT * FROM platos";
+
+        try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
+            java.sql.ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                Platos plato = new Platos();
+                plato.setIdPlatos(rs.getString("idPlatos"));
+                plato.setNombrePlato(rs.getString("nombrePlato"));
+                platos.add(plato);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Manejo de excepciones
+        }
+
+        return platos;
+    }
+
+    // Obtener productos por categoría
+    public List<Platos> getPlatosByCategoria(String idCategoriaPlatos) {
+        List<Platos> platos = new ArrayList<>();
+        String query = "SELECT * FROM platos WHERE categoriaPlatosId = ?";
+
+        try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
+            pst.setString(1, idCategoriaPlatos);
+            java.sql.ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                Platos plato = new Platos();
+                plato.setIdPlatos(rs.getString("idPlatos"));
+                plato.setNombrePlato(rs.getString("nombrePlato")); // Asegúrate de que sea el nombre correcto
+                plato.setCategoriaPlatosId(rs.getString("categoriaPlatosId"));
+                platos.add(plato);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Manejo de excepciones
+        }
+        return platos;
+    }
+
+    // Marcar un producto como no disponible
+    public void marcarComoNoDisponible(String idPlatos) {
+        String query = "UPDATE platos SET disponible = ? WHERE idPlatos = ?";
+        try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
+            pst.setBoolean(1, false); // Cambiar a no disponible
+            pst.setString(2, idPlatos);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Manejo de excepciones
+        }
+    }   
+
     // Método para obtener los platos según la categoría seleccionada
-    public ObservableList<String> getPlatosByCategoria(String nombreCategoria) {
+    public ObservableList<String> getPlatosByCategoriaM(String nombreCategoria) {
         ObservableList<String> platos = FXCollections.observableArrayList();
 
         try {
@@ -55,4 +117,5 @@ public class PlatosDao {
 
         return platos;
     }
+    
 }

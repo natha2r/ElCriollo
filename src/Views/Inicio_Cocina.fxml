@@ -111,7 +111,7 @@
             <children>
                 <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <content>
-                        <GridPane fx:id="contenedor_tllevar">
+                        <GridPane fx:id="contenedor_tllevar" minHeight="300.0" minWidth="400.0" prefHeight="600.0" prefWidth="800.0">
                             <columnConstraints>
                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -126,128 +126,23 @@
                 </ScrollPane>
             </children>
         </AnchorPane>
-        <BorderPane id="paneMenu" fx:id="paneMenu" prefHeight="744.0" prefWidth="300.0" styleClass="paneMenu" stylesheets="@../swing/inicio_cocina.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="833.0" AnchorPane.topAnchor="0.0">
-            <left>
-                <GridPane id="paneMenu" fx:id="panel_categoria" gridLinesVisible="true" minHeight="744.0" minWidth="298.0" styleClass="paneMenu" stylesheets="@../swing/inicio_cocina.css" BorderPane.alignment="CENTER">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="278.0" minWidth="10.0" prefWidth="198.0" />
-                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="141.0" minWidth="0.0" prefWidth="80.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints maxHeight="237.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="237.0" minHeight="0.0" prefHeight="60.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="573.0" minHeight="10.0" prefHeight="455.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="163.0" minHeight="0.0" prefHeight="135.0" valignment="BOTTOM" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                    <children>
-                        <Button id="btn_atras" fx:id="btnAtras" contentDisplay="CENTER" minHeight="32.0" minWidth="31.0" mnemonicParsing="false" onAction="#atrasAction" styleClass="btn_atras" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                            <graphic>
-                                <ImageView fitHeight="24.0" fitWidth="32.0" layoutX="243.0" layoutY="691.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../resources/flecha.png" />
-                                    </image>
-                                </ImageView>
-                            </graphic>
-                        </Button>
-                        <Pane id="paneCategoria" fx:id="PaneCategoria" disable="true" layoutX="-216.0" layoutY="144.0" minHeight="38.0" minWidth="350.0" prefHeight="38.0" prefWidth="350.0" styleClass="paneCategoria" GridPane.rowIndex="1">
-                            <opaqueInsets>
-                                <Insets />
-                            </opaqueInsets>
-                            <children>
-                                <Text layoutX="79.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CATEGORIAS">
-                                    <font>
-                                        <Font name="System Bold" size="30.0" />
-                                    </font>
-                                </Text>
-                            </children>
-                        </Pane>
-                        <VBox fx:id="contenedor_categorias" minHeight="300.0" minWidth="132.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0" visible="false" GridPane.rowIndex="2">
-                            <GridPane.margin>
-                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                            </GridPane.margin>
-                        </VBox>
-                    </children>
-                    <padding>
-                        <Insets bottom="20.0" right="20.0" />
-                    </padding>
-                </GridPane>
-            </left>
-        </BorderPane>
-        <BorderPane fx:id="paneProductos" prefHeight="200.0" prefWidth="200.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="833.0" AnchorPane.topAnchor="0.0">
-         <left>
-                <GridPane id="paneMenuP" fx:id="paneMenuP" gridLinesVisible="true" minHeight="744.0" minWidth="298.0" styleClass="paneMenu" stylesheets="@../swing/inicio_cocina.css" BorderPane.alignment="CENTER">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="284.0" minWidth="10.0" prefWidth="242.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.0" minWidth="0.0" prefWidth="58.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints maxHeight="237.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="237.0" minHeight="0.0" prefHeight="76.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="623.0" minHeight="10.0" prefHeight="561.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="125.0" minHeight="0.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                    <children>
-                        <Pane id="paneCategoria" fx:id="PaneCategoria1" disable="true" maxHeight="53.0" minHeight="22.0" minWidth="350.0" prefHeight="53.0" prefWidth="350.0" styleClass="paneCategoria" GridPane.rowIndex="1">
-                            <opaqueInsets>
-                                <Insets />
-                            </opaqueInsets>
-                            <children>
-                                <Text layoutX="79.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PRODUCTOS">
-                                    <font>
-                                        <Font name="System Bold" size="30.0" />
-                                    </font>
-                                </Text>
-                            </children>
-                        </Pane>
-                        <VBox fx:id="contenedor_productos" minHeight="300.0" minWidth="132.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0" GridPane.rowIndex="2">
-                            <GridPane.margin>
-                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                            </GridPane.margin>
-                        </VBox>
-                        <Button id="btn_atrass" fx:id="btnAtrass" contentDisplay="CENTER" minHeight="32.0" minWidth="31.0" mnemonicParsing="false" onAction="#atrassAction" styleClass="btn_atras" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                            <graphic>
-                                <ImageView fitHeight="27.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../resources/flecha.png" />
-                                    </image>
-                                </ImageView>
-                            </graphic>
-                        </Button>
-                    </children>
-                    <padding>
-                        <Insets bottom="20.0" right="20.0" />
-                    </padding>
-                </GridPane>
-         </left>
-        </BorderPane>
         <AnchorPane id="glassPane" fx:id="glassPane" prefHeight="200.0" prefWidth="200.0" styleClass="glassPane" stylesheets="@../swing/inicio_cocina.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
         <BorderPane fx:id="paneConfiguracion" focusTraversable="true" prefHeight="200.0" prefWidth="200.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <center>
-                <AnchorPane id="V_configuracion" fx:id="V_configuracion" focusTraversable="true" maxHeight="418.0" maxWidth="586.0" minHeight="35.0" minWidth="202.0" prefHeight="418.0" prefWidth="586.0" styleClass="popupPane" stylesheets="@../swing/inicio_cocina.css" BorderPane.alignment="CENTER">
+                <AnchorPane id="V_configuracion" fx:id="V_configuracion" focusTraversable="true" maxHeight="418.0" maxWidth="586.0" minHeight="35.0" minWidth="202.0" prefHeight="418.0" prefWidth="586.0" styleClass="popupPane" stylesheets="@../swing/inicio_cocina.css" visible="false" BorderPane.alignment="CENTER">
                     <children>
-                        <Label layoutX="180.0" layoutY="30.0" minHeight="22.0" minWidth="294.0" text="CONFIGURACIÓN">
+                        <Label layoutX="180.0" layoutY="65.0" minHeight="22.0" minWidth="294.0" text="CONFIGURACIÓN">
                             <font>
                                 <Font name="System Bold" size="30.0" />
                             </font>
                         </Label>
-                        <Label layoutX="150.0" layoutY="100.0" minHeight="22.0" minWidth="159.0" text="Activar alerta" textFill="#c68711">
+                        <Label layoutX="150.0" layoutY="137.0" minHeight="22.0" minWidth="159.0" text="Activar alerta" textFill="#c68711">
                             <font>
                                 <Font size="25.0" />
                             </font>
                         </Label>
-                        <CheckBox fx:id="btnChulo" layoutX="317.0" layoutY="110.0" mnemonicParsing="false" onAction="#chuloAction" />
-                        <Text layoutX="146.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Activa una alerta de notificación cada vez que un pedido ingresa a cocina." wrappingWidth="325.01171875">
-                            <font>
-                                <Font size="15.0" />
-                            </font>
-                        </Text>
-                        <Label layoutX="146.0" layoutY="204.0" text="Dividir pedidos" textFill="#c68711">
-                            <font>
-                                <Font size="25.0" />
-                            </font>
-                        </Label>
-                        <CheckBox fx:id="btnChulo1" layoutX="334.0" layoutY="215.0" mnemonicParsing="false" onAction="#chulo1Action" />
-                        <Text layoutX="146.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Divide pedidos de mesa y delivery. ">
+                        <CheckBox fx:id="btnChulo" layoutX="317.0" layoutY="148.0" mnemonicParsing="false" onAction="#chuloAction" />
+                        <Text layoutX="146.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Activa una alerta de notificación cada vez que un pedido ingresa a cocina." wrappingWidth="325.01171875">
                             <font>
                                 <Font size="15.0" />
                             </font>
@@ -266,49 +161,140 @@
                 </AnchorPane>
             </center>
         </BorderPane>
-        <BorderPane id="PaneMenuCP" fx:id="pane_categoriaplatos" maxHeight="744.0" maxWidth="300.0" prefHeight="744.0" prefWidth="300.0" styleClass="paneMenu" stylesheets="@../swing/inicio_cocina.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="833.0" AnchorPane.topAnchor="0.0">
-         <left>
-                <GridPane id="paneMenuPl" fx:id="paneMenuPl" maxHeight="744.0" maxWidth="300.0" minHeight="744.0" minWidth="300.0" styleClass="paneMenu" stylesheets="@../swing/inicio_cocina.css" BorderPane.alignment="CENTER">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="234.0" minWidth="10.0" prefWidth="226.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="134.0" minWidth="10.0" prefWidth="52.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints maxHeight="88.0" minHeight="10.0" prefHeight="51.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="112.0" minHeight="10.0" prefHeight="72.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="549.0" minHeight="0.0" prefHeight="549.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="593.0" minHeight="10.0" prefHeight="52.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
+        <BorderPane id="PaneMenuCP" fx:id="pane_categoriaplatos" maxHeight="744.0" maxWidth="300.0" prefHeight="744.0" prefWidth="300.0" styleClass="paneMenu" stylesheets="@../swing/inicio_cocina.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <left>
+        <GridPane id="paneMenuPl" fx:id="paneMenuPl" maxHeight="744.0" maxWidth="300.0" minHeight="744.0" minWidth="300.0" styleClass="paneMenu" stylesheets="@../swing/inicio_cocina.css" BorderPane.alignment="CENTER">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="234.0" minWidth="10.0" prefWidth="226.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="134.0" minWidth="10.0" prefWidth="52.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="134.0" minWidth="10.0" prefWidth="52.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="88.0" minHeight="10.0" prefHeight="51.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="112.0" minHeight="10.0" prefHeight="72.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="549.0" minHeight="0.0" prefHeight="549.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="593.0" minHeight="10.0" prefHeight="52.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <VBox fx:id="contenedor_platos" minHeight="300.0" minWidth="132.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0" GridPane.rowIndex="2">
+                    <GridPane.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                    </GridPane.margin>
+                </VBox>
+                <Button id="btn_atrasss" fx:id="btnAtrasss" maxHeight="32.0" maxWidth="31.0" minHeight="32.0" minWidth="31.0" mnemonicParsing="false" onAction="#atraAction" styleClass="btn_atras" stylesheets="@../swing/inicio_cocina.css" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                    <graphic>
+                        <ImageView fitHeight="27.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../resources/flecha.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Pane id="panePlatos" fx:id="panePlatos" maxHeight="81.0" maxWidth="350.0" minHeight="38.0" minWidth="350.0" prefHeight="81.0" prefWidth="350.0" styleClass="paneCategoria" stylesheets="@../swing/inicio_cocina.css" GridPane.rowIndex="1">
                     <children>
-                        <VBox fx:id="contenedor_platos" minHeight="300.0" minWidth="132.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0" GridPane.rowIndex="2">
-                            <GridPane.margin>
-                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                            </GridPane.margin>
-                        </VBox>
-                        <Button id="btn_atrasss" fx:id="btnAtrasss" minHeight="32.0" minWidth="31.0" mnemonicParsing="false" onAction="#atraAction" styleClass="btn_atras" stylesheets="@../swing/inicio_cocina.css" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                            <graphic>
-                                <ImageView fitHeight="27.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../resources/flecha.png" />
-                                    </image>
-                                </ImageView>                
-                            </graphic>
-                        </Button>
-                        <Pane id="panePlatos" fx:id="panePlatos" maxHeight="81.0" minHeight="38.0" minWidth="350.0" prefHeight="81.0" prefWidth="350.0" styleClass="paneCategoria" stylesheets="@../swing/inicio_cocina.css" GridPane.rowIndex="1">
-                            <children>
-                                <Text layoutX="52.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CARACTERISTICA_PLATOS">
-                                    <font>
-                                        <Font name="System Bold" size="20.0" />
-                                    </font>
-                                </Text>
-                            </children>
-                        </Pane>
+                        <Text layoutX="119.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TIPO MENU">
+                            <font>
+                                <Font name="System Bold" size="20.0" />
+                            </font>
+                        </Text>
                     </children>
-                    <padding>
-                        <Insets bottom="20.0" right="20.0" />
-                    </padding>
-                </GridPane>
+                </Pane>
+            </children>
+            <padding>
+                <Insets bottom="20.0" right="20.0" />
+            </padding>
+        </GridPane>
+    </left>
+</BorderPane>
+      <BorderPane id="PaneMenuCP" fx:id="paneMenuC" layoutX="10.0" layoutY="10.0" maxHeight="744.0" maxWidth="300.0" prefHeight="744.0" prefWidth="300.0" styleClass="paneMenu" stylesheets="@../swing/inicio_cocina.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <left>
+            <GridPane id="paneMenuPl" fx:id="paneMenuPl1" maxHeight="744.0" maxWidth="300.0" minHeight="744.0" minWidth="300.0" styleClass="paneMenu" stylesheets="@../swing/inicio_cocina.css" BorderPane.alignment="CENTER">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="234.0" minWidth="10.0" prefWidth="226.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="134.0" minWidth="10.0" prefWidth="52.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="134.0" minWidth="10.0" prefWidth="52.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="88.0" minHeight="10.0" prefHeight="51.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="112.0" minHeight="10.0" prefHeight="72.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="549.0" minHeight="0.0" prefHeight="549.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="593.0" minHeight="10.0" prefHeight="52.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <VBox fx:id="contenedor_categorias" minHeight="300.0" minWidth="132.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </GridPane.margin>
+                  </VBox>
+                  <Button id="btn_atrasss" fx:id="btnAtras" maxHeight="32.0" maxWidth="31.0" minHeight="32.0" minWidth="31.0" mnemonicParsing="false" onAction="#atraAction" styleClass="btn_atras" stylesheets="@../swing/inicio_cocina.css" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <graphic>
+                        <ImageView fitHeight="27.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/flecha.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Pane id="panePlatos" fx:id="panePlatos1" maxHeight="81.0" maxWidth="350.0" minHeight="38.0" minWidth="350.0" prefHeight="81.0" prefWidth="350.0" styleClass="paneCategoria" stylesheets="@../swing/inicio_cocina.css" GridPane.rowIndex="1">
+                     <children>
+                        <Text layoutX="119.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CATEGORÍAS">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </Pane>
+               </children>
+               <padding>
+                  <Insets bottom="20.0" right="20.0" />
+               </padding>
+            </GridPane>
          </left>
-        </BorderPane>
+      </BorderPane>
+      <BorderPane id="PaneMenuCP" fx:id="paneProductos" layoutX="10.0" layoutY="10.0" maxHeight="744.0" maxWidth="300.0" prefHeight="744.0" prefWidth="300.0" styleClass="paneMenu" stylesheets="@../swing/inicio_cocina.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <left>
+            <GridPane id="paneMenuPl" fx:id="paneMenuPl2" maxHeight="744.0" maxWidth="300.0" minHeight="744.0" minWidth="300.0" styleClass="paneMenu" stylesheets="@../swing/inicio_cocina.css" BorderPane.alignment="CENTER">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="234.0" minWidth="10.0" prefWidth="226.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="134.0" minWidth="10.0" prefWidth="52.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="134.0" minWidth="10.0" prefWidth="52.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="88.0" minHeight="10.0" prefHeight="51.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="112.0" minHeight="10.0" prefHeight="72.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="549.0" minHeight="0.0" prefHeight="549.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="593.0" minHeight="10.0" prefHeight="52.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <VBox fx:id="contenedor_productos" minHeight="300.0" minWidth="132.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </GridPane.margin>
+                  </VBox>
+                  <Button id="btn_atrasss" fx:id="btnAtrass" maxHeight="32.0" maxWidth="31.0" minHeight="32.0" minWidth="31.0" mnemonicParsing="false" onAction="#atraAction" styleClass="btn_atras" stylesheets="@../swing/inicio_cocina.css" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <graphic>
+                        <ImageView fitHeight="27.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/flecha.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Pane id="panePlatos" fx:id="panePlatos2" maxHeight="81.0" maxWidth="350.0" minHeight="38.0" minWidth="350.0" prefHeight="81.0" prefWidth="350.0" styleClass="paneCategoria" stylesheets="@../swing/inicio_cocina.css" GridPane.rowIndex="1">
+                     <children>
+                        <Text layoutX="138.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PLATOS">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </Pane>
+               </children>
+               <padding>
+                  <Insets bottom="20.0" right="20.0" />
+               </padding>
+            </GridPane>
+         </left>
+      </BorderPane>
     </children>
 </AnchorPane>

@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap');
+
 .popupPane{
-   -fx-background-color: #FFFFFF;
-   -fx-background-radius: 70px 10px 10px 10px;
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 70px 10px 10px 10px;
 }
 
 .glassPane {
@@ -47,10 +49,10 @@
     -fx-layout-y: 232px;
     -fx-font-family: 'Karla';
     -fx-font-style: normal;
-    -fx-font-weight: bold; /* Equivalente a 700 */
+    -fx-font-weight: bold;
     -fx-font-size: 23px;
     -fx-alignment: center;
-   
+
 }
 
 .btn_pedido {
@@ -58,13 +60,13 @@
     -fx-pref-height: 60px;
     -fx-background-color: #FFA150;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4);
-    -fx-border-radius: 30px; /* Radius for rounded corners */
-    -fx-background-radius: 30px; /* Ensures background also has rounded corners */
-    -fx-layout-x: 391px; /* Position from left */
-    -fx-layout-y: 155px; /* Position from top */
+    -fx-border-radius: 30px;
+    -fx-background-radius: 30px;
+    -fx-layout-x: 391px;
+    -fx-layout-y: 155px;
     -fx-font-family: 'Karla';
     -fx-font-style: normal;
-    -fx-font-weight: bold; /* Equivalente a 700 */
+    -fx-font-weight: bold;
     -fx-font-size: 23px;
     -fx-alignment: center;
 }
@@ -86,7 +88,6 @@
 
 }
 
-
 .btn_defauld{
     -fx-background-color: #DDDBDA; /* Fondo */
     -fx-border-radius: 30px; /* Radio del borde */
@@ -96,7 +97,56 @@
     -fx-font-style: normal;
     -fx-font-weight: bold;
     -fx-font-size: 20px;
-    }
+}
+
+
+.seleccion{
+    -fx-background-color: #FFFFFF;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4);
+    -fx-background-radius: 30px;
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #000000; /* Color del borde */
+    -fx-border-width: 0.5px;
+    -fx-background-radius: 19px; /* Radio del borde para el fondo */
+    -fx-border-radius: 19px; /* Radio del borde para el borde */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4);
+    -fx-fill: #FFB94F;
+}
+
+.seleccion .arrow {
+    -fx-background-color: #FFA41B;
+    -fx-background-radius: 0;
+    -fx-padding: 5 5 10 30; /* Ajusta el tamaño de la flecha */
+}
 
 
 
+.custom-checkbox {
+    -fx-background-color: #FFA41B;
+    -fx-border-color: #FFA41B;
+    -fx-border-width: 0px;
+}
+
+.custom-checkbox .checkbox {
+    -fx-background-color: #FFA41B;
+    -fx-border-color: #FFA41B;
+    -fx-border-width: 2px;
+    -fx-background-insets: 0, 0;
+    -fx-background-radius: 4px;
+    -fx-pref-width: 20px;
+    -fx-pref-height: 20px;
+}
+
+.custom-checkbox .checkbox:selected {
+    -fx-background-color: #FFA41B;
+    -fx-border-color: #FFA41B;
+    -fx-border-width: 2px;
+}
+
+.custom-checkbox .checkbox .tick-mark {
+    -fx-background-color: #FFA41B;
+}
+
+.custom-checkbox .checkbox:selected .tick-mark {
+    -fx-background-color: transparent;
+}

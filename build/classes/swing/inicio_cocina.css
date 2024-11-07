@@ -153,6 +153,10 @@
     -fx-max-height: 50;
 }
 
+.scroll-bar:vertical {
+    -fx-background-color: #2E1B10; /* Color del scrollbar */
+    -fx-pref-width: 14px; /* Ancho del scrollbar */
+}
 
 
 

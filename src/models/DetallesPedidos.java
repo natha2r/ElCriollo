@@ -4,20 +4,23 @@
  */
 package models;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author User
  */
 public class DetallesPedidos {
+
     private String pedidosId;
     private String platosId;
     private int cantidad;
-    private Double precioUnitario;
+    private BigDecimal precioUnitario;
 
     public DetallesPedidos() {
     }
 
-    public DetallesPedidos(String pedidosId, String platosId, int cantidad, Double precioUnitario) {
+    public DetallesPedidos(String pedidosId, String platosId, int cantidad, BigDecimal precioUnitario) {
         this.pedidosId = pedidosId;
         this.platosId = platosId;
         this.cantidad = cantidad;
@@ -48,12 +51,12 @@ public class DetallesPedidos {
         this.cantidad = cantidad;
     }
 
-    public Double getPrecioUnitario() {
+    public BigDecimal getPrecioUnitario() {
         return precioUnitario;
     }
 
-    public void setPrecioUnitario(Double precioUnitario) {
+    public void setPrecioUnitario(BigDecimal precioUnitario) {
         this.precioUnitario = precioUnitario;
-    }   
-    
+    }
+
 }

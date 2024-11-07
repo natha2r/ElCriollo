@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap');
+
 .boton {
     -fx-background-color: #FEB01D;
     -fx-background-radius: 10px;
@@ -49,8 +51,6 @@
     -fx-background-radius: 30px; /* Radio para esquinas redondeadas */
     -fx-border-radius: 30px; /* Asegúrate de que el borde también tenga esquinas redondeadas */
 }
-
-
 
 
 .popupLabel{
@@ -144,6 +144,31 @@
 .btn_default {
     -fx-background-color: #DDDDDD; /* Color de fondo por defecto */
     -fx-text-fill: black; /* Color del texto por defecto */
+}
+
+
+.btn-linea {
+    -fx-background-color: transparent;  /* Hace el fondo del botón transparente */
+    -fx-border-color: transparent transparent black transparent;  /* Solo aplica el borde inferior en negro */
+    -fx-border-width: 0 0 1px 0;  
+    -fx-background-color: #FBF6F6;
+    -fx-font-size: 15px;
+   
+}
+
+
+.pane_principio {
+    -fx-background-color: #EEEEEE; /* Color de fondo */
+    -fx-pref-width: 310px;         /* Ancho preferido */
+    -fx-pref-height: 268px;        /* Altura preferida */
+}
+
+.circular-image {
+    -fx-border-radius: 50%;      /* Hacer que el borde sea redondo */
+    -fx-background-radius: 50%;  /* Hacer que el fondo sea redondo */
+    -fx-border-color: black;     /* Color del borde */
+    -fx-border-width: 2px;       /* Grosor del borde */
+    -fx-padding: 1px;            /* Espacio entre la imagen y el borde */
 }
 
 

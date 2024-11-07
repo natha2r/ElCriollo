@@ -11,21 +11,110 @@ import javafx.collections.ObservableList;
 
 public class CategoriaPlatosDao {
 
-    public CategoriaPlatosDao(Connection conn1) {
+    private ConnectionMySQL cn;  // Connection manager
+    private Connection conn;
+    private PreparedStatement pst;
+    private ResultSet rs;
+
+
+    public CategoriaPlatosDao() {
+        cn = new ConnectionMySQL(); // Initialize the connection manager
     }
 
-    ConnectionMySQL cn = new ConnectionMySQL();
-    Connection conn;
-    PreparedStatement pst;
-    ResultSet rs;
+    // Method to get categories based on the selected menu
+    public ObservableList<String> getCategoriasByMenu(String nombreMenu) {
+        ObservableList<String> categoriasPlatos = FXCollections.observableArrayList();
+        String query = "SELECT nombrePlato FROM platos cp "
+                + "JOIN categoriaPlatos tm ON cp.idCategoriaPlatos = tm.idCategoriaPlatos "
+                + "WHERE tm.nombreCategoriaPlatos = ?";
 
-    public CategoriaPlatosDao(com.sun.jdi.connect.spi.Connection conn) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
+
+            pst.setString(1, nombreMenu);
+            try (ResultSet rs = pst.executeQuery()) {
+                while (rs.next()) {
+                    categoriasPlatos.add(rs.getString("nombrePlato"));
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return categoriasPlatos;
+    }
+
+    public List<CategoriaPlatos> getCategoriasPlatos() {
+        List<CategoriaPlatos> categorias = new ArrayList<>();
+        String query = "SELECT * FROM categoriaPlatos";
+
+        try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query); ResultSet rs = pst.executeQuery()) {
+
+            while (rs.next()) {
+                CategoriaPlatos categoria = new CategoriaPlatos();
+                categoria.setIdCategoriaPlatos(rs.getString("idCategoriaPlatos"));
+                categoria.setNombreCategoriaPlatos(rs.getString("nombreCategoriaPlatos"));
+                categorias.add(categoria);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return categorias;
+    }
+
+    public List<CategoriaPlatos> getCategoriasPorTipo(int idTipoMenu) {
+        List<CategoriaPlatos> categorias = new ArrayList<>();
+        String query = "SELECT * FROM categoriaPlatos WHERE idTipoMenu = ?";
+
+        try (Connection conn = cn.getConnection(); PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setInt(1, idTipoMenu);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    CategoriaPlatos categoria = new CategoriaPlatos();
+                    categoria.setIdCategoriaPlatos(rs.getString("idCategoriaPlatos"));
+                    categoria.setNombreCategoriaPlatos(rs.getString("nombreCategoriaPlatos"));
+                    categoria.setIdTipoMenu(rs.getInt("idTipoMenu"));
+                    categorias.add(categoria);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return categorias;
     }
 
     // Método para obtener las categorías según el menú seleccionado
-    public ObservableList<String> getCategoriasByMenu(String nombreMenu) {
+    public ObservableList<String> getCategoriasByMenuM(String nombreMenu) {
         ObservableList<String> categorias = FXCollections.observableArrayList();
+
+        try {
+            conn = cn.getConnection();
+            String query = "SELECT nombreCategoriaPlatos FROM categoriaPlatos cp "
+                    + "JOIN TipoMenu tm ON cp.idTipoMenu = tm.idTipoMenu "
+                    + "WHERE tm.nombreMenu = ?";
+            pst = conn.prepareStatement(query);
+            pst.setString(1, nombreMenu);
+            rs = pst.executeQuery();
+
+            while (rs.next()) {
+                categorias.add(rs.getString("nombreCategoriaPlatos"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeResources();
+        }
+
+        return categorias;
+    }
+
+    // Método para obtener los platos según el menú seleccionado
+    public ObservableList<String> getPlatosByMenuM(String nombreMenu) {
+        ObservableList<String> platos = FXCollections.observableArrayList();
 
         try {
             conn = cn.getConnection();
@@ -37,63 +126,54 @@ public class CategoriaPlatosDao {
             rs = pst.executeQuery();
 
             while (rs.next()) {
-                categorias.add(rs.getString("categoriaPlatosId"));
-                categorias.add(rs.getString("nombrePlato"));
+                platos.add(rs.getString("nombrePlato"));
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (pst != null) {
-                    pst.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
+            closeResources();
+        }
+
+        return platos;
+    }
+
+    // Método para obtener todas las categorías de platos
+    public List<CategoriaPlatos> getCategoriasPlatosM() throws SQLException {
+        List<CategoriaPlatos> categorias = new ArrayList<>();
+        String query = "SELECT * FROM tipoMenu";
+        try {
+            conn = cn.getConnection();
+            PreparedStatement statement = conn.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                CategoriaPlatos categoria = new CategoriaPlatos();
+                categoria.setId(resultSet.getInt("id"));
+                categoria.setNombre(resultSet.getString("nombre"));
+                categorias.add(categoria);
             }
+        } finally {
+            closeResources();
         }
-
-        return categorias;
-    }
-    
-
-    public List<CategoriaPlato> getCategoriasPlatos() {
-        List<CategoriaPlato> categoriasPlatos = new ArrayList<>();
-        // Aquí iría la lógica para conectarte a la base de datos y obtener las categorías.
-        return categoriasPlatos;
-    }
-
-    public List<CategoriaPlato> cargarCategorias() {
-        List<CategoriaPlato> categorias = new ArrayList<>();
-        // Lógica para consultar la base de datos y llenar la lista
         return categorias;
     }
 
-    public static class CategoriaPlato {
-
-        public CategoriaPlato() {
-        }
-
-        public String getNombreCategoriaPlatos() {
-            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        }
-
-        public String getIdCategoriaPlatos() {
-            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        }
-
-        public String getNombre() {
-            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        }
-
-        public String getId() {
-            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    // Método para cerrar recursos
+    private void closeResources() {
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pst != null) {
+                pst.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
+
 }

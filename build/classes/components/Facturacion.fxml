@@ -6,10 +6,12 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -44,11 +46,13 @@
                         <Separator layoutX="571.0" layoutY="301.0" prefHeight="11.0" prefWidth="510.0" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="269.0" />
                         <Label layoutX="563.0" layoutY="294.0" prefHeight="22.0" prefWidth="252.0" styleClass="lbl_reserva" stylesheets="@../swing/cajeraview.css" text="Total a pagar: " />
                         <Label fx:id="p_total" layoutX="769.0" layoutY="231.0" prefHeight="22.0" prefWidth="186.0" styleClass="lbl_reserva" stylesheets="@../swing/cajeraview.css" />
-                        <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="815.0" layoutY="297.0" prefHeight="22.0" prefWidth="261.0" styleClass="lbl_reserva" stylesheets="@../swing/cajeraview.css" />
-                        <Button fx:id="btn_imprimir" mnemonicParsing="false" prefHeight="45.0" prefWidth="301.0" style="-fx-font-weight: bold;" styleClass="botones-factura" stylesheets="@../swing/facturacion.css" text="FACTURAR" AnchorPane.bottomAnchor="84.0" AnchorPane.leftAnchor="241.0" AnchorPane.rightAnchor="546.0" AnchorPane.topAnchor="284.0" />
-                        <Button layoutX="78.0" layoutY="284.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="177.0" style="-fx-font-weight: bold;" styleClass="botones-factura" stylesheets="@../swing/facturacion.css" text="IMPRIMIR" AnchorPane.leftAnchor="49.0" />
+                        <Label fx:id="lbl_total" alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="815.0" layoutY="297.0" prefHeight="22.0" prefWidth="261.0" styleClass="lbl_reserva" stylesheets="@../swing/cajeraview.css" />
+                        <Button fx:id="btn_cancelarT" layoutX="129.0" layoutY="286.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="301.0" style="-fx-font-weight: bold;" styleClass="botones-factura" stylesheets="@../swing/facturacion.css" text="CANCELAR" AnchorPane.bottomAnchor="82.0" AnchorPane.leftAnchor="129.0" AnchorPane.rightAnchor="658.0" AnchorPane.topAnchor="286.0">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Button>
                         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="24.0" layoutY="344.0" prefHeight="26.0" prefWidth="561.0" style="-fx-font-weight: bold;" styleClass="metodo" stylesheets="@../swing/facturacion.css" text="MÉTODO" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="24.0" />
-                        <Button contentDisplay="TOP" layoutX="85.0" layoutY="123.0" mnemonicParsing="false" prefHeight="114.0" prefWidth="135.0" styleClass="btns_metodos" stylesheets="@../swing/facturacion.css" text="EFECTIVO" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="104.0">
+                        <Button fx:id="btn_efectivo" contentDisplay="TOP" layoutX="85.0" layoutY="123.0" mnemonicParsing="false" prefHeight="114.0" prefWidth="135.0" styleClass="btns_metodos" stylesheets="@../swing/facturacion.css" text="EFECTIVO" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="104.0">
                            <graphic>
                               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -97,6 +101,48 @@
                      </children></Pane>
                </children>
             </AnchorPane>
+         </center>
+      </BorderPane>
+      <BorderPane fx:id="glassPane" prefHeight="200.0" prefWidth="200.0" styleClass="glassPane" stylesheets="@../swing/mensaje_pedido.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <VBox alignment="CENTER" maxHeight="328.0" maxWidth="517.0" prefHeight="0.0" prefWidth="0.0" spacing="10.0" styleClass="popupPane" BorderPane.alignment="CENTER">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" styleClass="txt1" text="INFORMACION PAGO EFECTIVO" />
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                     <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </padding>
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="310.0" styleClass="txt1" text="TOTAL" HBox.hgrow="ALWAYS" />
+                        <Label fx:id="lbl_totalP" prefHeight="30.0" prefWidth="310.0" styleClass="txt1" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="310.0" styleClass="txt1" text="PAGO CON" />
+                        <TextField fx:id="txt_pago" prefHeight="30.0" prefWidth="310.0" />
+                     </children>
+                     <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="310.0" styleClass="txt1" text="CAMBIO" />
+                        <Label fx:id="lbl_cambio" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="310.0" styleClass="txt1" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                     <children>
+                        <Button fx:id="btn_volver" mnemonicParsing="false" style="-fx-border-color: #ff0000; -fx-background-color: none;" styleClass="boton" text="VOLVER" />
+                        <Button fx:id="btn_facturar" mnemonicParsing="false" style="-fx-border-color: green; -fx-background-color: none;" styleClass="boton" text="FACTURAR" />
+                     </children>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+            </VBox>
          </center>
       </BorderPane>
    </children>

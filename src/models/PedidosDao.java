@@ -1,10 +1,10 @@
 package models;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 public class PedidosDao {
@@ -65,7 +65,7 @@ public class PedidosDao {
                     DetallesPedidos detalle = new DetallesPedidos();
                     detalle.setPlatosId(rs.getString("nombrePlato"));
                     detalle.setCantidad(rs.getInt("cantidad"));
-                    detalle.setPrecioUnitario(rs.getDouble("precioUnitario"));
+                    detalle.setPrecioUnitario(rs.getBigDecimal("precioUnitario"));
                     detalles.add(detalle);
                 }
             }
@@ -129,8 +129,54 @@ public class PedidosDao {
             pstmt.executeUpdate();
         }
     }
+    
+    public List<Pedidos> obtenerPedidosPorDia(Date fecha) throws SQLException {
+        List<Pedidos> pedidosList = new ArrayList<>();
 
-    public void updatePedidoEstado(String pedidoId, String en_curso) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String query = "SELECT * FROM pedidos WHERE DATE(fecha_pedido) = ?";
+
+        try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+            preparedStatement.setDate(1, new java.sql.Date(fecha.getTime()));
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Pedidos pedido = new Pedidos();
+                    pedido.setIdPedidos(resultSet.getString("idPedidos"));
+                    pedido.setEmpleadosId(resultSet.getString("empleadosId"));
+                    pedido.setMesasId(resultSet.getString("mesasId"));
+                    pedido.setFechaPedido(resultSet.getTimestamp("fecha_pedido"));
+                    pedido.setEstadoPedido(resultSet.getString("estadoPedido"));
+                    pedido.setPrecioTotal(resultSet.getDouble("precioTotal"));
+
+                    pedidosList.add(pedido);
+                }
+            }
+        }
+
+        return pedidosList;
+    }
+    
+    public List<Pedidos> getAllPedidosLlevar() throws SQLException {
+        List<Pedidos> pedidosList = new ArrayList<>();
+        String query = "SELECT p.idPedidos, p.fechaPedido, p.estadoPedido, p.precioTotal, "
+            + "e.nombreEmpleado "
+            + "FROM pedidos p "
+            + "JOIN empleados e ON p.empleadosId = e.idEmpleados "
+            + "WHERE p.mesasId IS NULL"; // Asumiendo que pedidos para llevar no tienen mesa
+
+        try (PreparedStatement stmt = conn.prepareStatement(query); ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                Pedidos pedido = new Pedidos(
+                    rs.getString("idPedidos"),
+                    rs.getString("nombreEmpleado"),
+                    null, // Sin mesa
+                    rs.getDate("fechaPedido"),
+                    rs.getString("estadoPedido"),
+                    rs.getDouble("precioTotal")
+                );
+                pedidosList.add(pedido);
+            }
+        }
+        return pedidosList;
     }
 }

@@ -279,7 +279,7 @@
             </GridPane>
          </center>
       </BorderPane>
-      <BorderPane fx:id="glassPaneD" prefHeight="200.0" prefWidth="200.0" styleClass="glassPane" stylesheets="@../swing/mensaje_pedido.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <BorderPane fx:id="glassPaneD" prefHeight="200.0" prefWidth="200.0" styleClass="glassPane" stylesheets="@../swing/mensaje_pedido.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
             <GridPane hgap="10.0" maxHeight="444.0" maxWidth="646.0" prefHeight="444.0" prefWidth="646.0" styleClass="popupPane" stylesheets="@../swing/mensaje_pedido.css" vgap="10.0" BorderPane.alignment="CENTER">
               <columnConstraints>

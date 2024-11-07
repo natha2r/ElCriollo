@@ -1,4 +1,4 @@
-/*
+ /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
@@ -31,18 +31,29 @@ import models.ConnectionMySQL;
 import models.DetallesPedidos;
 import models.Pedidos;
 import models.PedidosDao;
-import models.Categorias;
 import javafx.scene.layout.HBox;
 import models.CategoriaPlatos;
 import models.CategoriaPlatosDao;
-import models.Productos;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import models.TipoMenu;
+import models.TipoMenuDao;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import java.io.File;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import models.Platos;
+import models.PlatosDao;
+import javafx.scene.text.Text;
 
 public class Inicio_CocinaController implements Initializable {
 
     @FXML
     private VBox contenedor_categorias;
+    
+    @FXML
+    private GridPane contenedor_tllevar;
 
     @FXML
     private VBox contenedor_productos;
@@ -58,6 +69,9 @@ public class Inicio_CocinaController implements Initializable {
 
     @FXML
     private GridPane paneMenuPl;
+    
+    @FXML
+    private BorderPane paneMenu;
 
     @FXML
     private Button btnSalir;
@@ -132,8 +146,9 @@ public class Inicio_CocinaController implements Initializable {
 
     @FXML
     private CheckBox btnChulo1;
+    
     @FXML
-    private BorderPane paneMenu;
+    private BorderPane paneMenuC;
 
     @FXML
     private BorderPane paneProductos;
@@ -165,13 +180,15 @@ public class Inicio_CocinaController implements Initializable {
     public Inicio_CocinaController() {
     }
 
-    public Inicio_CocinaController(VBox contenedor_categorias, VBox contenedor_productos, VBox contenedor_platos, GridPane contenedor_tarjetas, GridPane paneMenuP, GridPane paneMenuPl, Button btnSalir, Button btnMenu, Button btnCurso, Button btnTerminado, Button btnConfiguracion, Button btnAplicar, Label lblMesa1, Label lblTiempo1, Label lblTiempoR1, Label lblTiempoM1, Label lblDmesera1, Label lblMesa, Label lblColorP1, Label lblDpedido1, Label lblPedidoo, PedidosDao pedidos_dao, Connection conn, Label lblComentariooP, Label lblPedidooo1, Label lblComentarioooP, AnchorPane rootPane, Pane glassPane, Pane V_configuracion, CheckBox btnChulo, CheckBox btnChulo1, BorderPane paneMenu, BorderPane paneProductos, BorderPane pane_categoriaplatos, BorderPane paneConfiguracion, Button btnAtras, Button btnAtrass, Button btnAtrasss, ComboBox<String> comboBoxCategorias, CategoriaDao categoriaDao) {
+    public Inicio_CocinaController(VBox contenedor_categorias, GridPane contenedor_tllevar, VBox contenedor_productos, VBox contenedor_platos, GridPane contenedor_tarjetas, GridPane paneMenuP, GridPane paneMenuPl, BorderPane paneMenu, Button btnSalir, Button btnMenu, Button btnCurso, Button btnTerminado, Button btnConfiguracion, Button btnAplicar, Label lblMesa1, Label lblTiempo1, Label lblTiempoR1, Label lblTiempoM1, Label lblDmesera1, Label lblMesa, Label lblColorP1, Label lblDpedido1, Label lblPedidoo, PedidosDao pedidos_dao, Connection conn, Label lblComentariooP, Label lblPedidooo1, Label lblComentarioooP, AnchorPane rootPane, Pane glassPane, Pane V_configuracion, CheckBox btnChulo, CheckBox btnChulo1, BorderPane paneMenuC, BorderPane paneProductos, BorderPane pane_categoriaplatos, BorderPane paneConfiguracion, Button btnAtras, Button btnAtrass, Button btnAtrasss, ComboBox<String> comboBoxCategorias, MediaPlayer mediaPlayer, CategoriaDao categoriaDao, Label selectedLabel) {
         this.contenedor_categorias = contenedor_categorias;
+        this.contenedor_tllevar = contenedor_tllevar;
         this.contenedor_productos = contenedor_productos;
         this.contenedor_platos = contenedor_platos;
         this.contenedor_tarjetas = contenedor_tarjetas;
         this.paneMenuP = paneMenuP;
         this.paneMenuPl = paneMenuPl;
+        this.paneMenu = paneMenu;
         this.btnSalir = btnSalir;
         this.btnMenu = btnMenu;
         this.btnCurso = btnCurso;
@@ -197,7 +214,7 @@ public class Inicio_CocinaController implements Initializable {
         this.V_configuracion = V_configuracion;
         this.btnChulo = btnChulo;
         this.btnChulo1 = btnChulo1;
-        this.paneMenu = paneMenu;
+        this.paneMenuC = paneMenuC;
         this.paneProductos = paneProductos;
         this.pane_categoriaplatos = pane_categoriaplatos;
         this.paneConfiguracion = paneConfiguracion;
@@ -206,6 +223,7 @@ public class Inicio_CocinaController implements Initializable {
         this.btnAtrasss = btnAtrasss;
         this.comboBoxCategorias = comboBoxCategorias;
         this.categoriaDao = categoriaDao;
+        this.selectedLabel = selectedLabel;
         ConnectionMySQL connectionMySQL = new ConnectionMySQL();
         conn = (Connection) connectionMySQL.getConnection();
         categoriaDao = new CategoriaDao();
@@ -213,14 +231,16 @@ public class Inicio_CocinaController implements Initializable {
 
     @FXML
     private void initialize() {
-
         pedidos_dao = new PedidosDao(conn);
         categoriaDao = new CategoriaDao();
         try {
             loadPedidos();
+            //cargarCategoriasPlatos();
+            cargarTiposMenu(); 
         } catch (Exception e) {
             System.out.println("Error al cargar pedidos: " + e.getMessage());
         }
+        lblColorP1.setText("Nuevo texto desde el controlador");
     }
 
     private void handleButton1Click() {
@@ -262,60 +282,176 @@ public class Inicio_CocinaController implements Initializable {
         }
     }
 
-    private void cargarCategoriasPlatos() {
+    private void cargarCategoriasPlatos() throws SQLException {
         // Obtener las categorías de platos desde la base de datos
-        CategoriaPlatosDao categoriaPlatosDao = new CategoriaPlatosDao(conn); // Asegúrate de pasar la conexión
-        List<CategoriaPlatosDao.CategoriaPlato> categoriasPlatos = categoriaPlatosDao.getCategoriasPlatos(); // Ajusta el método según tu implementación
+        CategoriaPlatosDao categoriaPlatosDao = new CategoriaPlatosDao();
+        List<CategoriaPlatos> categoriasPlatos = categoriaPlatosDao.getCategoriasPlatos();
 
         // Limpiar el contenedor
         contenedor_categorias.getChildren().clear();
 
         // Agregar un label por cada categoría de platos
-        for (CategoriaPlatosDao.CategoriaPlato categoria : categoriasPlatos) {
-            Label label = new Label(categoria.getNombre()); // Asegúrate de que el método getNombre() sea correcto
-            label.setStyle("-fx-padding: 10; -fx-border-color: #ccc; -fx-background-color: #f2f2f2;"); // Estilo opcional
-            label.setOnMouseClicked(event -> {
-                // Aquí puedes manejar el evento de clic
-                cargarProductos(categoria.getId()); // Asegúrate de que getId() devuelva el ID correcto
+        for (int i = 0; i < categoriasPlatos.size(); i++) {
+            CategoriaPlatos categoria = categoriasPlatos.get(i);
+            Text text = new Text(categoria.getNombreCategoriaPlatos());
+            text.setId("categoriaLabel" + i); // Asignar un ID único
+            text.setStyle("-fx-padding: 20; -fx-border-color: #fff; -fx-background-color: #FAFBFD;");
+            text.setFont(Font.font("Arial", FontWeight.NORMAL, 16)); // Cambiar tipo y tamaño de letra
+            text.setOnMouseClicked(event -> {
+                paneMenuC.setVisible(false);
+                paneProductos.setVisible(true);
             });
-            contenedor_categorias.getChildren().add(label);
+            contenedor_categorias.getChildren().add(text);
         }
     }
 
+   
+    private void cargarPlatos() {
+        PlatosDao platosDao = new PlatosDao(); // Cambiar ProductoDao a PlatosDao
+        List<Platos> platos = platosDao.getAllPlatos(); // Asegúrate de que este método esté implementado
 
-    private void cargarCategoriasProductos(String idCategoriaPlato) {
-        // Obtener las categorías de los productos desde la base de datos
-        List<Categorias> categoriasProductos = categoriaDao.getCategoriasProductos(idCategoriaPlato);
-
-        // Limpiar el contenedor
         contenedor_productos.getChildren().clear();
 
-        // Agregar un label por cada categoría
-        for (Categorias categoria : categoriasProductos) {
-            Label label = new Label(categoria.getNombreCategoria());
-            label.setOnMouseClicked(event -> {
-                // Mostrar el paneProductos
-                paneMenuP.setVisible(false);
-                paneProductos.setVisible(true);
+        for (int i = 0; i < platos.size(); i++) {
+            Platos plato = platos.get(i); // Cambia Productos a Platos
+            HBox hbox = new HBox();
+            hbox.setSpacing(15);
 
-                // Cargar los productos
-                cargarProductos(String.valueOf(categoria.getIdCategoria()));
+            Label label = new Label(plato.getNombrePlato()); // Cambia getNombreProducto a getNombrePlato
+            label.setId("platoLabel" + i); // Asignar un ID único
+            label.setStyle("-fx-padding: 20; -fx-border-color: #fff; -fx-background-color: #FAFBFD;");
+            label.setFont(Font.font("Arial", FontWeight.NORMAL, 14)); // Cambiar tipo y tamaño de letra
+        
+            Label mensajeLabel = new Label(); // Crear un Label para mostrar mensajes a la mesera
+            CheckBox checkBox = new CheckBox();
+            checkBox.setPrefSize(50, 30); // Cambiar el tamaño del CheckBox
+            checkBox.getStyleClass().add("customCheckBox"); // Aplicar estilo CSS
+            checkBox.setOnAction(event -> {
+                if (checkBox.isSelected()) {
+                    mensajeLabel.setText(plato.getNombrePlato() + " ya no está disponible."); // Cambiar a getNombrePlato
+                    checkBox.setSelected(true);
+                    platosDao.marcarComoNoDisponible(plato.getIdPlatos()); // Cambiar a getIdPlatos
+                } else {
+                    mensajeLabel.setText(""); // Limpia el mensaje si se desmarca
+                }
             });
-            contenedor_productos.getChildren().add(label);
+
+            hbox.getChildren().addAll(label, checkBox, mensajeLabel); // Agregar mensajeLabel al HBox
+            contenedor_productos.getChildren().add(hbox);
         }
     }
-
-    private void cargarProductos(String idCategoriaProducto) {
-        // Obtener los productos desde la base de datos
-        List<Productos> productos = productoDao.getProductosByCategoria(idCategoriaProducto);
+    
+    private void cargarTiposMenu() {
+        // Obtener los tipos de menú desde la base de datos
+        TipoMenuDao tipoMenuDao = new TipoMenuDao();
+        List<TipoMenu> tiposMenu = tipoMenuDao.getTipoMenu();
 
         // Limpiar el contenedor
         contenedor_platos.getChildren().clear();
 
-        // Agregar un label por cada producto
-        for (Productos producto : productos) {
-            Label label = new Label(producto.getNombreProducto());
+        // Agregar un label por cada tipo de menú
+        for (int i = 0; i < tiposMenu.size(); i++) {
+            TipoMenu tipo = tiposMenu.get(i);
+            Label label = new Label(tipo.getNombreMenu());
+            label.setId("tipoMenuLabel" + i); // Asignar un ID único
+            label.setStyle("-fx-padding: 20; -fx-border-color: #fff; -fx-background-color: #FAFBFD;");
+            label.setFont(Font.font("Arial", FontWeight.NORMAL, 16)); // Cambiar tipo y tamaño de letra
+
+            // Agregar un evento para manejar clics en la etiqueta
+            label.setOnMouseClicked(event -> {
+                try {
+                    pane_categoriaplatos.setVisible(false);
+                    paneMenuC.setVisible(true);
+                    // Cargar categorías según el tipo de menú
+                    cargarCategoriasPorTipo(tipo.getIdTipoMenu());
+                } catch (SQLException ex) {
+                    Logger.getLogger(Inicio_CocinaController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
+
             contenedor_platos.getChildren().add(label);
+        }
+    }
+
+    private void cargarCategoriasPorTipo(int idTipoMenu) throws SQLException {
+        // Obtener las categorías de platos según el tipo de menú
+        CategoriaPlatosDao categoriaPlatosDao = new CategoriaPlatosDao();
+        List<CategoriaPlatos> categoriasPlatos = categoriaPlatosDao.getCategoriasPorTipo(idTipoMenu);
+
+        // Limpiar el contenedor de categorías
+            contenedor_categorias.getChildren().clear();
+
+        for (int i = 0; i < categoriasPlatos.size(); i++) {
+            CategoriaPlatos categoria = categoriasPlatos.get(i);
+            Label label = new Label(categoria.getNombreCategoriaPlatos());
+            label.setId("categoriaLabel" + i); // Asignar un ID único
+            label.setStyle("-fx-padding: 20; -fx-border-color: #fff; -fx-background-color: #FAFBFD;");
+            label.setFont(Font.font("Arial", FontWeight.NORMAL, 16)); // Cambiar tipo y tamaño de letra
+
+            // Agregar un evento para manejar clics en la categoría
+            label.setOnMouseClicked(event -> {
+                paneMenuC.setVisible(false);
+                paneProductos.setVisible(true);
+                // Cargar platos según la categoría seleccionada
+                cargarPlatosPorCategoria(categoria.getIdCategoriaPlatos());
+            });
+
+            contenedor_categorias.getChildren().add(label);
+        }
+    }
+
+    private void cargarPlatosPorCategoria(String idCategoriaPlatos) {
+        PlatosDao platosDao = new PlatosDao();
+        List<Platos> platos = platosDao.getPlatosByCategoria(idCategoriaPlatos);
+
+        contenedor_productos.getChildren().clear();
+
+        for (int i = 0; i < platos.size(); i++) {
+            Platos plato = platos.get(i);
+            HBox hbox = new HBox();
+                hbox.setSpacing(15);
+
+            Label label = new Label(plato.getNombrePlato());
+            label.setId("platoLabel" + i);
+            label.setStyle("-fx-padding: 20; -fx-border-color: #fff; -fx-background-color: #FAFBFD;");
+            label.setFont(Font.font("Arial", FontWeight.NORMAL, 14));
+
+            CheckBox checkBox = new CheckBox();
+            checkBox.setPrefSize(50, 30);
+            checkBox.getStyleClass().add("customCheckBox");
+            checkBox.setOnAction(event -> {
+                // Lógica para manejar la selección del plato
+            });
+
+            hbox.getChildren().addAll(label, checkBox);
+            contenedor_productos.getChildren().add(hbox);
+        }
+    }
+    
+    private void cargarTarjetasLlevar() {
+        try {
+            List<Pedidos> pedidosLlevar = pedidos_dao.getAllPedidosLlevar();
+            System.out.println("Número de pedidos para llevar: " + pedidosLlevar.size());
+
+            contenedor_tllevar.getChildren().clear();
+
+            if (pedidosLlevar.isEmpty()) {
+                System.out.println("No hay pedidos para llevar.");
+                return;
+            }
+
+            for (Pedidos pedido : pedidosLlevar) {
+                List<DetallesPedidos> detalles = pedidos_dao.getDetallesPedido(pedido.getIdPedidos());
+                VBox tarjetaLlevar = loadTarjetaLlevar(pedido, detalles);
+
+                if (tarjetaLlevar != null) {
+                    contenedor_tllevar.getChildren().add(tarjetaLlevar);
+                } else {
+                    System.err.println("Error: La tarjeta de llevar no se pudo cargar para el pedido ID: " + pedido.getIdPedidos());
+                }
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al cargar pedidos para llevar: " + e.getMessage());
         }
     }
 
@@ -332,9 +468,12 @@ public class Inicio_CocinaController implements Initializable {
     }
 
     @FXML
-    private void menuAction() {
+    private void menuAction() throws SQLException {
         pane_categoriaplatos.setVisible(true);
+        cargarTiposMenu();
         cargarCategoriasPlatos();
+        cargarPlatos();
+        
     }
 
     @FXML
@@ -397,19 +536,14 @@ public class Inicio_CocinaController implements Initializable {
 
     @FXML
     public void aplicarAction() {
-        // Aquí irían las acciones para aplicar la configuración seleccionada
-
-        // Verificar si el CheckBox está seleccionado
-        if (btnChulo.isSelected()) {
-        }
-
         // Ocultar la ventana emergente después de aplicar cambios
         paneConfiguracion.setVisible(false);
         glassPane.setVisible(false);
     }
 
     public void chuloAction() {
-
+        btnChulo.setOnAction(event -> {
+        });
     }
 
     public void chulo1Action() {
@@ -418,13 +552,13 @@ public class Inicio_CocinaController implements Initializable {
 
     @FXML
     private void atrasAction() {
-        pane_categoriaplatos.setVisible(true);
-        paneProductos.setVisible(false);
+        paneMenuPl.setVisible(true);
+        paneMenuC.setVisible(false);
     }
 
     @FXML
     private void atrassAction() {
-        pane_categoriaplatos.setVisible(true);
+        paneMenuC.setVisible(true);
         paneProductos.setVisible(false);
     }
 
@@ -433,42 +567,48 @@ public class Inicio_CocinaController implements Initializable {
         rootPane.setVisible(true);
         pane_categoriaplatos.setVisible(false);
     }
+    
+   private void loadPedidos() {
+    try {
+        List<Pedidos> pedidos = pedidos_dao.getAllPedidos();
+        System.out.println("Número de pedidos: " + pedidos.size());
 
-    private void loadPedidos() {
-        try {
-            List<Pedidos> pedidos = pedidos_dao.getAllPedidos();
-            System.out.println("Número de pedidos: " + pedidos.size());
+        // Limpia todas las columnas y filas existentes
+        contenedor_tarjetas.getColumnConstraints().clear();
+        contenedor_tarjetas.getRowConstraints().clear();
+        contenedor_tarjetas.getChildren().clear();
 
-            // Limpia todas las columnas y filas existentes
-            contenedor_tarjetas.getColumnConstraints().clear();
-            contenedor_tarjetas.getRowConstraints().clear();
-            contenedor_tarjetas.getChildren().clear();
+        int column = 0;
+        int row = 0;
+        int maxColumns = 5; // Número máximo de columnas en el GridPane
 
-            int column = 0;
-            int row = 0;
-            int maxColumns = 5; // Número máximo de columnas en el GridPane
+        for (Pedidos pedido : pedidos) {
+            List<DetallesPedidos> detalles = pedidos_dao.getDetallesPedido(pedido.getIdPedidos());
+            VBox pedidoCard = loadPedidoCard(pedido, detalles); // Cambiado a VBox
 
-            for (Pedidos pedido : pedidos) {
-                List<DetallesPedidos> detalles = pedidos_dao.getDetallesPedido(pedido.getIdPedidos());
-                VBox pedidoCard = loadPedidoCard(pedido, detalles); // Cambiado a VBox
+            // Añadir tarjeta al GridPane
+            contenedor_tarjetas.add(pedidoCard, column, row);
+            column++;
 
-                // Añadir tarjeta al GridPane
-                contenedor_tarjetas.add(pedidoCard, column, row);
-                column++;
-
-                // Mover a la siguiente fila si se alcanzó el número máximo de columnas
-                if (column >= maxColumns) {
-                    column = 0;
-                    row++;
-                }
+            // Mover a la siguiente fila si se alcanzó el número máximo de columnas
+            if (column >= maxColumns) {
+                column = 0;
+                row++;
             }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
-            e.printStackTrace();
+
+            // Asigna el ID del pedido a lblColorP1 si no es nulo
+            if (lblColorP1 != null) {
+                lblColorP1.setUserData(pedido.getIdPedidos()); // Solo usamos el último valor, podrías ajustar según tu lógica
+            }
         }
-        lblColorP1.setUserData(pedidos.getIdPedidos()); // Almacena el ID en userData
+        
         contenedor_tarjetas.setVisible(true); // Asegúrate de que el contenedor está visible
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+        e.printStackTrace();
     }
+}
 
     private VBox loadPedidoCard(Pedidos pedido, List<DetallesPedidos> detalles) {
         VBox pedidoCard = null;
@@ -495,13 +635,46 @@ public class Inicio_CocinaController implements Initializable {
             System.out.println("Error al cargar TarjetaPedido.fxml: " + e.getMessage());
         }
         return pedidoCard;
-}
+    }
+    
+    private VBox loadTarjetaLlevar(Pedidos pedido, List<DetallesPedidos> detalles) {
+        VBox tarjetaLlevar = null;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/components/TarjetaLlevar.fxml"));
+            tarjetaLlevar = loader.load();
+
+            TarjetaLlevarController controller = loader.getController();
+            //TarjetaLlevarController controller = new TarjetaLlevarController();
+            if (controller != null) {
+                controller.cargarDetalles(
+                    pedido.getIdPedidos(),
+                    pedido.getMesasId(),
+                    pedido.getEmpleadosId(),
+                    detalles
+                );
+            } else {
+                System.err.println("Error: Controlador es null.");
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error al cargar TarjetaLlevar.fxml: " + e.getMessage());
+        }
+
+        return tarjetaLlevar;
+    }
 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         btnSalir.setOnAction(e -> salirAction());
-        btnMenu.setOnAction(e -> menuAction());
+        btnMenu.setOnAction(e -> {
+            try {
+                menuAction();
+            } catch (SQLException ex) {
+                Logger.getLogger(Inicio_CocinaController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
         btnAplicar.setOnAction(e -> aplicarAction());
         pedidos_dao = new PedidosDao(conn);
         btnAtras.setOnAction(e -> atrasAction());
@@ -510,7 +683,8 @@ public class Inicio_CocinaController implements Initializable {
 
         btnCurso.setOnAction(e -> cursoAction());
         btnTerminado.setOnAction(e -> terminadoAction());
-        
+        cargarTarjetasLlevar();
+
         try {
             loadPedidos();
             cargarCategoriasPlatos();
@@ -518,12 +692,13 @@ public class Inicio_CocinaController implements Initializable {
             System.out.println("Error al cargar pedidos: " + e.getMessage());
             // Inicializar la ventana emergente como oculta
             glassPane.setVisible(false);
-            paneMenu.setVisible(false);
+            paneMenuC.setVisible(false);
             paneMenuP.setVisible(false);
             contenedor_categorias.setVisible(false);
             contenedor_productos.setVisible(false);
             contenedor_tarjetas.setVisible(true);
             paneConfiguracion.setVisible(false);
+            contenedor_tllevar.setVisible(true);
         }
     }
 
@@ -532,26 +707,29 @@ public class Inicio_CocinaController implements Initializable {
     }
 
     public void setStage(Stage stage) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    private void cargarCategorias() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    private static class productoDao {
-
-        private static List<Productos> getProductosByCategoria(String idCategoriaProducto) {
-            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        }
-
-        public productoDao() {
-        }
     }
 
     private static class lblColor {
 
         public lblColor() {
+            
+        }
+    }
+
+    public static class domicilios {
+
+        public domicilios() {
+        }
+    }
+
+    private static class producto {
+
+        private static String getNombreProducto() {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+
+        public producto() {
         }
     }
 }
+
