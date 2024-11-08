@@ -457,7 +457,13 @@ ON DELETE CASCADE;
     select * from categoria;
 SELECT idInventario FROM inventario ORDER BY idInventario DESC LIMIT 1;
 
-
+SELECT p.idProductos, p.nombreProducto, p.precio, c.nombreCategoria AS categoria,
+                   i.stock, pr.nombreEmpresa AS proveedor
+            FROM productos p
+            LEFT JOIN inventario i ON p.idProductos = i.productosId
+            LEFT JOIN proveedores pr ON i.proveedorId = pr.idProveedores
+            LEFT JOIN categoria c ON p.categoria = c.idCategoria
+            WHERE c.nombreCategoria =idCategoriacategoriacategoria "Entrantes";
 
 -- TRIGGER PARA INACTIVAR Y ACTUALIZAR LAS TABLAS RELACIONADAS CON LA LLAVE FORANEA DE EMPLEADOS.
 
