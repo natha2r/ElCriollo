@@ -85,6 +85,12 @@ create database if not exists ElCriollo;
 		categoriaPlatosId varchar(10),
 		foreign key (categoriaPlatosId) references categoriaPlatos(idCategoriaPlatos)
 	);
+    
+    ALTER TABLE platos
+ADD COLUMN esMini TINYINT(1) DEFAULT 0;
+
+select * from platos;
+
 
 	create table if not exists detallesPedido( -- AGREGAR COMENTARIOS DE PEDIDO
 		pedidosId varchar(10),
