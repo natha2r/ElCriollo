@@ -265,6 +265,9 @@ public class Inicio_ventas_administradorController {
     private Button btn_interno_limpiar_categoria;
     @FXML
     private Button btn_interno_cancelar_categoria;
+    
+    @FXML
+    private Button btn_volver_reponer_prod;
 
     /*SON SUBRECURSOS PARA LA TABLA INVENTARIO*/
     @FXML
@@ -671,7 +674,7 @@ public class Inicio_ventas_administradorController {
 
                     ObservableList<Productos> listaProductos = productoDao.obtenerTodosLosProductos();
 
-                    tablaInventario.setItems(listaProductos);
+                    tablaInventario_reponer.setItems(listaProductos);
 
                 }
             }
@@ -768,7 +771,8 @@ public class Inicio_ventas_administradorController {
         // Verificar si estás en los paneles de "Registrar Información" o "Modificar Información"
         if ((pane_registrar_informacion.isVisible() || pane_modificar_informacion.isVisible()
                 || pane_modificar_inactivos_informacion.isVisible() || pane_nuevo_producto.isVisible()
-                || pane_nuevo_proveedor.isVisible() || pane_nueva_categoria.isVisible()) && !anchorPane_inicio.isVisible()) {
+                || pane_nuevo_proveedor.isVisible() || pane_nueva_categoria.isVisible() || pane_reponer_producto.isVisible()) 
+                && !anchorPane_inicio.isVisible()) {
             // Mostrar advertencia de confirmación
             Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
             confirmacion.setTitle("Confirmar");
@@ -799,7 +803,10 @@ public class Inicio_ventas_administradorController {
         limpiarCamposmodificadosinactivos();
         limpiarCamposproductos();
         limpiarCamposproveedor();
-
+        limpiarCamposreponer();
+        tablaInventario.getSelectionModel().clearSelection();
+        tablaInventario_reponer.getSelectionModel().clearSelection();
+        
         // Ocultar todos los formularios que podrían estar visibles
         pane_registrar_informacion.setVisible(false);
         pane_modificar_informacion.setVisible(false);
@@ -833,7 +840,8 @@ public class Inicio_ventas_administradorController {
                 || pane_modificar_inactivos_informacion.isVisible()
                 || pane_nuevo_producto.isVisible()
                 || pane_nuevo_proveedor.isVisible()
-                || pane_nueva_categoria.isVisible();
+                || pane_nueva_categoria.isVisible()
+                || pane_reponer_producto.isVisible();
 
         if (enFormularioEspecifico) {
             // Mostrar advertencia de confirmación
@@ -892,7 +900,8 @@ public class Inicio_ventas_administradorController {
                 || pane_modificar_inactivos_informacion.isVisible()
                 || pane_nuevo_producto.isVisible()
                 || pane_nuevo_proveedor.isVisible()
-                || pane_nueva_categoria.isVisible();
+                || pane_nueva_categoria.isVisible()
+                || pane_reponer_producto.isVisible();
 
         if (enFormularioEspecifico) {
             // Mostrar advertencia de confirmación
@@ -1723,7 +1732,7 @@ public class Inicio_ventas_administradorController {
         // Acción para el botón "volver inventario"
 
         // Verificar si el panel de actualizacon están visibles
-        if (pane_nuevo_producto.isVisible() || pane_nuevo_proveedor.isVisible() || pane_nueva_categoria.isVisible()) {
+        if (pane_nuevo_producto.isVisible() || pane_nuevo_proveedor.isVisible() || pane_nueva_categoria.isVisible() || pane_reponer_producto.isVisible()) {
 
             // Mostrar advertencia de confirmación
             Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
@@ -1748,12 +1757,17 @@ public class Inicio_ventas_administradorController {
                 pane_nuevo_producto.setVisible(false);
                 pane_nuevo_proveedor.setVisible(false);
                 pane_nueva_categoria.setVisible(false);
-
+                pane_reponer_producto.setVisible(false);
+                
                 /*limpiarCamposmodificadosinactivos();
             limpiarCampos();  // Limpiar todos los campos
             limpiarCamposmodificados();*/
                 limpiarCamposproductos();
                 limpiarCamposproveedor();
+                limpiarCamposreponer();
+                tablaInventario_reponer.getSelectionModel().clearSelection();
+                configurarColumnasProductos();
+                cargarProductos();
 
                 enFormulario = false;
             }
@@ -1771,6 +1785,9 @@ public class Inicio_ventas_administradorController {
             pane_nuevo_proveedor.setVisible(false);
             pane_actualizacion_inventario.setVisible(false);
             pane_nueva_categoria.setVisible(false);
+            pane_reponer_producto.setVisible(false);
+            configurarColumnasProductos();
+            cargarProductos();
 
             enFormulario = false; // Asegurarse de que no estamos en un formulario
 
@@ -2337,6 +2354,15 @@ public class Inicio_ventas_administradorController {
         txt_reponer_precio_prod.clear();
         txt_reponer_proveedor_prod.clear();
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     @FXML
     private void handleBtnInternoReponerProd() {
@@ -2350,7 +2376,36 @@ public class Inicio_ventas_administradorController {
 
     @FXML
     private void handleBtnSalirReponerProd() {
+        // Mostrar advertencia de confirmación
+        Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmacion.setTitle("Confirmar");
+        confirmacion.setHeaderText("¿Está seguro de que desea cancelar el llenado del producto en reponer?");
+        confirmacion.setContentText("Si cancela, se perderá toda la información ingresada del producto en estado de reponer.");
 
+        Optional<ButtonType> resultado = confirmacion.showAndWait();
+
+        if (resultado.isPresent() && resultado.get() == ButtonType.OK) {
+            // Solo si el usuario confirma, cambia la visibilidad de los paneles
+            pane_nuevo_producto.setVisible(false);
+            pane_nuevo_proveedor.setVisible(false);
+            pane_nueva_categoria.setVisible(false);
+            pane_reponer_producto.setVisible(false);
+            
+            pane_actualizacion_inventario.setVisible(false);
+            pane_inventario.setVisible(true);
+
+            pane_configuracion.setVisible(false);
+            anchorPane_inicio.setVisible(false);
+            pane_personal_roles.setVisible(false);
+            anchor_configuracion.setVisible(false);
+            pane_registrar_informacion.setVisible(false);
+            pane_modificar_inactivos_informacion.setVisible(false);
+            
+            configurarColumnasProductos();
+            cargarProductos();
+            
+            limpiarCamposreponer(); // Limpia los campos solo si se confirma la cancelación
+        }
     }
 
     /*--------------------------------------------------------------------------*/

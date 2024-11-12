@@ -463,7 +463,7 @@ SELECT p.idProductos, p.nombreProducto, p.precio, c.nombreCategoria AS categoria
             LEFT JOIN inventario i ON p.idProductos = i.productosId
             LEFT JOIN proveedores pr ON i.proveedorId = pr.idProveedores
             LEFT JOIN categoria c ON p.categoria = c.idCategoria
-            WHERE c.nombreCategoria =idCategoriacategoriacategoria "Entrantes";
+            WHERE c.nombreCategoria ="Entrantes";
 
 -- TRIGGER PARA INACTIVAR Y ACTUALIZAR LAS TABLAS RELACIONADAS CON LA LLAVE FORANEA DE EMPLEADOS.
 

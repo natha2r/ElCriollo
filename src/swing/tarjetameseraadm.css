@@ -12,7 +12,7 @@
 .tarjeta_meseras {
     -fx-pref-width: 200px;
     -fx-pref-height: 220px;
-    -fx-background-color: #FFD700; /* Color amarillo claro */
+    -fx-background-color: #FFb94f; /* Color amarillo claro */
     -fx-padding: 20; /* Espacio interno */
     -fx-background-radius: 30; /*borde del pane*/
     -fx-border-radius: 30;
