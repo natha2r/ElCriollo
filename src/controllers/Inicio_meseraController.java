@@ -2,8 +2,6 @@ package controllers;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -13,10 +11,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -26,13 +27,24 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import models.CategoriaPlatosDao;
 import models.Employees;
 import models.EmployeesDao;
+import models.Platos;
 import models.PrincipioDao;
 import models.SopaDao;
 import models.TipoMenuDao;
 
 public class Inicio_meseraController implements Initializable {
+    
+    @FXML
+    private TableView<Platos> tablaPlatos;
+    @FXML
+    private TableColumn<Platos, String> columnaNombre;
+    @FXML
+    private TableColumn<Platos, String> columnaPrecio;
+    @FXML
+     private TableColumn<Platos, CheckBox> columnaMini;
 
     @FXML
     private Button btn_pedidos;
@@ -42,6 +54,12 @@ public class Inicio_meseraController implements Initializable {
 
     @FXML
     private Button btn_menu;
+
+    @FXML
+    private ListView<String> listViewCategorias;
+    
+    @FXML
+    private ListView<String> listViewCategoriasC;
 
     @FXML
     private Button btn_salir;
@@ -70,7 +88,10 @@ public class Inicio_meseraController implements Initializable {
 
     @FXML
     private Button btn_arrowMenu;
-
+    
+    @FXML
+    private Button btn_arrowMenu2;
+   
     @FXML
     private GridPane gridPane; // Contenedor de las mesas
 
@@ -99,6 +120,9 @@ public class Inicio_meseraController implements Initializable {
 
     @FXML
     private Pane pane_menu;
+    
+    @FXML
+    private Button btn_arrowMenu1;
 
     @FXML
     private Button btn_editPrincipio;
@@ -156,6 +180,8 @@ public class Inicio_meseraController implements Initializable {
     private Button btn_tomarPedido;
 
     private TipoMenuDao tipoMenuDao = new TipoMenuDao();
+
+    private CategoriaPlatosDao categoriaPlatosDao = new CategoriaPlatosDao();
 
     public Inicio_meseraController() {
     }
@@ -225,7 +251,7 @@ public class Inicio_meseraController implements Initializable {
 
         btn_aceptarEditSopa.setOnAction(event -> mostrarSopaSeleccionada());
         btn_aceptarEditPrincipio.setOnAction(event -> mostrarPrincipioSeleccionado());
-        btn_editDia.setOnAction(event -> editarMenuDia());
+        //btn_editDia.setOnAction(event -> editarMenuDia());
         btn_editCarta.setOnAction(event -> editarMenuCarta());
 
         glassPane3.setVisible(false);
@@ -253,6 +279,40 @@ public class Inicio_meseraController implements Initializable {
 
         imageView1.setImage(new Image("/resources/pepitoria.png"));
         makeImageViewCircular(imageView1, 50);
+
+        btn_editDia.setOnAction(event -> {
+            pane_menuDia.setVisible(true);
+            String categoria = "Menú del Día";
+            // listViewCategorias.setVisible(true); // Si necesitas mostrar la lista de categorías
+            ObservableList<String> categorias = categoriaPlatosDao.getCategoriasByMenuM(categoria);
+
+            listViewCategorias.getSelectionModel().clearSelection(); // Limpia la selección anterior
+            listViewCategorias.setItems(categorias);
+
+            // Verificación del tamaño de la lista de categorías
+            System.out.println("Tamaño de categorías: " + categorias.size());
+
+            // Listener para la selección de categorías (si necesitas agregar un listener aquí, lo haces)
+        });
+        
+        btn_editCarta.setOnAction(event -> {
+            pane_menuCarta.setVisible(true);
+            String categoria = "Platos a la Carta";
+            // listViewCategorias.setVisible(true); // Si necesitas mostrar la lista de categorías
+            ObservableList<String> categorias = categoriaPlatosDao.getCategoriasByMenuM(categoria);
+
+            listViewCategoriasC.getSelectionModel().clearSelection(); // Limpia la selección anterior
+            listViewCategoriasC.setItems(categorias);
+
+            // Verificación del tamaño de la lista de categorías
+            System.out.println("Tamaño de categorías: " + categorias.size());
+
+            // Listener para la selección de categorías (si necesitas agregar un listener aquí, lo haces)
+        });
+        
+        btn_arrowMenu.setOnAction(event -> handlearrowMenu());
+        btn_arrowMenu1.setOnAction(event -> handlearrowMenu());
+        btn_arrowMenu2.setOnAction(event -> handlearrowMenu2());
 
     }
 
@@ -318,12 +378,26 @@ public class Inicio_meseraController implements Initializable {
         pane_inicio.setVisible(false);
         pane_menu.setVisible(true);
         pane_editMenu.setVisible(false);
+        pane_menuCarta.setVisible(false);
+        pane_menuDia.setVisible(false);
+        
 
     }
 
-    private void handleButtonArrow() {
+    
+    private void handlearrowMenu() {
         pane_editMenu.setVisible(true);
+        pane_menuDia.setVisible(false);
+        pane_menuCarta.setVisible(false);
     }
+    
+    private void handlearrowMenu2() {
+        pane_editMenu.setVisible(false);
+        pane_menuDia.setVisible(false);
+        pane_menuCarta.setVisible(false);
+    }
+    
+    
 
     private void handleButtonInicio() { // Acción para que al oprimir btn_inicio el pane_inicio sea visible
         pane_inicio.setVisible(true);
@@ -357,10 +431,9 @@ public class Inicio_meseraController implements Initializable {
         glassPane3.setVisible(false);
     }
 
-    private void editarMenuDia() {
-        pane_menuDia.setVisible(true);
-    }
+    /*private void editarMenuDia() {
 
+    }*/
     private void editarMenuCarta() {
         pane_menuCarta.setVisible(true);
     }
@@ -545,7 +618,7 @@ public class Inicio_meseraController implements Initializable {
     private void mostrarPrincipioSeleccionado() {
         String verduraSeleccionada = comboBoxVerduras.getValue();
         String granoSeleccionado = comboBoxGranos.getValue();
-        
+
         if (verduraSeleccionada != null) {
             glassPane3.setVisible(false);
             txt_verdura.setText(verduraSeleccionada.toUpperCase());

@@ -9,6 +9,8 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -215,7 +217,7 @@
             </Button>
          </children>
       </Pane>
-      <Pane id="glassPane" fx:id="glassPane" prefHeight="744.0" prefWidth="1133.0" styleClass="glassPane" stylesheets="@../swing/mensaje_pedido.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Pane id="glassPane" fx:id="glassPane" prefHeight="744.0" prefWidth="1133.0" styleClass="glassPane" stylesheets="@../swing/mensaje_pedido.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Pane id="popupPane" fx:id="popupPane" layoutX="437.0" layoutY="259.0" prefHeight="328.0" prefWidth="517.0" styleClass="popupPane" stylesheets="@../swing/mensaje_pedido.css">
                <children>
@@ -429,14 +431,26 @@
             </VBox>
          </children>
       </Pane>
-      <Pane fx:id="pane_editMenu" layoutX="263.0" layoutY="138.0" prefHeight="606.0" prefWidth="871.0" style="-fx-background-color: FFFFFF;" visible="false">
+      <Pane fx:id="pane_editMenu" layoutX="263.0" layoutY="138.0" prefHeight="606.0" prefWidth="871.0" style="-fx-background-color: FFFFFF;">
          <children>
-            <Button fx:id="btn_editCarta" layoutX="234.0" layoutY="346.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="456.0" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4); -fx-border-radius: 30px; -fx-background-radius: 30px; -fx-font-size: 23px; -fx-background-color: FFFFFF; -fx-border-color: #000000; -fx-border-width: 0.5px;" text="PLATOS A LA CARTA">
+            <Button fx:id="btn_arrowMenu2" contentDisplay="GRAPHIC_ONLY" layoutX="430.0" layoutY="96.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="41.0" style="-fx-background-color: TRANSPARENT;">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <graphic>
+                  <ImageView fitHeight="53.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/casa%20(1).png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="btn_editCarta" layoutX="212.0" layoutY="303.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="456.0" styleClass="btn_personal_registro" stylesheets="@../swing/inicio_administrador.css" text="PLATOS A LA CARTA">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="btn_editDia" layoutX="234.0" layoutY="186.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="456.0" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4); -fx-background-radius: 30px; -fx-border-radius: 30px; -fx-background-color: FFFFFF; -fx-font-size: 23px; -fx-border-color: #000000; -fx-border-width: 0.5px;" text="MENÚ DEL DÍA">
+            <Button fx:id="btn_editDia" layoutX="212.0" layoutY="191.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="456.0" styleClass="btn_personal_registro" stylesheets="@../swing/inicio_administrador.css" text="MENÚ DEL DÍA">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -444,49 +458,73 @@
          </children>
       </Pane>
       <Pane fx:id="pane_menuCarta" layoutX="263.0" layoutY="138.0" prefHeight="606.0" prefWidth="871.0" style="-fx-background-color: ffff;" visible="false" />
-      <Pane fx:id="pane_menuDia" layoutX="263.0" layoutY="138.0" prefHeight="606.0" prefWidth="871.0" style="-fx-background-color: ffff;" visible="false">
+      <Pane fx:id="pane_menuDia" layoutX="263.0" layoutY="138.0" prefHeight="606.0" prefWidth="871.0" style="-fx-background-color: ffff;">
          <children>
-            <GridPane layoutX="243.0" layoutY="99.0" prefHeight="100.0" prefWidth="607.0" style="-fx-border-color: 00000;">
-              <columnConstraints>
-                <ColumnConstraints halignment="LEFT" maxWidth="95.0" minWidth="10.0" prefWidth="45.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="183.0" minWidth="10.0" prefWidth="102.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="216.0" minWidth="10.0" prefWidth="112.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="271.0" minWidth="10.0" prefWidth="138.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="318.0" minWidth="10.0" prefWidth="69.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="318.0" minWidth="10.0" prefWidth="154.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints maxHeight="36.0" minHeight="10.0" prefHeight="36.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
+            <ListView fx:id="listViewCategorias" layoutX="27.0" layoutY="86.0" prefHeight="478.0" prefWidth="158.0" />
+            <Separator layoutX="198.0" layoutY="34.0" orientation="VERTICAL" prefHeight="551.0" prefWidth="0.0" />
+            <Button fx:id="btn_arrowMenu1" contentDisplay="GRAPHIC_ONLY" layoutX="71.0" layoutY="25.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="41.0" style="-fx-background-color: TRANSPARENT;">
+               <graphic>
+                  <ImageView fitHeight="53.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/left-arrow.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <ScrollPane layoutX="227.0" layoutY="34.0" prefHeight="373.0" prefWidth="615.0">
+               <content>
+                  <TableView prefHeight="370.0" prefWidth="613.0">
+                    <columns>
+                      <TableColumn prefWidth="204.0" text="Platos" />
+                      <TableColumn prefWidth="271.0" text="Precio " />
+                        <TableColumn prefWidth="137.0" text="Mini" />
+                    </columns>
+                  </TableView>
+               </content>
+            </ScrollPane>
+         </children>
+      </Pane>
+      <Pane fx:id="pane_menuCarta" layoutX="263.0" layoutY="138.0" prefHeight="606.0" prefWidth="871.0" style="-fx-background-color: ffff;" visible="false">
+         <children>
+            <GridPane layoutX="243.0" layoutY="99.0" prefHeight="100.0" prefWidth="607.0">
+               <columnConstraints>
+                  <ColumnConstraints halignment="LEFT" maxWidth="95.0" minWidth="10.0" prefWidth="45.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="183.0" minWidth="10.0" prefWidth="102.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="216.0" minWidth="10.0" prefWidth="112.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="271.0" minWidth="10.0" prefWidth="138.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="36.0" minHeight="10.0" prefHeight="36.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
                <children>
                   <CheckBox mnemonicParsing="false" />
                   <CheckBox mnemonicParsing="false" GridPane.rowIndex="2" />
                   <CheckBox mnemonicParsing="false" GridPane.rowIndex="1" />
-                  <Label prefHeight="17.0" prefWidth="170.0" text="Pollo Apanado" GridPane.columnIndex="1" />
-                  <Label prefHeight="17.0" prefWidth="170.0" text="Carne Asada" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label prefHeight="17.0" prefWidth="170.0" text="Lomo de Cerdo" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <CheckBox mnemonicParsing="false" GridPane.columnIndex="3" />
-                  <CheckBox mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                  <CheckBox mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                  <Label text="\$13.000" GridPane.columnIndex="2" />
-                  <Label text="\$13.000" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <Label text="\$13.000" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                  <Label text="Arroz, carne, principio " GridPane.columnIndex="5" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="170.0" text="Pollo Apanado" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Label alignment="CENTER" prefHeight="17.0" prefWidth="170.0" text="Carne Asada" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label alignment="CENTER" prefHeight="17.0" prefWidth="170.0" text="Lomo de Cerdo" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <CheckBox alignment="CENTER" mnemonicParsing="false" GridPane.columnIndex="3" />
+                  <CheckBox alignment="CENTER" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <CheckBox alignment="CENTER" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                  <Label alignment="CENTER" text="\$13.000" GridPane.columnIndex="2" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" text="\$13.000" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Label alignment="CENTER" text="\$13.000" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                </children>
             </GridPane>
-            <ListView layoutX="27.0" layoutY="86.0" prefHeight="478.0" prefWidth="151.0" />
+            <ListView fx:id="listViewCategoriasC" layoutX="27.0" layoutY="86.0" prefHeight="478.0" prefWidth="158.0" />
             <Separator layoutX="198.0" layoutY="34.0" orientation="VERTICAL" prefHeight="551.0" prefWidth="0.0" />
             <Pane layoutX="222.0" layoutY="34.0" prefHeight="47.0" prefWidth="628.0" style="-fx-background-color: FFB94F; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0.0, 0, 4); -fx-background-radius: 30px;">
                <children>
-                  <HBox alignment="CENTER" layoutY="-1.0" prefHeight="50.0" prefWidth="628.0" spacing="60.0">
+                  <HBox alignment="CENTER" layoutY="-1.0" prefHeight="50.0" prefWidth="628.0" spacing="150.0">
                      <children>
                         <Label alignment="CENTER" contentDisplay="CENTER" styleClass="texto" text="Platos" />
                         <Label styleClass="texto" text="Precio" />
                         <Label styleClass="texto" text="Mini" />
-                        <Label styleClass="texto" text="Imagen" />
-                        <Label styleClass="texto" text="Descripción" />
                      </children>
                      <opaqueInsets>
                         <Insets />
@@ -508,6 +546,18 @@
             </Button>
          </children>
       </Pane>
+      <Button fx:id="btn_arrowMenu3" contentDisplay="GRAPHIC_ONLY" layoutX="81.0" layoutY="35.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="41.0" style="-fx-background-color: TRANSPARENT;">
+         <graphic>
+            <ImageView fitHeight="53.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/left-arrow.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
 
    </children>
 </AnchorPane>

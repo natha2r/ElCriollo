@@ -115,7 +115,7 @@ public class Mensaje_PedidoController implements Initializable {
         this.PrincipioSeleccionado = PrincipioSeleccionado;
     }
 
-    private void cargarCategorias() {
+    public void cargarCategorias() {
         listViewPlatos.setVisible(false);
         listViewCategorias.setVisible(true);
         ObservableList<String> categorias = categoriaPlatosDao.getCategoriasByMenuM(nombreMenuSeleccionado);
