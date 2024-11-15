@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.CheckBox;
 
 public class PlatosDao {
 
@@ -139,5 +140,39 @@ public class PlatosDao {
 
         return precio;
     }
+    
+    // Traer nombre del plato, precio y tipo 
+    public List<Platos> getPlatosByCategoriaC(String nombreCategoria) {
+    List<Platos> platos = new ArrayList<>();
+    String query = "SELECT p.idPlatos, p.nombrePlato, p.precio, p.esMini, p.categoriaPlatosId "
+                 + "FROM platos p "
+                 + "JOIN categoriaPlatos cp ON p.categoriaPlatosId = cp.idCategoriaPlatos "
+                 + "WHERE cp.nombreCategoriaPlatos = ?";
+
+    try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
+        pst.setString(1, nombreCategoria);
+        ResultSet rs = pst.executeQuery();
+
+        while (rs.next()) {
+            CheckBox miniCheckBox = new CheckBox();
+            miniCheckBox.setSelected(rs.getBoolean("esMini"));
+
+            Platos plato = new Platos(
+                rs.getString("idPlatos"),
+                rs.getString("nombrePlato"),
+                rs.getDouble("precio"),
+                rs.getString("categoriaPlatosId"),
+                miniCheckBox
+            );
+            platos.add(plato);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return platos;
+}
+
+
 
 }
