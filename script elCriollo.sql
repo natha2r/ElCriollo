@@ -24,10 +24,8 @@ create database if not exists ElCriollo;
 	);
 
 	create table if not exists mesas(
-		idMesas varchar(10) not null primary key,
-		numeroMesa int,
-		capacidad int,
-		estado varchar(20)
+		idMesas varchar(40) not null primary key,
+		numeroMesa int
 	);
 
 	create table if not exists proveedores(
@@ -281,11 +279,11 @@ FOREIGN KEY (usuario) REFERENCES sesiones(usuario)
 ON DELETE CASCADE;
 
 	-- Registros para la tabla mesas
-	INSERT INTO mesas (idMesas, numeroMesa, capacidad, estado) VALUES
-	('mesa001', 1, 4, 'Disponible'),
-	('mesa002', 2, 6, 'Ocupada'),
-	('mesa003', 3, 2, 'Reservada');
-
+	INSERT INTO mesas (idMesas, numeroMesa) VALUES
+	('mesa001', 1),
+	('mesa002', 2),
+	('mesa003', 3);
+select * from mesas;
 	-- Registros para la tabla proveedores
 	INSERT INTO proveedores (idProveedores, nombreEmpresa, contacto, telefono, email, direccion, terminoPago) VALUES
 	('prov001', 'Proveedor A', 'Contacto A', '111111111', 'proveedorA@example.com', 'Calle Proveedor A 123', '30 días'),

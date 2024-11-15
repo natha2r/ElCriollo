@@ -37,6 +37,8 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
@@ -48,8 +50,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javax.swing.JOptionPane;
 import models.CategoriasDao;
 import models.Pedidos;
@@ -58,6 +64,8 @@ import models.Productos;
 import models.ProductosDao;
 import models.ProveedoresDao;
 import models.InventarioDao;
+import models.Mesas;
+import models.MesasDao;
 
 public class Inicio_ventas_administradorController {
 
@@ -233,9 +241,6 @@ public class Inicio_ventas_administradorController {
     private Button btn_reponer_prod;
 
     @FXML
-    private Button btn_buscar_prod;
-
-    @FXML
     private Button btn_volver_inventario;
 
     @FXML
@@ -265,7 +270,7 @@ public class Inicio_ventas_administradorController {
     private Button btn_interno_limpiar_categoria;
     @FXML
     private Button btn_interno_cancelar_categoria;
-    
+
     @FXML
     private Button btn_volver_reponer_prod;
 
@@ -382,8 +387,26 @@ public class Inicio_ventas_administradorController {
     @FXML
     private Button btn_reportes;
 
+    /*BOTON PRINCIPAL DE MESERAS*/
     @FXML
-    private Button btn_mesas;
+    private Button btn_meseras_principal;
+
+    /*SUBBOTONES DE MESERAS*/
+    @FXML
+    private Button btn_pedidos_visual;
+    @FXML
+    private Button btnAgregarMesa;
+
+    // Variables globales
+    private int mesaCounter = 1; // Inicia en 17 ya que tienes hasta la 16
+    @FXML
+    private GridPane gridPaneMesas; // Asegúrate de que está enlazado en tu FXML
+
+    @FXML
+    private Pane pane_meseras_inicio;
+
+    @FXML
+    private ScrollPane scrollPaneMesas;
 
     @FXML
     private Button btn_caja;
@@ -409,6 +432,9 @@ public class Inicio_ventas_administradorController {
 
     @FXML
     private AnchorPane anchor_inventario;
+
+    @FXML
+    private AnchorPane anchor_meseras;
 
     @FXML
     private Pane pane_inventario;
@@ -449,7 +475,8 @@ public class Inicio_ventas_administradorController {
     public Inicio_ventas_administradorController() {
     }
 
-    public Inicio_ventas_administradorController(Button btn_inicio, Button btn_ventas, Button btn_meseras, Label jlabel_pedido, Label jlabel_sum_pedido, Button btn_configuracion, Button btn_personal_roles, Button btn_registro_actividades, Button btn_volver_config, Button btn_registrar_informacion, Button btn_modificar_informacion, Button btn_cancelar_registro_informacion, Button btn_interno_registrar_informacion, Button btn_inactivos, Button btn_atras_informacion, TextField txt_Id, TextField txt_Nombre, TextField txt_Edad, TextField txt_Direccion, TextField txt_Telefono, TextField txt_Email, ComboBox<String> cmb_Cargo, PasswordField txt_Contraseña, TextField txt_Usuario, TextField txt_modificar_Id, TextField txt_modificar_Nombre, TextField txt_modificar_Edad, TextField txt_modificar_Direccion, TextField txt_modificar_Telefono, TextField txt_modificar_Email, ComboBox<String> combo_Cargo, TextField txt_modificar_Usuario, PasswordField txt_modificar_Contraseña, TableView<Employees> tablaEmpleados, TableColumn<Employees, String> colId, TableColumn<Employees, String> colNombre, TableColumn<Employees, String> colEdad, TableColumn<Employees, String> colDireccion, TableColumn<Employees, String> colTelefono, TableColumn<Employees, String> colEmail, TableColumn<Employees, String> colCargo, TableColumn<Employees, String> colUsuario, TableColumn<Employees, String> colContraseña, TableView<Employees> tablaEmpleadosInactivos, TableColumn<Employees, String> colId_inactivos, TableColumn<Employees, String> colNombre_inactivos, TableColumn<Employees, String> colEdad_inactivos, TableColumn<Employees, String> colDireccion_inactivos, TableColumn<Employees, String> colTelefono_inactivos, TableColumn<Employees, String> colEmail_inactivos, TableColumn<Employees, String> colCargo_inactivos, TableColumn<Employees, String> colUsuario_inactivos, TableColumn<Employees, String> colContraseña_inactivos, TextField txt_modificar_Id_inactivos, TextField txt_modificar_Nombre_inactivos, TextField txt_modificar_Edad_inactivos, TextField txt_modificar_Direccion_inactivos, TextField txt_modificar_Telefono_inactivos, TextField txt_modificar_Email_inactivos, ComboBox<String> combo_Cargo_inactivos, TextField txt_modificar_Usuario_inactivos, PasswordField txt_modificar_Contraseña_inactivos, Button btn_inventario, Button btn_nuevo_prod, Button btn_reponer_prod, Button btn_buscar_prod, Button btn_volver_inventario, Button btn_actualizar_producto, Button btn_actualizar_proveedor, Button btn_actualizar_categoria, Button btn_interno_agregar_producto, Button btn_interno_limpiar_producto, Button btn_interno_cancelar_producto, Button btn_interno_agregar_proveedor, Button btn_interno_limpiar_proveedor, Button btn_interno_cancelar_proveedor, Button btn_interno_agregar_categoria, Button btn_interno_limpiar_categoria, Button btn_interno_cancelar_categoria, ComboBox<String> cmb_cargar_categoria, TableView<Productos> tablaInventario, TableColumn<Productos, String> columnaID, TableColumn<Productos, String> columnaProducto, TableColumn<Productos, String> columnaCategoria, TableColumn<Productos, Integer> columnaStock, TableColumn<Productos, Double> columnaPrecio, TableColumn<Productos, String> columnaProveedor, TextField txt_Id_agregar_prod, TextField txt_Nombre_agregar_prod, TextField txt_stock_agregar_prod, TextField txt_precio_agregar_prod, DatePicker txt_fecha_agregar_prod, ComboBox<String> cmb_categoria_agregar_prod, ComboBox<String> cmb_proveedor_agregar_prod, TextField txt_Id_agregar_prov, TextField txt_Nombre_agregar_prov, TextField txt_contacto_agregar_prov, TextField txt_telefono_agregar_prov, TextField txt_email_agregar_prov, TextField txt_direccion_agregar_prov, TextField txt_tpago_agregar_prov, TextField txt_Id_agregar_cat, TextField txt_Nombre_agregar_cat, TableView<Productos> tablaInventario_reponer, TableColumn<Productos, String> columnaID_reponer, TableColumn<Productos, String> columnaProducto_reponer, TableColumn<Productos, String> columnaCategoria_reponer, TableColumn<Productos, String> columnaStock_reponer, TableColumn<Productos, Double> columnaPrecio_reponer, TableColumn<Productos, String> columnaProveedor_reponer, ComboBox<String> cmb_cargar_reponer_categoria, TextField buscarReponerProducto, Button btn_buscar_reponer_prod, TextField txt_reponer_id_prod, TextField txt_reponer_producto, TextField txt_reponer_categoria_prod, TextField txt_reponer_stock_prod, TextField txt_reponer_precio_prod, TextField txt_reponer_proveedor_prod, Button btn_interno_reponer_prod, Button btn_limpiar_reponer_prod, Button btn_salir_reponer_prod, Button btn_reportes, Button btn_mesas, Button btn_caja, Button btn_salir, Pane pane_personal_roles, ScrollPane scroll_inicio_meseras, AnchorPane anchor_inicio_ventas, AnchorPane anchor_configuracion, AnchorPane anchorPane_inicio, AnchorPane anchor_inventario, Pane pane_inventario, Pane pane_configuracion, Pane pane_registrar_informacion, Pane pane_modificar_informacion, Pane pane_reponer_producto, Pane pane_modificar_inactivos_informacion, Pane pane_actualizacion_inventario, Pane pane_nuevo_producto, Pane pane_nuevo_proveedor, Pane pane_nueva_categoria, Connection conn) {
+    public Inicio_ventas_administradorController(Button btn_inicio, Button btn_ventas, Button btn_meseras, Label jlabel_pedido, Label jlabel_sum_pedido, Button btn_configuracion, Button btn_personal_roles, Button btn_registro_actividades, Button btn_volver_config, Button btn_registrar_informacion, Button btn_modificar_informacion, Button btn_cancelar_registro_informacion, Button btn_interno_registrar_informacion, Button btn_inactivos, Button btn_atras_informacion, TextField txt_Id, TextField txt_Nombre, TextField txt_Edad, TextField txt_Direccion, TextField txt_Telefono, TextField txt_Email, ComboBox<String> cmb_Cargo, PasswordField txt_Contraseña, TextField txt_Usuario, TextField txt_modificar_Id, TextField txt_modificar_Nombre, TextField txt_modificar_Edad, TextField txt_modificar_Direccion, TextField txt_modificar_Telefono, TextField txt_modificar_Email, ComboBox<String> combo_Cargo, TextField txt_modificar_Usuario, PasswordField txt_modificar_Contraseña, TableView<Employees> tablaEmpleados, TableColumn<Employees, String> colId, TableColumn<Employees, String> colNombre, TableColumn<Employees, String> colEdad, TableColumn<Employees, String> colDireccion, TableColumn<Employees, String> colTelefono, TableColumn<Employees, String> colEmail, TableColumn<Employees, String> colCargo, TableColumn<Employees, String> colUsuario, TableColumn<Employees, String> colContraseña, TableView<Employees> tablaEmpleadosInactivos, TableColumn<Employees, String> colId_inactivos, TableColumn<Employees, String> colNombre_inactivos, TableColumn<Employees, String> colEdad_inactivos, TableColumn<Employees, String> colDireccion_inactivos, TableColumn<Employees, String> colTelefono_inactivos, TableColumn<Employees, String> colEmail_inactivos, TableColumn<Employees, String> colCargo_inactivos, TableColumn<Employees, String> colUsuario_inactivos, TableColumn<Employees, String> colContraseña_inactivos, TextField txt_modificar_Id_inactivos, TextField txt_modificar_Nombre_inactivos, TextField txt_modificar_Edad_inactivos, TextField txt_modificar_Direccion_inactivos, TextField txt_modificar_Telefono_inactivos, TextField txt_modificar_Email_inactivos, ComboBox<String> combo_Cargo_inactivos, TextField txt_modificar_Usuario_inactivos, PasswordField txt_modificar_Contraseña_inactivos, Button btn_inventario, Button btn_nuevo_prod, Button btn_reponer_prod,
+            Button btn_volver_inventario, Button btn_actualizar_producto, Button btn_actualizar_proveedor, Button btn_actualizar_categoria, Button btn_interno_agregar_producto, Button btn_interno_limpiar_producto, Button btn_interno_cancelar_producto, Button btn_interno_agregar_proveedor, Button btn_interno_limpiar_proveedor, Button btn_interno_cancelar_proveedor, Button btn_interno_agregar_categoria, Button btn_interno_limpiar_categoria, Button btn_interno_cancelar_categoria, ComboBox<String> cmb_cargar_categoria, TableView<Productos> tablaInventario, TableColumn<Productos, String> columnaID, TableColumn<Productos, String> columnaProducto, TableColumn<Productos, String> columnaCategoria, TableColumn<Productos, Integer> columnaStock, TableColumn<Productos, Double> columnaPrecio, TableColumn<Productos, String> columnaProveedor, TextField txt_Id_agregar_prod, TextField txt_Nombre_agregar_prod, TextField txt_stock_agregar_prod, TextField txt_precio_agregar_prod, DatePicker txt_fecha_agregar_prod, ComboBox<String> cmb_categoria_agregar_prod, ComboBox<String> cmb_proveedor_agregar_prod, TextField txt_Id_agregar_prov, TextField txt_Nombre_agregar_prov, TextField txt_contacto_agregar_prov, TextField txt_telefono_agregar_prov, TextField txt_email_agregar_prov, TextField txt_direccion_agregar_prov, TextField txt_tpago_agregar_prov, TextField txt_Id_agregar_cat, TextField txt_Nombre_agregar_cat, TableView<Productos> tablaInventario_reponer, TableColumn<Productos, String> columnaID_reponer, TableColumn<Productos, String> columnaProducto_reponer, TableColumn<Productos, String> columnaCategoria_reponer, TableColumn<Productos, String> columnaStock_reponer, TableColumn<Productos, Double> columnaPrecio_reponer, TableColumn<Productos, String> columnaProveedor_reponer, ComboBox<String> cmb_cargar_reponer_categoria, TextField buscarReponerProducto, Button btn_buscar_reponer_prod, TextField txt_reponer_id_prod, TextField txt_reponer_producto, TextField txt_reponer_categoria_prod, TextField txt_reponer_stock_prod, TextField txt_reponer_precio_prod, TextField txt_reponer_proveedor_prod, Button btn_interno_reponer_prod, Button btn_limpiar_reponer_prod, Button btn_salir_reponer_prod, Button btn_reportes, Button btn_meseras_princpial, Button btn_caja, Button btn_salir, Pane pane_personal_roles, ScrollPane scroll_inicio_meseras, AnchorPane anchor_inicio_ventas, AnchorPane anchor_configuracion, AnchorPane anchorPane_inicio, AnchorPane anchor_inventario, Pane pane_inventario, Pane pane_configuracion, Pane pane_registrar_informacion, Pane pane_modificar_informacion, Pane pane_reponer_producto, Pane pane_modificar_inactivos_informacion, Pane pane_actualizacion_inventario, Pane pane_nuevo_producto, Pane pane_nuevo_proveedor, Pane pane_nueva_categoria, Connection conn) {
         this.btn_inicio = btn_inicio;
         this.btn_ventas = btn_ventas;
         this.btn_meseras = btn_meseras;
@@ -515,7 +542,6 @@ public class Inicio_ventas_administradorController {
         this.btn_inventario = btn_inventario;
         this.btn_nuevo_prod = btn_nuevo_prod;
         this.btn_reponer_prod = btn_reponer_prod;
-        this.btn_buscar_prod = btn_buscar_prod;
         this.btn_volver_inventario = btn_volver_inventario;
         this.btn_actualizar_producto = btn_actualizar_producto;
         this.btn_actualizar_proveedor = btn_actualizar_proveedor;
@@ -573,7 +599,7 @@ public class Inicio_ventas_administradorController {
         this.btn_limpiar_reponer_prod = btn_limpiar_reponer_prod;
         this.btn_salir_reponer_prod = btn_salir_reponer_prod;
         this.btn_reportes = btn_reportes;
-        this.btn_mesas = btn_mesas;
+        this.btn_meseras_principal = btn_meseras_principal;
         this.btn_caja = btn_caja;
         this.btn_salir = btn_salir;
         this.pane_personal_roles = pane_personal_roles;
@@ -595,7 +621,7 @@ public class Inicio_ventas_administradorController {
         this.conn = conn;
     }
 
-    public void initialize() {
+    public void initialize() {    
         // No hacer nada aquí
         /*onShown();
         UpdatePedidosLabels();*/
@@ -713,6 +739,14 @@ public class Inicio_ventas_administradorController {
                 cargarDatosProductoSeleccionado(newSelection);
             }
         });
+        
+        
+        gridPaneMesas.getColumnConstraints().clear();
+        gridPaneMesas.getRowConstraints().clear();
+        gridPaneMesas.getChildren().clear();
+        
+        
+        cargarMesasDesdeBaseDeDatos();
 
     }
 
@@ -723,7 +757,7 @@ public class Inicio_ventas_administradorController {
         btn_configuracion.setOnAction(e -> handleBtnConfiguracionAction());
         btn_inventario.setOnAction(e -> handleBtnInventarioAction());
         btn_reportes.setOnAction(e -> handleBtnReportesAction());
-        btn_mesas.setOnAction(e -> handleBtnMesasAction());
+        btn_meseras_principal.setOnAction(e -> handleBtnMeserasPrincipalAction());
         btn_caja.setOnAction(e -> handleBtnCajaAction());
         btn_salir.setOnAction(e -> handleBtnSalirAction());
 
@@ -745,7 +779,6 @@ public class Inicio_ventas_administradorController {
         //subbotones de la vista de inventario
         btn_nuevo_prod.setOnAction(e -> handleBtnNuevoProdAction());
         btn_reponer_prod.setOnAction(e -> handleBtnReponerProdAction());
-        btn_buscar_prod.setOnAction(e -> handleBtnBuscarProdAction());
         btn_volver_inventario.setOnAction(e -> handleBtnVolverInventarioAction());
         btn_actualizar_producto.setOnAction(e -> handleBtnActualizarProductoAction());
         btn_actualizar_proveedor.setOnAction(e -> handleBtnActualizarProveedorAction());
@@ -763,6 +796,11 @@ public class Inicio_ventas_administradorController {
         btn_limpiar_reponer_prod.setOnAction(e -> handleBtnLimpiarReponerProd());
         btn_salir_reponer_prod.setOnAction(e -> handleBtnSalirReponerProd());
 
+        //subbotones de la vista de reportes
+        //subbotones de la vista de meseras 
+        btn_pedidos_visual.setOnAction(e -> handleBtnPedidosVisual());
+        btnAgregarMesa.setOnAction(e -> handleBtnAgregarMesa());
+
     }
 
     @FXML
@@ -771,7 +809,7 @@ public class Inicio_ventas_administradorController {
         // Verificar si estás en los paneles de "Registrar Información" o "Modificar Información"
         if ((pane_registrar_informacion.isVisible() || pane_modificar_informacion.isVisible()
                 || pane_modificar_inactivos_informacion.isVisible() || pane_nuevo_producto.isVisible()
-                || pane_nuevo_proveedor.isVisible() || pane_nueva_categoria.isVisible() || pane_reponer_producto.isVisible()) 
+                || pane_nuevo_proveedor.isVisible() || pane_nueva_categoria.isVisible() || pane_reponer_producto.isVisible())
                 && !anchorPane_inicio.isVisible()) {
             // Mostrar advertencia de confirmación
             Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
@@ -806,7 +844,7 @@ public class Inicio_ventas_administradorController {
         limpiarCamposreponer();
         tablaInventario.getSelectionModel().clearSelection();
         tablaInventario_reponer.getSelectionModel().clearSelection();
-        
+
         // Ocultar todos los formularios que podrían estar visibles
         pane_registrar_informacion.setVisible(false);
         pane_modificar_informacion.setVisible(false);
@@ -959,7 +997,59 @@ public class Inicio_ventas_administradorController {
         // Acción para el botón "CAJA"
     }
 
-    private void handleBtnMesasAction() {
+    private void handleBtnMeserasPrincipalAction() {
+        // Verificar si estás en los paneles de "Registrar Información" o "Modificar Información"
+        if ((pane_registrar_informacion.isVisible() || pane_modificar_informacion.isVisible()
+                || pane_modificar_inactivos_informacion.isVisible() || pane_nuevo_producto.isVisible()
+                || pane_nuevo_proveedor.isVisible() || pane_nueva_categoria.isVisible() || pane_reponer_producto.isVisible())
+                && !anchor_meseras.isVisible()) {
+            // Mostrar advertencia de confirmación
+            Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmacion.setTitle("Confirmar");
+            confirmacion.setHeaderText("¿Está seguro de que desea cancelar el llenado del formulario?");
+            confirmacion.setContentText("Si cancela, se perderá toda la información ingresada.");
+
+            Optional<ButtonType> resultado = confirmacion.showAndWait();
+
+            if (resultado.isPresent() && resultado.get() == ButtonType.OK) {
+                // Acción para el botón "Inicio" si confirma
+
+                limpiarEstadoFormulario();
+                mostrarPanelMeseras();
+                enFormulario = false; // Actualizamos correctamente el estado
+            }
+        } else {
+            // Si no estás en los formularios (ya estás en el panel de inicio), cambiar a la vista sin advertencia
+            limpiarEstadoFormulario(); // Aseguramos de limpiar correctamente
+            mostrarPanelInicio();
+            enFormulario = false; // Estado correcto para evitar conflictos
+        }
+    }
+
+    private void mostrarPanelMeseras() {
+        // Mostrar el panel de inventario y ocultar los demás paneles no relevantes
+        anchor_meseras.setVisible(true);
+        pane_meseras_inicio.setVisible(true);
+
+        anchor_inventario.setVisible(false);
+        pane_inventario.setVisible(false);
+        pane_actualizacion_inventario.setVisible(false);
+        pane_nuevo_producto.setVisible(false);
+        pane_reponer_producto.setVisible(false);
+        pane_nuevo_proveedor.setVisible(false);
+        pane_nueva_categoria.setVisible(false);
+
+        // Ocultar otros paneles que no son relevantes
+        anchorPane_inicio.setVisible(false);
+        anchor_inicio_ventas.setVisible(false);
+        scroll_inicio_meseras.setVisible(false);
+        anchor_configuracion.setVisible(false);
+        pane_configuracion.setVisible(false);
+        pane_registrar_informacion.setVisible(false);
+        pane_modificar_informacion.setVisible(false);
+        pane_modificar_inactivos_informacion.setVisible(false);
+        configurarColumnasProductos();
+        cargarProductos();
 
     }
 
@@ -1723,11 +1813,6 @@ public class Inicio_ventas_administradorController {
     }
 
     @FXML
-    private void handleBtnBuscarProdAction() {
-
-    }
-
-    @FXML
     public void handleBtnVolverInventarioAction() {
         // Acción para el botón "volver inventario"
 
@@ -1758,7 +1843,7 @@ public class Inicio_ventas_administradorController {
                 pane_nuevo_proveedor.setVisible(false);
                 pane_nueva_categoria.setVisible(false);
                 pane_reponer_producto.setVisible(false);
-                
+
                 /*limpiarCamposmodificadosinactivos();
             limpiarCampos();  // Limpiar todos los campos
             limpiarCamposmodificados();*/
@@ -2354,15 +2439,6 @@ public class Inicio_ventas_administradorController {
         txt_reponer_precio_prod.clear();
         txt_reponer_proveedor_prod.clear();
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
 
     @FXML
     private void handleBtnInternoReponerProd() {
@@ -2390,7 +2466,7 @@ public class Inicio_ventas_administradorController {
             pane_nuevo_proveedor.setVisible(false);
             pane_nueva_categoria.setVisible(false);
             pane_reponer_producto.setVisible(false);
-            
+
             pane_actualizacion_inventario.setVisible(false);
             pane_inventario.setVisible(true);
 
@@ -2400,15 +2476,149 @@ public class Inicio_ventas_administradorController {
             anchor_configuracion.setVisible(false);
             pane_registrar_informacion.setVisible(false);
             pane_modificar_inactivos_informacion.setVisible(false);
-            
+
             configurarColumnasProductos();
             cargarProductos();
-            
+
             limpiarCamposreponer(); // Limpia los campos solo si se confirma la cancelación
         }
     }
 
     /*--------------------------------------------------------------------------*/
  /* **********************FIN DEL MODULO INVENTARIO************************* */
+ /*--------------------------------------------------------------------------*/
+    //////////////////////////////////////////////////////////////////////////////
+    /*--------------------------------------------------------------------------*/
+ /* **************************MODULO DE REPORTES**************************** */
+ /*--------------------------------------------------------------------------*/
+ /*--------------------------------------------------------------------------*/
+ /* *********************FIN DEL MODULO DE REPORTES************************* */
+ /*--------------------------------------------------------------------------*/
+    //////////////////////////////////////////////////////////////////////////////
+    /*--------------------------------------------------------------------------*/
+ /* ***********************MODULO DE MESERAS******************************** */
+ /*--------------------------------------------------------------------------*/
+    @FXML
+    private void handleBtnPedidosVisual() {
+
+    }
+
+    /*@FXML
+    private void handleBtnAgregarMesa() {
+        // Crear un nuevo contenedor para la mesa
+        StackPane mesaContainer = new StackPane();
+        mesaContainer.setAlignment(Pos.CENTER);
+
+        // Crear la imagen de la mesa
+        ImageView mesaImage = new ImageView(new Image("resources/mesaoficial.png"));
+        mesaImage.setFitWidth(106);
+        mesaImage.setFitHeight(98);
+
+        // Crear el número de la mesa y colocarlo encima de la imagen
+        Label lblMesaNumero = new Label(String.valueOf(mesaCounter));
+        lblMesaNumero.setStyle("-fx-font-size: 16px; -fx-text-fill: #000000; -fx-font-weight: bold;");
+        StackPane.setAlignment(lblMesaNumero, Pos.TOP_CENTER);
+
+        // Agregar la imagen y el número al contenedor
+        mesaContainer.getChildren().addAll(mesaImage, lblMesaNumero);
+
+        // Definir el número máximo de columnas antes de pasar a una nueva fila
+        int maxColumns = 4;
+        int maxVisibleRows = 4; // Máximo de filas visibles antes de hacer scroll
+
+        // Calcular la posición de la nueva mesa en el GridPane
+        int row = (mesaCounter - 1) / maxColumns;
+        int col = (mesaCounter - 1) % maxColumns;
+
+        // Agregar el contenedor de la mesa al GridPane en la posición calculada
+        gridPaneMesas.add(mesaContainer, col, row);
+
+        // Incrementar el contador de mesas para la próxima mesa
+        mesaCounter++;
+    }*/
+
+    
+    private void cargarMesasDesdeBaseDeDatos() {
+        try {
+            MesasDao mesasDao = new MesasDao();
+            List<String> mesas = mesasDao.obtenerTodasLasMesas();
+
+            for (String mesaId : mesas) {
+                agregarMesaAGridPane(mesaId);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
+    
+    
+    @FXML
+private void handleBtnAgregarMesa() {
+    try {
+        // Obtener la última mesa de la base de datos
+        MesasDao mesasDao = new MesasDao();
+        String ultimoId = mesasDao.obtenerUltimaMesa();
+
+        // Generar el nuevo ID
+        String nuevoId = generarSiguienteId(ultimoId);
+
+        // Crear un nuevo registro en la base de datos
+        mesasDao.insertarMesa(nuevoId);
+
+        // Actualizar la vista con la nueva mesa
+        agregarMesaAGridPane(nuevoId);
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+
+// Método para generar el siguiente ID de mesa
+private String generarSiguienteId(String ultimoId) {
+    if (ultimoId == null || ultimoId.isEmpty()) {
+        return "mesa001"; // Si no hay mesas, empezar con mesa001
+    }
+
+    // Extraer el número del último ID
+    int numero = Integer.parseInt(ultimoId.replace("mesa", ""));
+    return String.format("mesa%03d", numero + 1);
+}
+
+// Método para agregar la mesa al GridPane
+private void agregarMesaAGridPane(String nuevoId) {
+    StackPane mesaContainer = new StackPane();
+    mesaContainer.setAlignment(Pos.CENTER);
+
+    // Crear la imagen de la mesa
+    ImageView mesaImage = new ImageView(new Image("resources/mesaoficial.png"));
+    mesaImage.setFitWidth(106);
+    mesaImage.setFitHeight(98);
+
+    // Crear el número de la mesa y colocarlo encima de la imagen
+    Label lblMesaNumero = new Label(nuevoId);
+    lblMesaNumero.setStyle("-fx-font-size: 16px; -fx-text-fill: #000000; -fx-font-weight: bold;");
+    StackPane.setAlignment(lblMesaNumero, Pos.TOP_CENTER);
+
+    // Agregar la imagen y el número al contenedor
+    mesaContainer.getChildren().addAll(mesaImage, lblMesaNumero);
+
+    // Calcular la posición de la nueva mesa en el GridPane
+    int maxColumns = 4;
+    int row = (mesaCounter - 1) / maxColumns;
+    int col = (mesaCounter - 1) % maxColumns;
+
+    // Agregar el contenedor de la mesa al GridPane
+    gridPaneMesas.add(mesaContainer, col, row);
+
+    // Incrementar el contador de mesas
+    mesaCounter++;
+}
+
+
+
+    /*--------------------------------------------------------------------------*/
+ /* *********************FIN DEL MODULO DE MESERAS************************** */
  /*--------------------------------------------------------------------------*/
 }
