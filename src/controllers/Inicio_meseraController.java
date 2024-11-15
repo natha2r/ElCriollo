@@ -85,9 +85,9 @@ public class Inicio_meseraController implements Initializable {
     @FXML
     private Pane pane_menuDia;
     @FXML
-    private Pane pane_inicio; //Panel de Inicio de mesera
+    private Pane pane_inicio;
     @FXML
-    private Pane glassPane; // El Pane que actúa como GlassPane
+    private Pane glassPane;
     @FXML
     private Pane pane_editCarta;
     @FXML
@@ -99,9 +99,9 @@ public class Inicio_meseraController implements Initializable {
 
     // LISTA DE COMBOBOX
     @FXML
-    private ComboBox comboBoxselecMesera; //Lista desplegable de meseras
+    private ComboBox comboBoxselecMesera;
     @FXML
-    private ComboBox<String> menuComboBox;  // El ComboBox que contiene los menús
+    private ComboBox<String> menuComboBox;
     @FXML
     private ComboBox<String> comboBoxGranos;
     @FXML
@@ -123,7 +123,7 @@ public class Inicio_meseraController implements Initializable {
     @FXML
     private ListView<String> listViewCategoriasC;
     @FXML
-    private Label popupLabel; //Texto de "MESA X"
+    private Label popupLabel;
     @FXML
     private ImageView imageView1;
 
@@ -139,13 +139,13 @@ public class Inicio_meseraController implements Initializable {
 
     private Mensaje_PedidoController mensajePedidoController;
     @FXML
-    private GridPane gridPane; // Contenedor de las mesas
+    private GridPane gridPane;
     @FXML
     private VBox vBox_editSopa;
 
     @FXML
-    private Label txt_cantidad;  // Label para mostrar la cantidad
-    private int cantidad = 0;  // Cantidad inicial
+    private Label txt_cantidad;
+    private int cantidad = 0;
     private SopaDao sopaDao = new SopaDao();
     private PrincipioDao principioDao;
     private TipoMenuDao tipoMenuDao = new TipoMenuDao();
@@ -292,7 +292,6 @@ public class Inicio_meseraController implements Initializable {
         pane_editMenu.setVisible(false);
         pane_menuCarta.setVisible(false);
         pane_menuDia.setVisible(false);
-
     }
 
     private void handlearrowMenu() {
@@ -367,7 +366,6 @@ public class Inicio_meseraController implements Initializable {
 
         popupLabel.setText(tableNumber);
 
-
         if (mensajePedidoController != null) {
             mensajePedidoController.mostrarNumeroMesa(tableNumber);
         }
@@ -405,7 +403,7 @@ public class Inicio_meseraController implements Initializable {
                     protected void updateItem(Employees employee, boolean empty) {
                         super.updateItem(employee, empty);
                         if (employee != null && !empty) {
-                            setText(employee.getNombreEmpleado()); 
+                            setText(employee.getNombreEmpleado());
                         } else {
                             setText(null);
                         }
@@ -432,20 +430,18 @@ public class Inicio_meseraController implements Initializable {
     @FXML
     private void handlePedidoClick() {
         try {
-   
+
             String menuSeleccionado = menuComboBox.getSelectionModel().getSelectedItem();
 
             if (menuSeleccionado != null) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/components/Mensaje_Pedido.fxml"));
                 Parent root = loader.load();
 
-          
                 Mensaje_PedidoController mensajePedidoController = loader.getController();
 
                 mensajePedidoController.setMenuSeleccionado(menuSeleccionado);
                 mensajePedidoController.mostrarNumeroMesa(popupLabel.getText());
 
-  
                 Scene scene = new Scene(root);
                 Stage stage = (Stage) btn_tomarPedido.getScene().getWindow();
                 stage.setScene(scene);
