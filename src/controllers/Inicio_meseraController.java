@@ -18,15 +18,11 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.CheckBoxTableCell;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import models.CategoriaPlatosDao;
@@ -38,7 +34,7 @@ import models.SopaDao;
 import models.TipoMenuDao;
 
 public class Inicio_meseraController implements Initializable {
-    
+
     //lISTA DE BOTONES
     @FXML
     private Button btn_pedidos;
@@ -76,7 +72,7 @@ public class Inicio_meseraController implements Initializable {
     private Button btn_tomarPedido;
     @FXML
     private Button btn_mesas;
-    
+
     //lISTA DE PANE
     @FXML
     private Pane pane_editMenu;
@@ -127,7 +123,6 @@ public class Inicio_meseraController implements Initializable {
     @FXML
     private ImageView imageView1;
 
-    
     //PANEL DE MENÚ
     @FXML
     private VBox vBox_editPrincipio;
@@ -150,8 +145,6 @@ public class Inicio_meseraController implements Initializable {
     private String sopaSeleccionadaActual;
 
     // --------------------------
-
-
     public Inicio_meseraController() {
     }
 
@@ -197,12 +190,30 @@ public class Inicio_meseraController implements Initializable {
         this.principioDao = principioDao;
         this.btn_tomarPedido = btn_tomarPedido;
     }
-    
-    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // Configura eventos para los botones
+
+        glassPane.setVisible(false);
+        glassPane3.setVisible(false);
+        
+        pane_editMenu.setVisible(false);
+        pane_menu.setVisible(false);
+        pane_menuCarta.setVisible(false);
+        pane_menuDia.setVisible(false);
+        pane_inicio.setVisible(true);
+        
+        principioDao = new PrincipioDao();
+        menuComboBox.setItems(tipoMenuDao.getAllMenus());
+        
+        buttons();
+        initComboBox();
+        CargarVerduras();
+        CargarGranos();
+        cargarSopas();
+    }
+    
+    private void buttons(){
         btn_tomarPedido.setOnAction(e -> handlePedidoClick());
         btn_pedidos.setOnAction(e -> handleButton1Click());
         btn_mesas.setOnAction(e -> handleButton2Click());
@@ -213,13 +224,7 @@ public class Inicio_meseraController implements Initializable {
         btn_cancelarEditPrincipio.setOnAction(e -> handleButtoncancelarEditPrincipio());
         btn_editSopa.setOnAction(e -> handleButtonEditSopa());
         btn_cancelarEditSopa.setOnAction(e -> handleButtoncancelarEditSopa());
-        cargarSopas();
-        
-        
         btn_editMenu.setOnAction(e -> handleButtonEditMenu());
-        cargarSopas();
-
-
         btn_aceptarEditSopa.setOnAction(event -> mostrarSopaSeleccionada());
         btn_aceptarEditPrincipio.setOnAction(event -> mostrarPrincipioSeleccionado());
         btn_editDia.setOnAction(event -> editarMenuDia());
@@ -227,33 +232,7 @@ public class Inicio_meseraController implements Initializable {
         btn_arrowMenu.setOnAction(event -> handlearrowMenu());
         btn_arrowMenu1.setOnAction(event -> handlearrowMenu());
         btn_arrowMenu2.setOnAction(event -> handlearrowMenu2());
-        btn_tomarPedido.setOnAction(e -> handlePedidoClick());
-        
-        glassPane3.setVisible(false);
-        pane_editMenu.setVisible(false);
-        
-        pane_menu.setVisible(false);
-        pane_menuCarta.setVisible(false);
-        pane_menuDia.setVisible(false);
-
-        // Ocultar el GlassPane al iniciar la aplicación
-        glassPane.setVisible(false);
-
-        // Otros componentes de la interfaz pueden ser inicializados aquí
-        pane_inicio.setVisible(true);
-        
-        principioDao = new PrincipioDao();
-
-        initComboBox();
-        CargarVerduras();
-        CargarGranos();
-
-        btn_tomarPedido.setOnAction(e -> handlePedidoClick());
-
-        menuComboBox.setItems(tipoMenuDao.getAllMenus());
-
-
-
+        btn_tomarPedido.setOnAction(e -> handlePedidoClick());  
     }
 
     private void handleButton5Click() {
@@ -309,7 +288,7 @@ public class Inicio_meseraController implements Initializable {
         pane_menuCarta.setVisible(false);
         pane_menuDia.setVisible(false);
     }
-    
+
     private void handlearrowMenu() {
         pane_editMenu.setVisible(true);
         pane_menuDia.setVisible(false);
@@ -322,7 +301,7 @@ public class Inicio_meseraController implements Initializable {
         pane_menuCarta.setVisible(false);
     }
 
-    private void handleButtonInicio() { 
+    private void handleButtonInicio() {
         pane_inicio.setVisible(true);
         pane_menu.setVisible(false);
         pane_editMenu.setVisible(false);
@@ -339,7 +318,7 @@ public class Inicio_meseraController implements Initializable {
     private void handleButtoncancelarEditPrincipio() {
         glassPane3.setVisible(false);
     }
-    
+
     private void handleButtonEditMenu() {
         pane_editMenu.setVisible(true);
     }
@@ -352,7 +331,7 @@ public class Inicio_meseraController implements Initializable {
 
     private void handleButtoncancelarEditSopa() {
         glassPane3.setVisible(false);
-    } 
+    }
 
     @FXML
     private void showPopup() {
@@ -419,7 +398,7 @@ public class Inicio_meseraController implements Initializable {
                     protected void updateItem(Employees employee, boolean empty) {
                         super.updateItem(employee, empty);
                         if (employee != null && !empty) {
-                            setText(employee.getNombreEmpleado()); 
+                            setText(employee.getNombreEmpleado());
                         } else {
                             setText(null);
                         }
@@ -433,7 +412,7 @@ public class Inicio_meseraController implements Initializable {
             protected void updateItem(Employees employee, boolean empty) {
                 super.updateItem(employee, empty);
                 if (employee != null && !empty) {
-                    setText(employee.getNombreEmpleado()); 
+                    setText(employee.getNombreEmpleado());
                 } else {
                     setText(null);
                 }
@@ -520,7 +499,7 @@ public class Inicio_meseraController implements Initializable {
             txt_verdura.setText("Seleccione un grano");
         }
     }
-    
+
     private void editarMenuDia() {
         pane_menuDia.setVisible(true);
         String categoria = "Menú del Día";
