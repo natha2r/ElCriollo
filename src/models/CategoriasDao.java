@@ -26,7 +26,8 @@ public class CategoriasDao {
     List<Categorias> categoriaslist = new ArrayList<>();
     String query = "SELECT * FROM categorias";
 
-    try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query);
+    try (Connection conn = cn.getConnection(); 
+            PreparedStatement pst = conn.prepareStatement(query);
          ResultSet rs = pst.executeQuery()) {
 
         while (rs.next()) {

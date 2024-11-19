@@ -34,7 +34,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane minHeight="744.0" minWidth="1135.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Inicio_ventas_administradorController">
+<AnchorPane minHeight="744.0" minWidth="1135.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Inicio_ventas_administradorController">
     <children>
         <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <center>
@@ -120,7 +120,7 @@
                                         <Font name="System Bold" size="12.0" />
                                     </font>
                                 </Button>
-                                <Button id="boton" fx:id="btn_meseras_principal" minHeight="40.0" minWidth="220.0" mnemonicParsing="false" styleClass="boton" stylesheets="@../swing/inicio_administrador.css" text="MESA" GridPane.rowIndex="4">
+                                <Button id="boton" fx:id="btn_meseras_principal" minHeight="40.0" minWidth="220.0" mnemonicParsing="false" onAction="#handleBtnMeserasPrincipalAction" styleClass="boton" stylesheets="@../swing/inicio_administrador.css" text="MESA" GridPane.rowIndex="4">
                                     <effect>
                                         <DropShadow />
                                     </effect>
@@ -1343,7 +1343,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="btnEliminarMesa" alignment="CENTER" contentDisplay="BOTTOM" layoutX="508.0" layoutY="33.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="242.0" styleClass="boton" stylesheets="@../swing/inicio_mesera.css" text="Eliminar mesa">
+                              <Button fx:id="btnEliminarMesa" alignment="CENTER" contentDisplay="BOTTOM" layoutX="508.0" layoutY="33.0" mnemonicParsing="false" onAction="#handleBtnEliminarMesa" prefHeight="37.0" prefWidth="242.0" styleClass="boton" stylesheets="@../swing/inicio_mesera.css" text="Eliminar mesa">
                                  <font>
                                     <Font size="20.0" />
                                  </font>

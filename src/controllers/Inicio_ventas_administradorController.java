@@ -396,6 +396,9 @@ public class Inicio_ventas_administradorController {
     private Button btn_pedidos_visual;
     @FXML
     private Button btnAgregarMesa;
+    
+    @FXML
+    private Button btnEliminarMesa;
 
     // Variables globales
     private int mesaCounter = 1; // Inicia en 17 ya que tienes hasta la 16
@@ -673,7 +676,7 @@ public class Inicio_ventas_administradorController {
                     // Actualizar la tabla con los productos filtrados
                     tablaInventario.setItems(productosFiltrados);
                 }
-                if (newValue == "Todas las categorías") {
+                if ("Todas las categorías".equals(newValue)) {
 
                     ObservableList<Productos> listaProductos = productoDao.obtenerTodosLosProductos();
 
@@ -696,7 +699,7 @@ public class Inicio_ventas_administradorController {
                     // Actualizar la tabla con los productos filtrados
                     tablaInventario_reponer.setItems(productosFiltrados);
                 }
-                if (newValue == "Todas las categorías") {
+                if ("Todas las categorías".equals(newValue)) {
 
                     ObservableList<Productos> listaProductos = productoDao.obtenerTodosLosProductos();
 
@@ -800,6 +803,7 @@ public class Inicio_ventas_administradorController {
         //subbotones de la vista de meseras 
         btn_pedidos_visual.setOnAction(e -> handleBtnPedidosVisual());
         btnAgregarMesa.setOnAction(e -> handleBtnAgregarMesa());
+        btnEliminarMesa.setOnAction(e -> handleBtnEliminarMesa());
 
     }
 
@@ -866,6 +870,8 @@ public class Inicio_ventas_administradorController {
         pane_actualizacion_inventario.setVisible(false);
         pane_reponer_producto.setVisible(false);
         pane_modificar_inactivos_informacion.setVisible(false);
+        anchor_meseras.setVisible(false);
+        pane_meseras_inicio.setVisible(false);
 
     }
 
@@ -924,6 +930,9 @@ public class Inicio_ventas_administradorController {
         pane_actualizacion_inventario.setVisible(false);
         pane_reponer_producto.setVisible(false);
         pane_modificar_inactivos_informacion.setVisible(false);
+        anchor_meseras.setVisible(false);
+        pane_meseras_inicio.setVisible(false);
+        
 
         // Llamar al método para agregar el efecto 3D si es necesario
         agregarEfecto3D(btn_personal_roles);
@@ -984,6 +993,8 @@ public class Inicio_ventas_administradorController {
         pane_registrar_informacion.setVisible(false);
         pane_modificar_informacion.setVisible(false);
         pane_modificar_inactivos_informacion.setVisible(false);
+        anchor_meseras.setVisible(false);
+        pane_meseras_inicio.setVisible(false);
         configurarColumnasProductos();
         cargarProductos();
 
@@ -996,7 +1007,8 @@ public class Inicio_ventas_administradorController {
     public void handleBtnCajaAction() {
         // Acción para el botón "CAJA"
     }
-
+    
+    @FXML
     private void handleBtnMeserasPrincipalAction() {
         // Verificar si estás en los paneles de "Registrar Información" o "Modificar Información"
         if ((pane_registrar_informacion.isVisible() || pane_modificar_informacion.isVisible()
@@ -1021,7 +1033,7 @@ public class Inicio_ventas_administradorController {
         } else {
             // Si no estás en los formularios (ya estás en el panel de inicio), cambiar a la vista sin advertencia
             limpiarEstadoFormulario(); // Aseguramos de limpiar correctamente
-            mostrarPanelInicio();
+            mostrarPanelMeseras();
             enFormulario = false; // Estado correcto para evitar conflictos
         }
     }
@@ -2503,39 +2515,7 @@ public class Inicio_ventas_administradorController {
 
     }
 
-    /*@FXML
-    private void handleBtnAgregarMesa() {
-        // Crear un nuevo contenedor para la mesa
-        StackPane mesaContainer = new StackPane();
-        mesaContainer.setAlignment(Pos.CENTER);
 
-        // Crear la imagen de la mesa
-        ImageView mesaImage = new ImageView(new Image("resources/mesaoficial.png"));
-        mesaImage.setFitWidth(106);
-        mesaImage.setFitHeight(98);
-
-        // Crear el número de la mesa y colocarlo encima de la imagen
-        Label lblMesaNumero = new Label(String.valueOf(mesaCounter));
-        lblMesaNumero.setStyle("-fx-font-size: 16px; -fx-text-fill: #000000; -fx-font-weight: bold;");
-        StackPane.setAlignment(lblMesaNumero, Pos.TOP_CENTER);
-
-        // Agregar la imagen y el número al contenedor
-        mesaContainer.getChildren().addAll(mesaImage, lblMesaNumero);
-
-        // Definir el número máximo de columnas antes de pasar a una nueva fila
-        int maxColumns = 4;
-        int maxVisibleRows = 4; // Máximo de filas visibles antes de hacer scroll
-
-        // Calcular la posición de la nueva mesa en el GridPane
-        int row = (mesaCounter - 1) / maxColumns;
-        int col = (mesaCounter - 1) % maxColumns;
-
-        // Agregar el contenedor de la mesa al GridPane en la posición calculada
-        gridPaneMesas.add(mesaContainer, col, row);
-
-        // Incrementar el contador de mesas para la próxima mesa
-        mesaCounter++;
-    }*/
 
     
     private void cargarMesasDesdeBaseDeDatos() {
@@ -2582,7 +2562,7 @@ private String generarSiguienteId(String ultimoId) {
     }
 
     // Extraer el número del último ID
-    int numero = Integer.parseInt(ultimoId.replace("mesa", ""));
+    int numero = Integer.parseInt(ultimoId.replace("mesa0", ""));
     return String.format("mesa%03d", numero + 1);
 }
 
@@ -2596,8 +2576,11 @@ private void agregarMesaAGridPane(String nuevoId) {
     mesaImage.setFitWidth(106);
     mesaImage.setFitHeight(98);
 
+    // Obtener el número de la mesa a partir del ID
+    int numeroMesa = mesaCounter; // `mesaCounter` ya lleva el conteo secuencial
+
     // Crear el número de la mesa y colocarlo encima de la imagen
-    Label lblMesaNumero = new Label(nuevoId);
+    Label lblMesaNumero = new Label(String.valueOf(numeroMesa));
     lblMesaNumero.setStyle("-fx-font-size: 16px; -fx-text-fill: #000000; -fx-font-weight: bold;");
     StackPane.setAlignment(lblMesaNumero, Pos.TOP_CENTER);
 
@@ -2615,6 +2598,65 @@ private void agregarMesaAGridPane(String nuevoId) {
     // Incrementar el contador de mesas
     mesaCounter++;
 }
+
+
+
+/*boton de eliminar mesa*/
+
+@FXML
+private void handleBtnEliminarMesa() {
+    try {
+        // Obtener el último ID de la mesa de la base de datos
+        MesasDao mesasDao = new MesasDao();
+        String ultimoId = mesasDao.obtenerUltimaMesa();
+
+        if (ultimoId == null) {
+            // No hay mesas para eliminar
+            mostrarAlerta("No hay mesas para eliminar.");
+            return;
+        }
+
+        // Eliminar la última mesa de la base de datos
+        mesasDao.eliminarUltimaMesa(ultimoId);
+
+        // Eliminar la última mesa visualmente
+        eliminarMesaDeGridPane();
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        mostrarAlerta("Ocurrió un error al intentar eliminar la mesa.");
+    }
+}
+
+// Método para eliminar la última mesa del GridPane
+private void eliminarMesaDeGridPane() {
+    if (mesaCounter <= 1) {
+        mostrarAlerta("No hay mesas para eliminar visualmente.");
+        return;
+    }
+
+    // Calcular la posición de la última mesa en el GridPane
+    int maxColumns = 4;
+    int row = (mesaCounter - 2) / maxColumns;
+    int col = (mesaCounter - 2) % maxColumns;
+
+    // Eliminar el último nodo del GridPane
+    Node nodoEliminar = null;
+    for (Node nodo : gridPaneMesas.getChildren()) {
+        if (GridPane.getRowIndex(nodo) == row && GridPane.getColumnIndex(nodo) == col) {
+            nodoEliminar = nodo;
+            break;
+        }
+    }
+
+    if (nodoEliminar != null) {
+        gridPaneMesas.getChildren().remove(nodoEliminar);
+    }
+
+    // Decrementar el contador de mesas
+    mesaCounter--;
+}
+
 
 
 

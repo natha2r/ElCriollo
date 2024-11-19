@@ -60,6 +60,14 @@ public class MesasDao {
         return mesas;
     }
     
-    
+    public void eliminarUltimaMesa(String idMesa) throws Exception {
+    String query = "DELETE FROM mesas WHERE idMesas = ?";
+    try (Connection conn = cn.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(query)) {
+
+        stmt.setString(1, idMesa);
+        stmt.executeUpdate();
+    }
+}
     
 }

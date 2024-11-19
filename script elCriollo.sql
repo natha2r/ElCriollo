@@ -448,7 +448,7 @@ select * from mesas;
 	select *from pedidos;
 	select *from reportes;
 	select *from historialVentas;
-    
+    select *from mesas;
     select *from productos;
     select *from inventario;
     select *from proveedores;
