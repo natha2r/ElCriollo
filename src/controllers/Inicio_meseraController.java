@@ -2,8 +2,11 @@ package controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +21,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -29,6 +33,7 @@ import models.CategoriaPlatosDao;
 import models.Employees;
 import models.EmployeesDao;
 import models.Platos;
+import models.PlatosDao;
 import models.PrincipioDao;
 import models.SopaDao;
 import models.TipoMenuDao;
@@ -109,19 +114,17 @@ public class Inicio_meseraController implements Initializable {
     @FXML
     private TableView<Platos> tablaPlatos;
     @FXML
-    private TableColumn<Platos, String> columnaPlatos;
+    private TableColumn<Platos, String> columnaNombrePlato;
     @FXML
     private TableColumn<Platos, String> columnaPrecio;
     @FXML
-    private TableColumn<Platos, CheckBox> columnaMini;
+    private TableColumn<Platos, CheckBox> columnaEsMini;
     @FXML
     private ListView<String> listViewCategorias;
     @FXML
     private ListView<String> listViewCategoriasC;
     @FXML
     private Label popupLabel;
-    @FXML
-    private ImageView imageView1;
 
     //PANEL DE MENÚ
     @FXML
@@ -143,6 +146,7 @@ public class Inicio_meseraController implements Initializable {
     private CategoriaPlatosDao categoriaPlatosDao = new CategoriaPlatosDao();
     private Mensaje_PedidoController mensajePedidoController;
     private String sopaSeleccionadaActual;
+    private PlatosDao platosDao;
 
     // --------------------------
     public Inicio_meseraController() {
@@ -196,24 +200,51 @@ public class Inicio_meseraController implements Initializable {
 
         glassPane.setVisible(false);
         glassPane3.setVisible(false);
-        
+
         pane_editMenu.setVisible(false);
         pane_menu.setVisible(false);
         pane_menuCarta.setVisible(false);
         pane_menuDia.setVisible(false);
         pane_inicio.setVisible(true);
-        
+
         principioDao = new PrincipioDao();
+        platosDao = new PlatosDao();
         menuComboBox.setItems(tipoMenuDao.getAllMenus());
-        
+
         buttons();
         initComboBox();
         CargarVerduras();
         CargarGranos();
         cargarSopas();
+
+        columnaNombrePlato.setCellValueFactory(new PropertyValueFactory<>("nombrePlato"));
+        columnaPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
+        //columnaEsMini.setCellValueFactory(new PropertyValueFactory<>("esMini"));
+        columnaEsMini.setCellValueFactory(cellData -> {
+            CheckBox checkBox = cellData.getValue().getMiniCheckBox();
+
+            // Asigna el evento para actualizar la base de datos al cambiar el estado del CheckBox
+            checkBox.setOnAction(event -> {
+                boolean esMini = checkBox.isSelected();
+                String idPlato = cellData.getValue().getIdPlatos(); // Obtén el ID del plato
+                boolean actualizado = platosDao.actualizarEsMini(idPlato, esMini);
+                if (actualizado) {
+                    System.out.println("Plato " + idPlato + " actualizado correctamente.");
+                } else {
+                    System.out.println("Error al actualizar el plato " + idPlato + ".");
+                }
+            });
+            return new SimpleObjectProperty<>(checkBox);
+        });
+
+        listViewCategorias.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                cargarPlatosPorCategoria(newValue);
+            }
+        });
     }
-    
-    private void buttons(){
+
+    private void buttons() {
         btn_tomarPedido.setOnAction(e -> handlePedidoClick());
         btn_pedidos.setOnAction(e -> handleButton1Click());
         btn_mesas.setOnAction(e -> handleButton2Click());
@@ -232,7 +263,7 @@ public class Inicio_meseraController implements Initializable {
         btn_arrowMenu.setOnAction(event -> handlearrowMenu());
         btn_arrowMenu1.setOnAction(event -> handlearrowMenu());
         btn_arrowMenu2.setOnAction(event -> handlearrowMenu2());
-        btn_tomarPedido.setOnAction(e -> handlePedidoClick());  
+        btn_tomarPedido.setOnAction(e -> handlePedidoClick());
     }
 
     private void handleButton5Click() {
@@ -521,4 +552,12 @@ public class Inicio_meseraController implements Initializable {
         System.out.println("Tamaño de categorías: " + categorias.size());
     }
 
+    private void cargarPlatosPorCategoria(String categoria) {
+
+        List<Platos> listaPlatos = platosDao.getPlatosByCategoriaC(categoria);
+
+        ObservableList<Platos> platos = FXCollections.observableArrayList(listaPlatos);
+        tablaPlatos.setItems(platos);
+
+    }
 }

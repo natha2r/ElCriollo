@@ -464,7 +464,14 @@
       <Pane fx:id="pane_menuCarta" layoutX="263.0" layoutY="138.0" prefHeight="606.0" prefWidth="871.0" style="-fx-background-color: ffff;" visible="false" />
       <Pane fx:id="pane_menuDia" layoutX="263.0" layoutY="138.0" prefHeight="606.0" prefWidth="871.0" style="-fx-background-color: ffff;">
          <children>
-            <ListView fx:id="listViewCategorias" layoutX="27.0" layoutY="86.0" prefHeight="478.0" prefWidth="158.0" />
+            <TableView fx:id="tablaPlatos" editable="true" layoutX="243.0" layoutY="34.0" prefHeight="369.0" prefWidth="594.0">
+              <columns>
+                <TableColumn fx:id="columnaNombrePlato" prefWidth="197.0" text="Nombre" />
+                <TableColumn fx:id="columnaPrecio" prefWidth="193.0" text="Precio " />
+                  <TableColumn fx:id="columnaEsMini" editable="false" prefWidth="228.0" text="Mini" />
+              </columns>
+            </TableView>
+            <ListView fx:id="listViewCategorias" layoutX="27.0" layoutY="86.0" prefHeight="320.0" prefWidth="158.0" stylesheets="@../swing/inicio_mesera.css" />
             <Separator layoutX="198.0" layoutY="34.0" orientation="VERTICAL" prefHeight="551.0" prefWidth="0.0" />
             <Button fx:id="btn_arrowMenu1" contentDisplay="GRAPHIC_ONLY" layoutX="71.0" layoutY="25.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="41.0" style="-fx-background-color: TRANSPARENT;">
                <graphic>
@@ -478,17 +485,6 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <ScrollPane layoutX="227.0" layoutY="34.0" prefHeight="373.0" prefWidth="615.0">
-               <content>
-                  <TableView fx:id="tablePlatos" prefHeight="370.0" prefWidth="613.0">
-                    <columns>
-                      <TableColumn prefWidth="204.0" text="Platos" />
-                      <TableColumn prefWidth="271.0" text="Precio " />
-                        <TableColumn prefWidth="137.0" text="Mini" />
-                    </columns>
-                  </TableView>
-               </content>
-            </ScrollPane>
          </children>
       </Pane>
       <Pane fx:id="pane_menuCarta" layoutX="263.0" layoutY="138.0" prefHeight="606.0" prefWidth="871.0" style="-fx-background-color: ffff;" visible="false">

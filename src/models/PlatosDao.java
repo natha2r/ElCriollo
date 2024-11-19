@@ -121,7 +121,7 @@ public class PlatosDao {
 
     // ************************************************** 07/11/24 *******************************************************
     
-    // Método para obtener el precio de un plato por su nombre
+     // Método para obtener el precio de un plato por su nombre
     public String obtenerPrecioPorNombre(String nombrePlato) {
         String precio = "";
         String query = "SELECT precio FROM platos WHERE nombrePlato = ?";
@@ -172,7 +172,19 @@ public class PlatosDao {
 
     return platos;
 }
-
+    
+    public boolean actualizarEsMini(String idPlato, boolean esMini) {
+    String query = "UPDATE platos SET esMini = ? WHERE idPlatos = ?";
+    try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
+        pst.setBoolean(1, esMini);
+        pst.setString(2, idPlato);
+        int rowsAffected = pst.executeUpdate();
+        return rowsAffected > 0; // Devuelve true si se actualizó al menos una fila
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false; // Devuelve false si ocurrió un error
+    }
+}
 
 
 }

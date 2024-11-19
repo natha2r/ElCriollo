@@ -163,12 +163,64 @@
     -fx-pref-height: 268px;        /* Altura preferida */
 }
 
-.circular-image {
-    -fx-border-radius: 50%;      /* Hacer que el borde sea redondo */
-    -fx-background-radius: 50%;  /* Hacer que el fondo sea redondo */
-    -fx-border-color: black;     /* Color del borde */
-    -fx-border-width: 2px;       /* Grosor del borde */
-    -fx-padding: 1px;            /* Espacio entre la imagen y el borde */
+.list-view {
+    -fx-background-color: #ffffff; /* Fondo del ListView */
+    -fx-border-radius: 10px; /* Bordes redondeados */
+    -fx-background-radius: 10px;
+    -fx-padding: 8px;
+    -fx-font-size: 15px;
+    
+}
+
+.list-view .list-cell {
+    -fx-background-color: transparent; /* Fondo por defecto */
+    -fx-text-fill: #333333; /* Color del texto */
+    -fx-padding: 8px;
+    -fx-border-color: transparent;
+}
+
+
+.list-view .list-cell:selected {
+    -fx-background-color: #FBE5C4; /* Fondo seleccionado */
+    -fx-text-fill: #333333; /* Texto seleccionado */
+    -fx-font-weight: bold;
+}
+
+/* Estilo para el TableView */
+.table-view {
+    -fx-font-size: 15px;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #d3d3d3;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-padding: 5px;
+}
+
+.table-view .column-header {
+    -fx-background-color: #FBE5C4;
+    -fx-text-fill: #333333; /* Texto de encabezado */
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+}
+
+
+.table-view .table-row-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #333333;
+}
+
+
+.table-view .cell {
+    -fx-padding: 2px;
+    -fx-alignment: center-left; /* Alineación del contenido */
+    -fx-border-color: transparent;
+    -fx-text-fill: #333333;
+}
+
+.table-view .cell:selected {
+    -fx-background-color: #FBE5C4; /* Fondo seleccionado */
+    -fx-text-fill: #333333; /* Texto seleccionado */
+    -fx-font-weight: bold;
 }
 
 
