@@ -38,7 +38,7 @@ import models.SopaDao;
 import models.TipoMenuDao;
 
 public class Inicio_meseraController implements Initializable {
-
+    
     //lISTA DE BOTONES
     @FXML
     private Button btn_pedidos;
@@ -76,7 +76,7 @@ public class Inicio_meseraController implements Initializable {
     private Button btn_tomarPedido;
     @FXML
     private Button btn_mesas;
-
+    
     //lISTA DE PANE
     @FXML
     private Pane pane_editMenu;
@@ -127,6 +127,7 @@ public class Inicio_meseraController implements Initializable {
     @FXML
     private ImageView imageView1;
 
+    
     //PANEL DE MENÚ
     @FXML
     private VBox vBox_editPrincipio;
@@ -136,21 +137,20 @@ public class Inicio_meseraController implements Initializable {
     private Label txt_verdura;
     @FXML
     private Label txt_sopa;
-
-    private Mensaje_PedidoController mensajePedidoController;
     @FXML
     private GridPane gridPane;
     @FXML
     private VBox vBox_editSopa;
 
-    @FXML
-    private Label txt_cantidad;
-    private int cantidad = 0;
     private SopaDao sopaDao = new SopaDao();
     private PrincipioDao principioDao;
     private TipoMenuDao tipoMenuDao = new TipoMenuDao();
     private CategoriaPlatosDao categoriaPlatosDao = new CategoriaPlatosDao();
+    private Mensaje_PedidoController mensajePedidoController;
     private String sopaSeleccionadaActual;
+
+    // --------------------------
+
 
     public Inicio_meseraController() {
     }
@@ -190,7 +190,6 @@ public class Inicio_meseraController implements Initializable {
         this.pane_editCarta = pane_editCarta;
         this.pane_editDia = pane_editDia;
         this.btn_aceptarEditPrincipio = btn_aceptarEditPrincipio;
-        this.txt_cantidad = txt_cantidad;
         this.menuComboBox = menuComboBox;
         this.comboBoxGranos = comboBoxGranos;
         this.comboBoxVerduras = comboBoxVerduras;
@@ -198,6 +197,8 @@ public class Inicio_meseraController implements Initializable {
         this.principioDao = principioDao;
         this.btn_tomarPedido = btn_tomarPedido;
     }
+    
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -212,7 +213,13 @@ public class Inicio_meseraController implements Initializable {
         btn_cancelarEditPrincipio.setOnAction(e -> handleButtoncancelarEditPrincipio());
         btn_editSopa.setOnAction(e -> handleButtonEditSopa());
         btn_cancelarEditSopa.setOnAction(e -> handleButtoncancelarEditSopa());
+        cargarSopas();
+        
+        
         btn_editMenu.setOnAction(e -> handleButtonEditMenu());
+        cargarSopas();
+
+
         btn_aceptarEditSopa.setOnAction(event -> mostrarSopaSeleccionada());
         btn_aceptarEditPrincipio.setOnAction(event -> mostrarPrincipioSeleccionado());
         btn_editDia.setOnAction(event -> editarMenuDia());
@@ -221,22 +228,31 @@ public class Inicio_meseraController implements Initializable {
         btn_arrowMenu1.setOnAction(event -> handlearrowMenu());
         btn_arrowMenu2.setOnAction(event -> handlearrowMenu2());
         btn_tomarPedido.setOnAction(e -> handlePedidoClick());
+        
+        glassPane3.setVisible(false);
+        pane_editMenu.setVisible(false);
+        
+        pane_menu.setVisible(false);
+        pane_menuCarta.setVisible(false);
+        pane_menuDia.setVisible(false);
+
+        // Ocultar el GlassPane al iniciar la aplicación
+        glassPane.setVisible(false);
+
+        // Otros componentes de la interfaz pueden ser inicializados aquí
+        pane_inicio.setVisible(true);
+        
+        principioDao = new PrincipioDao();
 
         initComboBox();
         CargarVerduras();
         CargarGranos();
-        cargarSopas();
 
-        glassPane.setVisible(false);
-        glassPane3.setVisible(false);
-        pane_editMenu.setVisible(false);
-        pane_menu.setVisible(false);
-        pane_menuCarta.setVisible(false);
-        pane_menuDia.setVisible(false);
-        pane_inicio.setVisible(true);
+        btn_tomarPedido.setOnAction(e -> handlePedidoClick());
 
-        principioDao = new PrincipioDao();
         menuComboBox.setItems(tipoMenuDao.getAllMenus());
+
+
 
     }
 
@@ -293,7 +309,7 @@ public class Inicio_meseraController implements Initializable {
         pane_menuCarta.setVisible(false);
         pane_menuDia.setVisible(false);
     }
-
+    
     private void handlearrowMenu() {
         pane_editMenu.setVisible(true);
         pane_menuDia.setVisible(false);
@@ -306,7 +322,7 @@ public class Inicio_meseraController implements Initializable {
         pane_menuCarta.setVisible(false);
     }
 
-    private void handleButtonInicio() {
+    private void handleButtonInicio() { 
         pane_inicio.setVisible(true);
         pane_menu.setVisible(false);
         pane_editMenu.setVisible(false);
@@ -323,7 +339,7 @@ public class Inicio_meseraController implements Initializable {
     private void handleButtoncancelarEditPrincipio() {
         glassPane3.setVisible(false);
     }
-
+    
     private void handleButtonEditMenu() {
         pane_editMenu.setVisible(true);
     }
@@ -336,7 +352,7 @@ public class Inicio_meseraController implements Initializable {
 
     private void handleButtoncancelarEditSopa() {
         glassPane3.setVisible(false);
-    }
+    } 
 
     @FXML
     private void showPopup() {
@@ -403,7 +419,7 @@ public class Inicio_meseraController implements Initializable {
                     protected void updateItem(Employees employee, boolean empty) {
                         super.updateItem(employee, empty);
                         if (employee != null && !empty) {
-                            setText(employee.getNombreEmpleado());
+                            setText(employee.getNombreEmpleado()); 
                         } else {
                             setText(null);
                         }
@@ -417,7 +433,7 @@ public class Inicio_meseraController implements Initializable {
             protected void updateItem(Employees employee, boolean empty) {
                 super.updateItem(employee, empty);
                 if (employee != null && !empty) {
-                    setText(employee.getNombreEmpleado());
+                    setText(employee.getNombreEmpleado()); 
                 } else {
                     setText(null);
                 }
@@ -504,7 +520,7 @@ public class Inicio_meseraController implements Initializable {
             txt_verdura.setText("Seleccione un grano");
         }
     }
-
+    
     private void editarMenuDia() {
         pane_menuDia.setVisible(true);
         String categoria = "Menú del Día";
