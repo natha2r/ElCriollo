@@ -77,6 +77,8 @@ public class Inicio_meseraController implements Initializable {
     private Button btn_tomarPedido;
     @FXML
     private Button btn_mesas;
+    @FXML
+    private Button btnAgregarPlato, btnEliminarPlato;
 
     //lISTA DE PANE
     @FXML
