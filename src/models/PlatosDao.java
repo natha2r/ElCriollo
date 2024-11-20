@@ -120,8 +120,7 @@ public class PlatosDao {
     }
 
     // ************************************************** 07/11/24 *******************************************************
-    
-     // Método para obtener el precio de un plato por su nombre
+    // Método para obtener el precio de un plato por su nombre
     public String obtenerPrecioPorNombre(String nombrePlato) {
         String precio = "";
         String query = "SELECT precio FROM platos WHERE nombrePlato = ?";
@@ -140,49 +139,99 @@ public class PlatosDao {
 
         return precio;
     }
-    
+
     // Traer nombre del plato, precio y tipo 
     public List<Platos> getPlatosByCategoriaC(String nombreCategoria) {
-    List<Platos> platos = new ArrayList<>();
-    String query = "SELECT p.idPlatos, p.nombrePlato, p.precio, p.esMini, p.categoriaPlatosId "
-                 + "FROM platos p "
-                 + "JOIN categoriaPlatos cp ON p.categoriaPlatosId = cp.idCategoriaPlatos "
-                 + "WHERE cp.nombreCategoriaPlatos = ?";
+        List<Platos> platos = new ArrayList<>();
+        String query = "SELECT p.idPlatos, p.nombrePlato, p.precio, p.esMini, p.categoriaPlatosId "
+                + "FROM platos p "
+                + "JOIN categoriaPlatos cp ON p.categoriaPlatosId = cp.idCategoriaPlatos "
+                + "WHERE cp.nombreCategoriaPlatos = ?";
 
-    try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
-        pst.setString(1, nombreCategoria);
-        ResultSet rs = pst.executeQuery();
+        try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
+            pst.setString(1, nombreCategoria);
+            ResultSet rs = pst.executeQuery();
 
-        while (rs.next()) {
-            CheckBox miniCheckBox = new CheckBox();
-            miniCheckBox.setSelected(rs.getBoolean("esMini"));
+            while (rs.next()) {
+                CheckBox miniCheckBox = new CheckBox();
+                miniCheckBox.setSelected(rs.getBoolean("esMini"));
 
-            Platos plato = new Platos(
-                rs.getString("idPlatos"),
-                rs.getString("nombrePlato"),
-                rs.getDouble("precio"),
-                rs.getString("categoriaPlatosId"),
-                miniCheckBox
-            );
-            platos.add(plato);
+                Platos plato = new Platos(
+                        rs.getString("idPlatos"),
+                        rs.getString("nombrePlato"),
+                        rs.getDouble("precio"),
+                        rs.getString("categoriaPlatosId"),
+                        miniCheckBox
+                );
+                platos.add(plato);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
+
+        return platos;
     }
 
-    return platos;
-}
-    
     public boolean actualizarEsMini(String idPlato, boolean esMini) {
-    String query = "UPDATE platos SET esMini = ? WHERE idPlatos = ?";
+        String query = "UPDATE platos SET esMini = ? WHERE idPlatos = ?";
+        try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
+            pst.setBoolean(1, esMini);
+            pst.setString(2, idPlato);
+            int rowsAffected = pst.executeUpdate();
+            return rowsAffected > 0; // Devuelve true si se actualizó al menos una fila
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false; // Devuelve false si ocurrió un error
+        }
+    }
+
+    public boolean actualizarNombrePlato(String idPlato, String nuevoNombre) {
+        String query = "UPDATE platos SET nombrePlato = ? WHERE idPlatos = ?";
+        try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
+            pst.setString(1, nuevoNombre);
+            pst.setString(2, idPlato);
+            return pst.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean actualizarPrecioPlato(String idPlato, double nuevoPrecio) {
+        String query = "UPDATE platos SET precio = ? WHERE idPlatos = ?";
+        try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
+            pst.setDouble(1, nuevoPrecio);
+            pst.setString(2, idPlato);
+            return pst.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean insertarPlato(Platos plato) {
+        String query = "INSERT INTO platos (idPlatos, nombrePlato, precio, categoriaPlatosId, esMini) VALUES (?, ?, ?, ?, ?)";
+        try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
+            pst.setString(1, plato.getIdPlatos());
+            pst.setString(2, plato.getNombrePlato());
+            pst.setDouble(3, plato.getPrecio());
+            pst.setString(4, plato.getCategoriaPlatosId());
+            pst.setBoolean(5, plato.getMiniCheckBox().isSelected());
+            return pst.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public boolean eliminarPlato(String idPlato) {
+    String query = "DELETE FROM platos WHERE idPlatos = ?";
     try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
-        pst.setBoolean(1, esMini);
-        pst.setString(2, idPlato);
-        int rowsAffected = pst.executeUpdate();
-        return rowsAffected > 0; // Devuelve true si se actualizó al menos una fila
+        pst.setString(1, idPlato);
+        return pst.executeUpdate() > 0;
     } catch (SQLException e) {
         e.printStackTrace();
-        return false; // Devuelve false si ocurrió un error
+        return false;
     }
 }
 
