@@ -47,6 +47,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -54,8 +55,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.web.WebView;
 import javax.swing.JOptionPane;
 import models.CategoriasDao;
 import models.Pedidos;
@@ -95,8 +99,6 @@ public class Inicio_ventas_administradorController {
     @FXML
     private Button btn_personal_roles;
 
-    @FXML
-    private Button btn_registro_actividades;
 
     @FXML
     private Button btn_volver_config;
@@ -316,6 +318,7 @@ public class Inicio_ventas_administradorController {
     private CategoriasDao categoriaDao = new CategoriasDao();
     private ProveedoresDao ProveedoresDao = new ProveedoresDao();
     private InventarioDao InventarioDao = new InventarioDao();
+    private PedidosDao PedidosDao = new PedidosDao();
 
     /*SON RECURSOS PAR METODOS DE LA VISTA DE AGREGAR PROVEEDOR*/
     @FXML
@@ -396,7 +399,6 @@ public class Inicio_ventas_administradorController {
     private Button btn_pedidos_visual;
     @FXML
     private Button btnAgregarMesa;
-    
     @FXML
     private Button btnEliminarMesa;
 
@@ -408,18 +410,23 @@ public class Inicio_ventas_administradorController {
     @FXML
     private Pane pane_meseras_inicio;
 
-    @FXML
-    private ScrollPane scrollPaneMesas;
 
+    
+    
+    /*boton que principal de caja*/
     @FXML
     private Button btn_caja;
+    
+    /*recursos de apoyo para vista caja*/
+    @FXML
+    private FlowPane tarjetasContainer; // Contenedor para las tarjetas.
+    
 
     @FXML
     private Button btn_salir;
 
     /*son recursos necesiarios para todas las vistas**/
-    @FXML
-    private Pane pane_personal_roles;
+    
 
     @FXML
     private ScrollPane scroll_inicio_meseras;
@@ -438,6 +445,12 @@ public class Inicio_ventas_administradorController {
 
     @FXML
     private AnchorPane anchor_meseras;
+    
+    @FXML
+    private AnchorPane anchor_caja;
+    
+    @FXML
+    private Pane pane_personal_roles;
 
     @FXML
     private Pane pane_inventario;
@@ -469,6 +482,7 @@ public class Inicio_ventas_administradorController {
     @FXML
     private Pane pane_nueva_categoria;
 
+
     @FXML
     private boolean enFormulario = false;
 
@@ -478,8 +492,7 @@ public class Inicio_ventas_administradorController {
     public Inicio_ventas_administradorController() {
     }
 
-    public Inicio_ventas_administradorController(Button btn_inicio, Button btn_ventas, Button btn_meseras, Label jlabel_pedido, Label jlabel_sum_pedido, Button btn_configuracion, Button btn_personal_roles, Button btn_registro_actividades, Button btn_volver_config, Button btn_registrar_informacion, Button btn_modificar_informacion, Button btn_cancelar_registro_informacion, Button btn_interno_registrar_informacion, Button btn_inactivos, Button btn_atras_informacion, TextField txt_Id, TextField txt_Nombre, TextField txt_Edad, TextField txt_Direccion, TextField txt_Telefono, TextField txt_Email, ComboBox<String> cmb_Cargo, PasswordField txt_Contraseña, TextField txt_Usuario, TextField txt_modificar_Id, TextField txt_modificar_Nombre, TextField txt_modificar_Edad, TextField txt_modificar_Direccion, TextField txt_modificar_Telefono, TextField txt_modificar_Email, ComboBox<String> combo_Cargo, TextField txt_modificar_Usuario, PasswordField txt_modificar_Contraseña, TableView<Employees> tablaEmpleados, TableColumn<Employees, String> colId, TableColumn<Employees, String> colNombre, TableColumn<Employees, String> colEdad, TableColumn<Employees, String> colDireccion, TableColumn<Employees, String> colTelefono, TableColumn<Employees, String> colEmail, TableColumn<Employees, String> colCargo, TableColumn<Employees, String> colUsuario, TableColumn<Employees, String> colContraseña, TableView<Employees> tablaEmpleadosInactivos, TableColumn<Employees, String> colId_inactivos, TableColumn<Employees, String> colNombre_inactivos, TableColumn<Employees, String> colEdad_inactivos, TableColumn<Employees, String> colDireccion_inactivos, TableColumn<Employees, String> colTelefono_inactivos, TableColumn<Employees, String> colEmail_inactivos, TableColumn<Employees, String> colCargo_inactivos, TableColumn<Employees, String> colUsuario_inactivos, TableColumn<Employees, String> colContraseña_inactivos, TextField txt_modificar_Id_inactivos, TextField txt_modificar_Nombre_inactivos, TextField txt_modificar_Edad_inactivos, TextField txt_modificar_Direccion_inactivos, TextField txt_modificar_Telefono_inactivos, TextField txt_modificar_Email_inactivos, ComboBox<String> combo_Cargo_inactivos, TextField txt_modificar_Usuario_inactivos, PasswordField txt_modificar_Contraseña_inactivos, Button btn_inventario, Button btn_nuevo_prod, Button btn_reponer_prod,
-            Button btn_volver_inventario, Button btn_actualizar_producto, Button btn_actualizar_proveedor, Button btn_actualizar_categoria, Button btn_interno_agregar_producto, Button btn_interno_limpiar_producto, Button btn_interno_cancelar_producto, Button btn_interno_agregar_proveedor, Button btn_interno_limpiar_proveedor, Button btn_interno_cancelar_proveedor, Button btn_interno_agregar_categoria, Button btn_interno_limpiar_categoria, Button btn_interno_cancelar_categoria, ComboBox<String> cmb_cargar_categoria, TableView<Productos> tablaInventario, TableColumn<Productos, String> columnaID, TableColumn<Productos, String> columnaProducto, TableColumn<Productos, String> columnaCategoria, TableColumn<Productos, Integer> columnaStock, TableColumn<Productos, Double> columnaPrecio, TableColumn<Productos, String> columnaProveedor, TextField txt_Id_agregar_prod, TextField txt_Nombre_agregar_prod, TextField txt_stock_agregar_prod, TextField txt_precio_agregar_prod, DatePicker txt_fecha_agregar_prod, ComboBox<String> cmb_categoria_agregar_prod, ComboBox<String> cmb_proveedor_agregar_prod, TextField txt_Id_agregar_prov, TextField txt_Nombre_agregar_prov, TextField txt_contacto_agregar_prov, TextField txt_telefono_agregar_prov, TextField txt_email_agregar_prov, TextField txt_direccion_agregar_prov, TextField txt_tpago_agregar_prov, TextField txt_Id_agregar_cat, TextField txt_Nombre_agregar_cat, TableView<Productos> tablaInventario_reponer, TableColumn<Productos, String> columnaID_reponer, TableColumn<Productos, String> columnaProducto_reponer, TableColumn<Productos, String> columnaCategoria_reponer, TableColumn<Productos, String> columnaStock_reponer, TableColumn<Productos, Double> columnaPrecio_reponer, TableColumn<Productos, String> columnaProveedor_reponer, ComboBox<String> cmb_cargar_reponer_categoria, TextField buscarReponerProducto, Button btn_buscar_reponer_prod, TextField txt_reponer_id_prod, TextField txt_reponer_producto, TextField txt_reponer_categoria_prod, TextField txt_reponer_stock_prod, TextField txt_reponer_precio_prod, TextField txt_reponer_proveedor_prod, Button btn_interno_reponer_prod, Button btn_limpiar_reponer_prod, Button btn_salir_reponer_prod, Button btn_reportes, Button btn_meseras_princpial, Button btn_caja, Button btn_salir, Pane pane_personal_roles, ScrollPane scroll_inicio_meseras, AnchorPane anchor_inicio_ventas, AnchorPane anchor_configuracion, AnchorPane anchorPane_inicio, AnchorPane anchor_inventario, Pane pane_inventario, Pane pane_configuracion, Pane pane_registrar_informacion, Pane pane_modificar_informacion, Pane pane_reponer_producto, Pane pane_modificar_inactivos_informacion, Pane pane_actualizacion_inventario, Pane pane_nuevo_producto, Pane pane_nuevo_proveedor, Pane pane_nueva_categoria, Connection conn) {
+    public Inicio_ventas_administradorController(Button btn_inicio, Button btn_ventas, Button btn_meseras, Label jlabel_pedido, Label jlabel_sum_pedido, Button btn_configuracion, Button btn_personal_roles, Button btn_volver_config, Button btn_registrar_informacion, Button btn_modificar_informacion, Button btn_cancelar_registro_informacion, Button btn_interno_registrar_informacion, Button btn_inactivos, Button btn_atras_informacion, TextField txt_Id, TextField txt_Nombre, TextField txt_Edad, TextField txt_Direccion, TextField txt_Telefono, TextField txt_Email, ComboBox<String> cmb_Cargo, PasswordField txt_Contraseña, TextField txt_Usuario, TextField txt_modificar_Id, TextField txt_modificar_Nombre, TextField txt_modificar_Edad, TextField txt_modificar_Direccion, TextField txt_modificar_Telefono, TextField txt_modificar_Email, ComboBox<String> combo_Cargo, TextField txt_modificar_Usuario, PasswordField txt_modificar_Contraseña, TableView<Employees> tablaEmpleados, TableColumn<Employees, String> colId, TableColumn<Employees, String> colNombre, TableColumn<Employees, String> colEdad, TableColumn<Employees, String> colDireccion, TableColumn<Employees, String> colTelefono, TableColumn<Employees, String> colEmail, TableColumn<Employees, String> colCargo, TableColumn<Employees, String> colUsuario, TableColumn<Employees, String> colContraseña, TableView<Employees> tablaEmpleadosInactivos, TableColumn<Employees, String> colId_inactivos, TableColumn<Employees, String> colNombre_inactivos, TableColumn<Employees, String> colEdad_inactivos, TableColumn<Employees, String> colDireccion_inactivos, TableColumn<Employees, String> colTelefono_inactivos, TableColumn<Employees, String> colEmail_inactivos, TableColumn<Employees, String> colCargo_inactivos, TableColumn<Employees, String> colUsuario_inactivos, TableColumn<Employees, String> colContraseña_inactivos, TextField buscarProducto, TextField txt_modificar_Id_inactivos, TextField txt_modificar_Nombre_inactivos, TextField txt_modificar_Edad_inactivos, TextField txt_modificar_Direccion_inactivos, TextField txt_modificar_Telefono_inactivos, TextField txt_modificar_Email_inactivos, ComboBox<String> combo_Cargo_inactivos, TextField txt_modificar_Usuario_inactivos, PasswordField txt_modificar_Contraseña_inactivos, Button btn_inventario, Button btn_nuevo_prod, Button btn_reponer_prod, Button btn_volver_inventario, Button btn_actualizar_producto, Button btn_actualizar_proveedor, Button btn_actualizar_categoria, Button btn_interno_agregar_producto, Button btn_interno_limpiar_producto, Button btn_interno_cancelar_producto, Button btn_interno_agregar_proveedor, Button btn_interno_limpiar_proveedor, Button btn_interno_cancelar_proveedor, Button btn_interno_agregar_categoria, Button btn_interno_limpiar_categoria, Button btn_interno_cancelar_categoria, Button btn_volver_reponer_prod, ComboBox<String> cmb_cargar_categoria, TableView<Productos> tablaInventario, TableColumn<Productos, String> columnaID, TableColumn<Productos, String> columnaProducto, TableColumn<Productos, String> columnaCategoria, TableColumn<Productos, Integer> columnaStock, TableColumn<Productos, Double> columnaPrecio, TableColumn<Productos, String> columnaProveedor, TextField txt_Id_agregar_prod, TextField txt_Nombre_agregar_prod, TextField txt_stock_agregar_prod, TextField txt_precio_agregar_prod, DatePicker txt_fecha_agregar_prod, ComboBox<String> cmb_categoria_agregar_prod, ComboBox<String> cmb_proveedor_agregar_prod, TextField txt_Id_agregar_prov, TextField txt_Nombre_agregar_prov, TextField txt_contacto_agregar_prov, TextField txt_telefono_agregar_prov, TextField txt_email_agregar_prov, TextField txt_direccion_agregar_prov, TextField txt_tpago_agregar_prov, TextField txt_Id_agregar_cat, TextField txt_Nombre_agregar_cat, TableView<Productos> tablaInventario_reponer, TableColumn<Productos, String> columnaID_reponer, TableColumn<Productos, String> columnaProducto_reponer, TableColumn<Productos, String> columnaCategoria_reponer, TableColumn<Productos, String> columnaStock_reponer, TableColumn<Productos, Double> columnaPrecio_reponer, TableColumn<Productos, String> columnaProveedor_reponer, ComboBox<String> cmb_cargar_reponer_categoria, TextField buscarReponerProducto, Button btn_buscar_reponer_prod, TextField txt_reponer_id_prod, TextField txt_reponer_producto, TextField txt_reponer_categoria_prod, TextField txt_reponer_stock_prod, TextField txt_reponer_precio_prod, TextField txt_reponer_proveedor_prod, Button btn_interno_reponer_prod, Button btn_limpiar_reponer_prod, Button btn_salir_reponer_prod, Button btn_reportes, Button btn_meseras_principal, Button btn_pedidos_visual, Button btnAgregarMesa, Button btnEliminarMesa, GridPane gridPaneMesas, Pane pane_meseras_inicio, Button btn_caja, FlowPane tarjetasContainer, Button btn_salir, ScrollPane scroll_inicio_meseras, AnchorPane anchor_inicio_ventas, AnchorPane anchor_configuracion, AnchorPane anchorPane_inicio, AnchorPane anchor_inventario, AnchorPane anchor_meseras, AnchorPane anchor_caja, Pane pane_personal_roles, Pane pane_inventario, Pane pane_configuracion, Pane pane_registrar_informacion, Pane pane_modificar_informacion, Pane pane_reponer_producto, Pane pane_modificar_inactivos_informacion, Pane pane_actualizacion_inventario, Pane pane_nuevo_producto, Pane pane_nuevo_proveedor, Pane pane_nueva_categoria, Connection conn) {
         this.btn_inicio = btn_inicio;
         this.btn_ventas = btn_ventas;
         this.btn_meseras = btn_meseras;
@@ -487,7 +500,6 @@ public class Inicio_ventas_administradorController {
         this.jlabel_sum_pedido = jlabel_sum_pedido;
         this.btn_configuracion = btn_configuracion;
         this.btn_personal_roles = btn_personal_roles;
-        this.btn_registro_actividades = btn_registro_actividades;
         this.btn_volver_config = btn_volver_config;
         this.btn_registrar_informacion = btn_registrar_informacion;
         this.btn_modificar_informacion = btn_modificar_informacion;
@@ -533,6 +545,7 @@ public class Inicio_ventas_administradorController {
         this.colCargo_inactivos = colCargo_inactivos;
         this.colUsuario_inactivos = colUsuario_inactivos;
         this.colContraseña_inactivos = colContraseña_inactivos;
+        this.buscarProducto = buscarProducto;
         this.txt_modificar_Id_inactivos = txt_modificar_Id_inactivos;
         this.txt_modificar_Nombre_inactivos = txt_modificar_Nombre_inactivos;
         this.txt_modificar_Edad_inactivos = txt_modificar_Edad_inactivos;
@@ -558,6 +571,7 @@ public class Inicio_ventas_administradorController {
         this.btn_interno_agregar_categoria = btn_interno_agregar_categoria;
         this.btn_interno_limpiar_categoria = btn_interno_limpiar_categoria;
         this.btn_interno_cancelar_categoria = btn_interno_cancelar_categoria;
+        this.btn_volver_reponer_prod = btn_volver_reponer_prod;
         this.cmb_cargar_categoria = cmb_cargar_categoria;
         this.tablaInventario = tablaInventario;
         this.columnaID = columnaID;
@@ -603,14 +617,22 @@ public class Inicio_ventas_administradorController {
         this.btn_salir_reponer_prod = btn_salir_reponer_prod;
         this.btn_reportes = btn_reportes;
         this.btn_meseras_principal = btn_meseras_principal;
+        this.btn_pedidos_visual = btn_pedidos_visual;
+        this.btnAgregarMesa = btnAgregarMesa;
+        this.btnEliminarMesa = btnEliminarMesa;
+        this.gridPaneMesas = gridPaneMesas;
+        this.pane_meseras_inicio = pane_meseras_inicio;
         this.btn_caja = btn_caja;
+        this.tarjetasContainer = tarjetasContainer;
         this.btn_salir = btn_salir;
-        this.pane_personal_roles = pane_personal_roles;
         this.scroll_inicio_meseras = scroll_inicio_meseras;
         this.anchor_inicio_ventas = anchor_inicio_ventas;
         this.anchor_configuracion = anchor_configuracion;
         this.anchorPane_inicio = anchorPane_inicio;
         this.anchor_inventario = anchor_inventario;
+        this.anchor_meseras = anchor_meseras;
+        this.anchor_caja = anchor_caja;
+        this.pane_personal_roles = pane_personal_roles;
         this.pane_inventario = pane_inventario;
         this.pane_configuracion = pane_configuracion;
         this.pane_registrar_informacion = pane_registrar_informacion;
@@ -623,6 +645,8 @@ public class Inicio_ventas_administradorController {
         this.pane_nueva_categoria = pane_nueva_categoria;
         this.conn = conn;
     }
+
+    
 
     public void initialize() {    
         // No hacer nada aquí
@@ -751,6 +775,8 @@ public class Inicio_ventas_administradorController {
         
         cargarMesasDesdeBaseDeDatos();
 
+        
+        cargarPedidos(); // Llama al método que gestiona la carga con manejo de excepciones.
     }
 
     @FXML
@@ -770,7 +796,7 @@ public class Inicio_ventas_administradorController {
 
         //subbotones de la vista de configuracion
         btn_personal_roles.setOnAction(e -> handleBtnPersonalRolesAction());
-        btn_registro_actividades.setOnAction(e -> handleBtnRegistroActividadesAction());
+
         btn_volver_config.setOnAction(e -> handleBtnVolverConfigAction());
         btn_registrar_informacion.setOnAction(e -> handleBtnRegistrarInformacion());
         btn_modificar_informacion.setOnAction(e -> handleBtnModificarInformacion());
@@ -936,7 +962,7 @@ public class Inicio_ventas_administradorController {
 
         // Llamar al método para agregar el efecto 3D si es necesario
         agregarEfecto3D(btn_personal_roles);
-        agregarEfecto3D(btn_registro_actividades);
+
     }
 
     @FXML
@@ -1158,7 +1184,7 @@ public class Inicio_ventas_administradorController {
 
             // Crear una instancia de PedidosDAO
             // Aquí 'conn' es de tipo 'java.sql.Connection'
-            PedidosDao pedidosDAO = new PedidosDao((com.sun.jdi.connect.spi.Connection) conn);
+            PedidosDao pedidosDAO = new PedidosDao();
 
             // Definir la fecha para la consulta
             // Obtener los pedidos realizados en la fecha especificada
@@ -1319,10 +1345,6 @@ public class Inicio_ventas_administradorController {
         }
     }
 
-    public void handleBtnRegistroActividadesAction() {
-        // Acción para el botón "REGISTRO DE ACTIVIDADES"
-
-    }
 
     /*---BOTON PARA REGISTRAR INFORMACION EN LA VISTA REGISTRO INFORMACION-----*/
     @FXML
@@ -2662,5 +2684,174 @@ private void eliminarMesaDeGridPane() {
 
     /*--------------------------------------------------------------------------*/
  /* *********************FIN DEL MODULO DE MESERAS************************** */
+ /*--------------------------------------------------------------------------*/
+
+////////////////////////////////////////////////////////////////////////////////
+
+    /*--------------------------------------------------------------------------*/
+ /* *********************INICIO DEL MODULO DE CAJA************************** */
+ /*--------------------------------------------------------------------------*/
+
+
+    private void cargarPedidos() {
+        try {
+            List<Pedidos> pedidosList = PedidosDao.getAllPedidos();
+            mostrarTarjetasPedidos(pedidosList);
+        } catch (SQLException e) {
+            mostrarAlertaError("Error al cargar pedidos", "Hubo un problema al intentar cargar los pedidos: " + e.getMessage());
+        }
+    }
+
+    private void mostrarTarjetasPedidos(List<Pedidos> pedidosList) {
+        tarjetasContainer.getChildren().clear(); // Limpia las tarjetas antes de cargarlas.
+
+        for (Pedidos pedido : pedidosList) {
+            tarjetasContainer.getChildren().add(crearTarjeta(pedido));
+        }
+    }
+
+    private VBox crearTarjeta(Pedidos pedido) {
+    VBox tarjeta = new VBox();
+    tarjeta.setSpacing(10);
+    tarjeta.setStyle("""
+            -fx-padding: 0; 
+            -fx-background-color: #fefefe; 
+            -fx-border-color: #ddd; 
+            -fx-border-radius: 10; 
+            -fx-background-radius: 10;
+            -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 2);
+            -fx-pref-width: 260px;
+            -fx-pref-height: 130px;
+            -fx-alignment: center;
+            """);
+
+    // Tiempo de pedido (parte superior)
+    HBox tiempoBox = new HBox();
+    tiempoBox.setAlignment(Pos.CENTER_LEFT);
+    tiempoBox.setSpacing(5);
+    tiempoBox.setStyle("-fx-background-color: #ffc107; -fx-padding: 5; -fx-background-radius: 5;");
+
+    Label iconoTiempo = new Label("🕛"); // Icono de reloj (Unicode)
+    iconoTiempo.setStyle("-fx-font-size: 14px; -fx-text-fill: black;");
+
+    Label tiempoPedido = new Label(""); // Aquí puedes calcular la duración real si es necesario
+    tiempoPedido.setStyle("-fx-font-size: 14px; -fx-text-fill: black;");
+
+    tiempoBox.getChildren().addAll(iconoTiempo, tiempoPedido);
+
+    // Número de mesa
+    Label numeroMesa = new Label("MESA " + pedido.getMesasId());
+    numeroMesa.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: black; -fx-alignment: center;");
+
+    // Información del mesero y número de orden
+    Label mesero = new Label("Mesero: " + pedido.getEmpleadosId());
+    mesero.setStyle("-fx-font-size: 14px; -fx-text-fill: black; -fx-padding: 0px 0px 0px 10px");
+
+    Label orden = new Label("Orden #" + pedido.getIdPedidos());
+    orden.setStyle("-fx-font-size: 14px; -fx-text-fill: black; -fx-padding: 0px 0px 0px 10px");
+
+    VBox detallesBox = new VBox(mesero, orden);
+    detallesBox.setSpacing(5);
+
+    // Estado del pedido (parte inferior)
+    Label estado = new Label(pedido.getEstadoPedido());
+    estado.setStyle("""
+            -fx-background-color: #4caf50; 
+            -fx-text-fill: white; 
+            -fx-padding:  5 10; 
+            -fx-border-radius: 5; 
+            -fx-background-radius: 5;
+            -fx-font-size: 12px;
+            
+                        
+            """);
+
+    // Estructura principal
+    tarjeta.getChildren().addAll(tiempoBox, numeroMesa, detallesBox, estado);
+
+    // Configuración de evento clic (opcional)
+    tarjeta.setOnMouseClicked(event -> mostrarDetallesPedido(pedido));
+
+    return tarjeta;
+}
+
+private void mostrarDetallesPedido(Pedidos pedido) {
+    Alert detalles = new Alert(Alert.AlertType.INFORMATION);
+    detalles.setTitle("Detalles del Pedido");
+    detalles.setHeaderText("Información del Pedido");
+
+    // Crear el contenido con formato simple
+    String contenido = String.format(
+            "Mesa: %s\nMesero: %s\nFecha: %s\nEstado: %s\nTotal: $%.2f",
+            pedido.getMesasId(),
+            pedido.getEmpleadosId(),
+            pedido.getFechaPedido(),
+            pedido.getEstadoPedido(),
+            pedido.getPrecioTotal()
+    );
+
+    // Obtener el color asociado al estado
+    String colorEstado = obtenerColorEstado(pedido.getEstadoPedido());
+
+    // Crear un TextArea para mostrar los detalles con formato simple
+    TextArea textArea = new TextArea(contenido);
+    textArea.setEditable(false);
+    textArea.setWrapText(true);
+    textArea.setStyle("-fx-font-size: 14px; -fx-background-color: #f0f0f0; -fx-border-color: #ccc; -fx-padding: 10; -fx-text-fill: " + colorEstado + ";");
+
+    // Colocar el TextArea dentro de la alerta
+    detalles.getDialogPane().setContent(textArea);
+    
+    detalles.showAndWait();
+}
+
+// Método para obtener color del estado basado en el valor
+private String obtenerColorEstado(String estado) {
+    switch (estado.toLowerCase()) {
+        case "facturado":
+            return "#4caf50";  // Verde
+        case "pendiente":
+            return "#ff9800";  // Naranja
+        case "en proceso":
+            return "#2196f3";  // Azul
+        default:
+            return "#9e9e9e";  // Gris
+    }
+}
+
+
+    private void mostrarAlertaError(String titulo, String mensaje) {
+        Alert alerta = new Alert(Alert.AlertType.ERROR);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
+    }
+
+    @FXML
+    private void actualizarEstadoPedido(String idPedido, String nuevoEstado) {
+        Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmacion.setTitle("Confirmar actualización");
+        confirmacion.setHeaderText(null);
+        confirmacion.setContentText("¿Estás seguro de actualizar el estado del pedido a \"" + nuevoEstado + "\"?");
+
+        Optional<ButtonType> resultado = confirmacion.showAndWait();
+        if (resultado.isPresent() && resultado.get() == ButtonType.OK) {
+            try {
+                boolean exito = PedidosDao.actualizarEstadoPedido(idPedido, nuevoEstado);
+                if (exito) {
+                    mostrarAlertaError("Actualización exitosa", "El estado del pedido fue actualizado correctamente.");
+                    cargarPedidos(); // Recarga las tarjetas después de la actualización.
+                } else {
+                    mostrarAlertaError("Error", "No se pudo actualizar el estado del pedido.");
+                }
+            } catch (Exception e) {
+                mostrarAlertaError("Error", "Hubo un problema al actualizar el estado del pedido: " + e.getMessage());
+            }
+        }
+    }
+
+    /*--------------------------------------------------------------------------*/
+ /* *********************FIN DEL MODULO DE CAJA************************** */
  /*--------------------------------------------------------------------------*/
 }

@@ -15,9 +15,7 @@ public class PedidosDao {
     PreparedStatement pst;
     ResultSet rs;
 
-    public PedidosDao(com.sun.jdi.connect.spi.Connection conn) {
-        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
 
     // Obtener información básica del pedido
     public Pedidos getPedido(String idPedido) throws SQLException {
@@ -120,6 +118,45 @@ public class PedidosDao {
         }
         return pedidosList;
     }
+    
+    //ESTO ES DE JAIRITO, BESITOS RAFITA JAJA
+    public List<Pedidos> obtenertodosPedidos() throws SQLException {
+        List<Pedidos> pedidosList = new ArrayList<>();
+        String query = "SELECT p.idPedidos, p.fechaPedido, p.estadoPedido, p.precioTotal, "
+                + "e.nombreEmpleado AS nombreEmpleado, m.numeroMesa "
+                + "FROM pedidos p "
+                + "JOIN empleados e ON p.empleadosId = e.idEmpleados "
+                + "JOIN mesas m ON p.mesasId = m.idMesas";
+
+        try (PreparedStatement stmt = conn.prepareStatement(query); ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Pedidos pedido = new Pedidos(
+                        rs.getString("idPedidos"),
+                        rs.getString("nombreEmpleado"), // Nombre del empleado
+                        rs.getString("numeroMesa"),    // Número de mesa
+                        rs.getDate("fechaPedido"),
+                        rs.getString("estadoPedido"),
+                        rs.getDouble("precioTotal")
+                );
+                pedidosList.add(pedido);
+            }
+        }
+        return pedidosList;
+    }
+
+    public boolean actualizarEstadoPedido(String idPedido, String nuevoEstado) throws SQLException {
+        String query = "UPDATE pedidos SET estadoPedido = ? WHERE idPedidos = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, nuevoEstado);
+            stmt.setString(2, idPedido);
+            return stmt.executeUpdate() > 0;
+        }
+    }
+    
+    
+    
+    
     
     public void updatePedidoEstado(int pedidoId, String nuevoEstado) throws SQLException {
         String sql = "UPDATE pedidos SET estado = ? WHERE id_pedido = ?";

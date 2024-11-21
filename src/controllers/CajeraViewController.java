@@ -160,7 +160,7 @@ public class CajeraViewController implements Initializable {
         this.pedidos_dao = pedidos_dao;
         ConnectionMySQL connectionMySQL = new ConnectionMySQL();
         conn = (Connection) connectionMySQL.getConnection();
-        pedidos_dao = new PedidosDao(conn);
+        pedidos_dao = new PedidosDao();
     }
 
     public String getIdReservaActual() {
@@ -224,7 +224,7 @@ public class CajeraViewController implements Initializable {
         // Otros componentes de la interfaz pueden ser inicializados aquí
         paneInicio.setVisible(true);
         btn_salir.setOnAction(e -> handleButton3Click());
-        pedidos_dao = new PedidosDao(conn);
+        pedidos_dao = new PedidosDao();
         try {
             loadPedidos();
         } catch (Exception e) {

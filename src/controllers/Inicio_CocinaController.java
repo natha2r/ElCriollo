@@ -231,7 +231,7 @@ public class Inicio_CocinaController implements Initializable {
 
     @FXML
     private void initialize() {
-        pedidos_dao = new PedidosDao(conn);
+        pedidos_dao = new PedidosDao();
         categoriaDao = new CategoriaDao();
         try {
             loadPedidos();
@@ -676,7 +676,7 @@ public class Inicio_CocinaController implements Initializable {
             }
         });
         btnAplicar.setOnAction(e -> aplicarAction());
-        pedidos_dao = new PedidosDao(conn);
+        pedidos_dao = new PedidosDao();
         btnAtras.setOnAction(e -> atrasAction());
         btnAtrass.setOnAction(e -> atrassAction());
         btnAtrasss.setOnAction(e -> atraAction());

@@ -463,6 +463,12 @@ SELECT p.idProductos, p.nombreProducto, p.precio, c.nombreCategoria AS categoria
             LEFT JOIN categoria c ON p.categoria = c.idCategoria
             WHERE c.nombreCategoria ="Entrantes";
 
+SELECT p.idPedidos, p.fechaPedido, p.estadoPedido, p.precioTotal, 
+                e.nombreEmpleado AS nombreEmpleado, m.numeroMesa 
+                FROM pedidos p 
+                JOIN empleados e ON p.empleadosId = e.idEmpleados JOIN mesas m ON p.mesasId = m.idMesas;
+
+
 -- TRIGGER PARA INACTIVAR Y ACTUALIZAR LAS TABLAS RELACIONADAS CON LA LLAVE FORANEA DE EMPLEADOS.
 
 DELIMITER /

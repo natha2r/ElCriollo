@@ -61,7 +61,7 @@ public class FacturacionController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        pedidosDao = new PedidosDao(conn); // Inicializa tu DAO aquí
+        pedidosDao = new PedidosDao(); // Inicializa tu DAO aquí
         btn_efectivo.setOnAction(e -> abrirInformacionEfectivo());
         btn_volver.setOnAction(e -> cancelarPago());
         btn_cancelarT.setOnAction(e -> cancelar());
