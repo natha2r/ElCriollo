@@ -4,6 +4,7 @@
  */
 package models;
 
+import com.mysql.cj.xdevapi.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -140,7 +141,7 @@ public class PlatosDao {
         return precio;
     }
 
-    // Traer nombre del plato, precio y tipo 
+    // Traer nombre del plato, precio y tipo para menú del día
     public List<Platos> getPlatosByCategoriaC(String nombreCategoria) {
         List<Platos> platos = new ArrayList<>();
         String query = "SELECT p.idPlatos, p.nombrePlato, p.precio, p.esMini, p.categoriaPlatosId "
@@ -209,7 +210,7 @@ public class PlatosDao {
         }
     }
 
-    public boolean insertarPlato(Platos plato) {
+    /*public boolean insertarPlato(Platos plato) {
         String query = "INSERT INTO platos (idPlatos, nombrePlato, precio, categoriaPlatosId, esMini) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
             pst.setString(1, plato.getIdPlatos());
@@ -222,18 +223,127 @@ public class PlatosDao {
             e.printStackTrace();
             return false;
         }
+    }*/
+ /*public boolean eliminarPlato(String idPlato) {
+        String query = "DELETE FROM platos WHERE idPlatos = ?";
+        try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
+            pst.setString(1, idPlato);
+            return pst.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }*/
+    public List<Platos> obtenerTodosLosPlatos() {
+        List<Platos> platos = new ArrayList<>();
+        String query = "SELECT idPlatos, nombrePlato, precio, esMini, categoriaPlatosId FROM platos";
+
+        try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query); ResultSet rs = pst.executeQuery()) {
+
+            while (rs.next()) {
+                CheckBox miniCheckBox = new CheckBox();
+                miniCheckBox.setSelected(rs.getBoolean("esMini"));
+
+                Platos plato = new Platos(
+                        rs.getString("idPlatos"),
+                        rs.getString("nombrePlato"),
+                        rs.getDouble("precio"),
+                        rs.getString("categoriaPlatosId"),
+                        miniCheckBox
+                );
+                platos.add(plato);
+
+                // Listener para guardar cambios en el CheckBox
+                miniCheckBox.setOnAction(e -> {
+                    plato.setMiniCheckBox(miniCheckBox);
+                    actualizarPlato(plato);
+                });
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return platos;
     }
-    
-    public boolean eliminarPlato(String idPlato) {
-    String query = "DELETE FROM platos WHERE idPlatos = ?";
+
+    public boolean insertarPlato(Platos plato) {
+        String query = "INSERT INTO platos (idPlatos, nombrePlato, precio, esMini, categoriaPlatosId) "
+                + "VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
+            pst.setString(1, plato.getIdPlatos());
+            pst.setString(2, plato.getNombrePlato());
+            pst.setDouble(3, plato.getPrecio());
+            pst.setBoolean(4, plato.getMiniCheckBox().isSelected());
+            pst.setString(5, plato.getCategoriaPlatosId());
+            pst.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public void actualizarPlato(Platos plato) {
+        String query = "UPDATE platos SET nombrePlato = ?, precio = ?, esMini = ? WHERE idPlatos = ?";
+        try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
+
+            pst.setString(1, plato.getNombrePlato());
+            pst.setDouble(2, plato.getPrecio());
+            pst.setBoolean(3, plato.getMiniCheckBox().isSelected());
+            pst.setString(4, plato.getIdPlatos());
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void eliminarPlato(String idPlatos) {
+        String query = "DELETE FROM platos WHERE idPlatos = ?";
+        try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
+
+            pst.setString(1, idPlatos);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String generarNuevoIdPlato() {
+        String query = "SELECT idPlatos FROM platos ORDER BY idPlatos DESC LIMIT 1";
+
+        try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query); ResultSet rs = pst.executeQuery()) {
+            if (rs.next()) {
+                String ultimoId = rs.getString("idPlatos"); // Por ejemplo, "plato027"
+                // Extraer el número y generar el siguiente ID
+                int numero = Integer.parseInt(ultimoId.substring(5)); // Obtiene "027" como número
+                String nuevoId = String.format("plato%03d", numero + 1); // Incrementa y formatea con ceros
+                return nuevoId;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "plato001"; // Si no hay registros, comienza desde "plato001"
+    }
+
+    public String obtenerIdCategoriaPorNombre(String nombreCategoria) {
+    String idCategoria = null;
+    String query = "SELECT idCategoriaPlatos FROM categoriaPlatos WHERE nombreCategoriaPlatos = ?";
+
     try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
-        pst.setString(1, idPlato);
-        return pst.executeUpdate() > 0;
+        pst.setString(1, nombreCategoria);
+        ResultSet rs = pst.executeQuery();
+
+        if (rs.next()) {
+            idCategoria = rs.getString("idCategoriaPlatos");
+        }
     } catch (SQLException e) {
         e.printStackTrace();
-        return false;
     }
+
+    return idCategoria;
 }
+
 
 
 }
