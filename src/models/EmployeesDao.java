@@ -489,6 +489,34 @@ public class EmployeesDao {
     }
 }
 
+   
     
+    //PARA LA VISTA DE INICIO DE MOSTRAR MESERAS 
+    
+    public List<Employees> obtenerCamareros() {
+    List<Employees> camareros = new ArrayList<>();
+    String sql = "SELECT idEmpleados, nombreEmpleado, edad, telefono " +
+                 "FROM empleados WHERE rol = 'Camarero'";  // Aquí cambiamos "Mesera" por "Camarero"
+
+    try (Connection connection = cn.getConnection();
+         PreparedStatement statement = connection.prepareStatement(sql);
+         ResultSet resultSet = statement.executeQuery()) {
+
+        while (resultSet.next()) {
+            Employees camarero = new Employees();
+            camarero.setIdEmpleados(resultSet.getString("idEmpleados"));
+            camarero.setNombreEmpleado(resultSet.getString("nombreEmpleado"));
+            camarero.setEdad(resultSet.getInt("edad"));
+            camarero.setTelefono(resultSet.getString("telefono"));
+            camareros.add(camarero);
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return camareros;
+}
+
 
 }

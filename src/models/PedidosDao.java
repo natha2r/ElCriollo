@@ -96,6 +96,36 @@ public class PedidosDao {
         }
         return pedidosList;
     }
+    
+    // Obtener pedidos del día actual
+public List<Pedidos> getPedidosDelDia() throws SQLException {
+    List<Pedidos> pedidosList = new ArrayList<>();
+    String query = "SELECT p.idPedidos, p.fechaPedido, p.estadoPedido, p.precioTotal, "
+            + "e.nombreEmpleado AS nombreEmpleado, m.numeroMesa "
+            + "FROM pedidos p "
+            + "JOIN empleados e ON p.empleadosId = e.idEmpleados "
+            + "JOIN mesas m ON p.mesasId = m.idMesas "
+            + "WHERE DATE(p.fechaPedido) = CURDATE()";
+
+    try (PreparedStatement stmt = conn.prepareStatement(query); ResultSet rs = stmt.executeQuery()) {
+
+        while (rs.next()) {
+            Pedidos pedido = new Pedidos(
+                    rs.getString("idPedidos"),
+                    rs.getString("nombreEmpleado"), // Suponiendo que has modificado la clase Pedidos
+                    rs.getString("numeroMesa"),     // Suponiendo que has modificado la clase Pedidos
+                    rs.getDate("fechaPedido"),
+                    rs.getString("estadoPedido"),
+                    rs.getDouble("precioTotal")
+            );
+            pedidosList.add(pedido);
+        }
+    }
+    return pedidosList;
+}
+
+    
+    
 
     // Obtener todos los pedidos activos
     public List<Pedidos> getActivePedidos() throws SQLException {

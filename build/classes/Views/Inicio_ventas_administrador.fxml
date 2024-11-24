@@ -35,7 +35,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane minHeight="744.0" minWidth="1135.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Inicio_ventas_administradorController">
+<AnchorPane minHeight="744.0" minWidth="1135.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Inicio_ventas_administradorController">
     <children>
         <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <center>
@@ -146,7 +146,7 @@
                                         <Font name="System Bold" size="12.0" />
                                     </font>
                                 </Button>
-                                <Button id="boton" fx:id="btn_caja" minHeight="40.0" minWidth="220.0" mnemonicParsing="false" styleClass="boton" stylesheets="@../swing/inicio_administrador.css" text="CAJA" GridPane.rowIndex="5">
+                                <Button id="boton" fx:id="btn_caja" minHeight="40.0" minWidth="220.0" mnemonicParsing="false" onAction="#handleBtnCajaAction" styleClass="boton" stylesheets="@../swing/inicio_administrador.css" text="CAJA" GridPane.rowIndex="5">
                                     <effect>
                                         <DropShadow />
                                     </effect>
@@ -156,11 +156,11 @@
                                 </Button>
                             </children>
                         </GridPane>
-                        <AnchorPane fx:id="anchorPane_inicio" layoutX="264.0" layoutY="200.0" prefHeight="544.0" prefWidth="869.0" styleClass="root_personal" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="264.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="200.0">
+                        <AnchorPane fx:id="anchorPane_inicio" layoutX="264.0" layoutY="200.0" prefHeight="544.0" prefWidth="869.0" styleClass="root_personal" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="264.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="200.0">
                             <children>
-                                <ScrollPane fx:id="scroll_inicio_meseras" layoutY="80.0" prefHeight="464.0" prefWidth="871.0" visible="false">
+                                <ScrollPane fx:id="scrollPaneCamareros" layoutY="80.0" prefHeight="464.0" prefWidth="871.0">
                                     <content>
-                                        <GridPane fx:id="gridpane_inicio_meseras" hgap="10.0" prefHeight="479.0" prefWidth="884.0" vgap="10.0">
+                                        <GridPane fx:id="gridPaneCamareros" hgap="10.0" prefHeight="479.0" prefWidth="884.0" vgap="10.0">
                                             <columnConstraints>
                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -194,7 +194,7 @@
                                         </Button>
                                     </right>
                                 </BorderPane>
-                                <AnchorPane fx:id="anchor_inicio_ventas" layoutY="85.0" prefHeight="460.0" prefWidth="871.0" styleClass="root_personal">
+                                <AnchorPane fx:id="anchor_inicio_ventas" layoutY="85.0" prefHeight="460.0" prefWidth="871.0" styleClass="root_personal" visible="false">
                                     <children>
                                         <BorderPane minHeight="48.0" minWidth="871.0" prefHeight="48.0" prefWidth="871.0" AnchorPane.bottomAnchor="415.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <top>
@@ -445,11 +445,11 @@
                                                         <PasswordField fx:id="txt_Contraseña" layoutX="363.0" layoutY="311.0" prefHeight="25.0" prefWidth="184.0" />
                                                         <Button fx:id="btn_cancelar_registro_informacion" alignment="CENTER" contentDisplay="CENTER" layoutX="32.0" layoutY="298.0" mnemonicParsing="false" onAction="#handleBtnCancelarRegistroInformacion" prefHeight="32.0" prefWidth="173.0" styleClass="boton-cancelar" text="CANCELAR" />
                                                         <Button fx:id="btn_interno_registrar_informacion" alignment="CENTER" contentDisplay="CENTER" layoutX="32.0" layoutY="249.0" mnemonicParsing="false" onAction="#handleBtnInternoRegistroInformacion" prefHeight="32.0" prefWidth="173.0" styleClass="boton-registrar" text="REGISTRAR" />
-                                                        <Button contentDisplay="TOP" layoutX="35.0" layoutY="34.0" mnemonicParsing="false" prefHeight="177.0" prefWidth="166.0" styleClass="foto_personal" text="Subir foto ">
+                                                        <Button contentDisplay="GRAPHIC_ONLY" layoutX="35.0" layoutY="34.0" mnemonicParsing="false" prefHeight="177.0" prefWidth="166.0" styleClass="foto_personal">
                                                             <graphic>
-                                                                <ImageView fitHeight="50.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                                                                <ImageView fitHeight="94.0" fitWidth="88.0" pickOnBounds="true" preserveRatio="true">
                                                                     <image>
-                                                                        <Image url="@../resources/foto.png" />
+                                                                        <Image url="@../resources/grupo%20(1).png" />
                                                                     </image>
                                                                 </ImageView>
                                                             </graphic>
@@ -1358,12 +1358,43 @@
                         </Pane>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="anchor_caja" layoutX="264.0" layoutY="200.0" prefHeight="544.0" prefWidth="872.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="264.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="200.0">
+                  <AnchorPane fx:id="anchor_caja" layoutX="264.0" layoutY="200.0" prefHeight="544.0" prefWidth="872.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="264.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="200.0">
                      <children>
-                        <FlowPane fx:id="tarjetasContainer" alignment="TOP_CENTER" columnHalignment="CENTER" hgap="20.0" layoutX="69.0" layoutY="88.0" prefHeight="411.0" prefWidth="732.0" vgap="20.0" />
-                        <BorderPane layoutX="-1.0" layoutY="32.0" minHeight="48.0" minWidth="871.0" prefHeight="56.0" prefWidth="871.0">
+                        <ScrollPane fx:id="scrollPaneFacturados" layoutX="69.0" layoutY="303.0" prefHeight="228.0" prefWidth="732.0">
+                           <content>
+                              <FlowPane fx:id="flowPanePedidosFacturados" alignment="TOP_CENTER" columnHalignment="CENTER" hgap="20.0" prefHeight="204.0" prefWidth="732.0" vgap="20.0" />
+                           </content>
+                           <padding>
+                              <Insets top="10.0" />
+                           </padding>
+                        </ScrollPane>
+                        <BorderPane layoutX="-1.0" layoutY="272.0" minHeight="48.0" minWidth="871.0" prefHeight="56.0" prefWidth="871.0">
                            <top>
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="FACTURADOS" wrappingWidth="154.63687133789062" BorderPane.alignment="CENTER">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Text>
+                           </top>
+                           <center>
+                              <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                 <top>
+                                    <Line endX="100.0" startX="-100.0" BorderPane.alignment="CENTER" />
+                                 </top>
+                              </BorderPane>
+                           </center>
+                        </BorderPane>
+                        <ScrollPane fx:id="scrollPaneEnProceso" layoutX="70.0" layoutY="55.0" prefHeight="221.0" prefWidth="732.0">
+                           <content>
+                              <FlowPane fx:id="flowPanePedidosEnProceso" alignment="TOP_CENTER" columnHalignment="CENTER" hgap="20.0" prefHeight="204.0" prefWidth="732.0" vgap="20.0" />
+                           </content>
+                           <padding>
+                              <Insets top="10.0" />
+                           </padding>
+                        </ScrollPane>
+                        <BorderPane layoutY="24.0" minHeight="48.0" minWidth="871.0" prefHeight="56.0" prefWidth="871.0">
+                           <top>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" EN PROCESO" wrappingWidth="154.63687133789062" BorderPane.alignment="CENTER">
                                  <font>
                                     <Font size="24.0" />
                                  </font>

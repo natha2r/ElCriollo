@@ -37,13 +37,16 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -90,6 +93,14 @@ public class Inicio_ventas_administradorController {
 
     @FXML
     public Label jlabel_sum_pedido;
+    
+    @FXML
+    private ScrollPane scrollPaneCamareros;
+
+    @FXML
+    private GridPane gridPaneCamareros;
+    
+    
 
     /*BOTON DE PRINCIPAL DE CONFIGURACION*/
     @FXML
@@ -319,6 +330,7 @@ public class Inicio_ventas_administradorController {
     private ProveedoresDao ProveedoresDao = new ProveedoresDao();
     private InventarioDao InventarioDao = new InventarioDao();
     private PedidosDao PedidosDao = new PedidosDao();
+    private EmployeesDao EmployeesDao = new EmployeesDao();  // Crear instancia del DAO
 
     /*SON RECURSOS PAR METODOS DE LA VISTA DE AGREGAR PROVEEDOR*/
     @FXML
@@ -419,7 +431,10 @@ public class Inicio_ventas_administradorController {
     
     /*recursos de apoyo para vista caja*/
     @FXML
-    private FlowPane tarjetasContainer; // Contenedor para las tarjetas.
+    private FlowPane flowPanePedidosEnProceso;
+
+    @FXML
+    private FlowPane flowPanePedidosFacturados;
     
 
     @FXML
@@ -623,7 +638,7 @@ public class Inicio_ventas_administradorController {
         this.gridPaneMesas = gridPaneMesas;
         this.pane_meseras_inicio = pane_meseras_inicio;
         this.btn_caja = btn_caja;
-        this.tarjetasContainer = tarjetasContainer;
+        
         this.btn_salir = btn_salir;
         this.scroll_inicio_meseras = scroll_inicio_meseras;
         this.anchor_inicio_ventas = anchor_inicio_ventas;
@@ -777,6 +792,7 @@ public class Inicio_ventas_administradorController {
 
         
         cargarPedidos(); // Llama al método que gestiona la carga con manejo de excepciones.
+        cargarCamareros();
     }
 
     @FXML
@@ -884,7 +900,7 @@ public class Inicio_ventas_administradorController {
         // Mostrar el panel de inicio y asegurarse de que los paneles relevantes estén ocultos
         anchorPane_inicio.setVisible(true);
         anchor_inicio_ventas.setVisible(true);
-        scroll_inicio_meseras.setVisible(false);
+        scrollPaneCamareros.setVisible(false);
         anchor_inventario.setVisible(false);
         // Ocultar otros paneles (como el de configuración)
         anchor_configuracion.setVisible(false);
@@ -898,6 +914,7 @@ public class Inicio_ventas_administradorController {
         pane_modificar_inactivos_informacion.setVisible(false);
         anchor_meseras.setVisible(false);
         pane_meseras_inicio.setVisible(false);
+        anchor_caja.setVisible(false);
 
     }
 
@@ -944,7 +961,7 @@ public class Inicio_ventas_administradorController {
         // Ocultar otros paneles que no son relevantes
         anchorPane_inicio.setVisible(false);
         anchor_inicio_ventas.setVisible(false);
-        scroll_inicio_meseras.setVisible(false);
+        scrollPaneCamareros.setVisible(false);
         pane_registrar_informacion.setVisible(false);
         pane_modificar_informacion.setVisible(false);
         pane_personal_roles.setVisible(false);
@@ -958,6 +975,7 @@ public class Inicio_ventas_administradorController {
         pane_modificar_inactivos_informacion.setVisible(false);
         anchor_meseras.setVisible(false);
         pane_meseras_inicio.setVisible(false);
+        anchor_caja.setVisible(false);
         
 
         // Llamar al método para agregar el efecto 3D si es necesario
@@ -1013,7 +1031,7 @@ public class Inicio_ventas_administradorController {
         // Ocultar otros paneles que no son relevantes
         anchorPane_inicio.setVisible(false);
         anchor_inicio_ventas.setVisible(false);
-        scroll_inicio_meseras.setVisible(false);
+        scrollPaneCamareros.setVisible(false);
         anchor_configuracion.setVisible(false);
         pane_configuracion.setVisible(false);
         pane_registrar_informacion.setVisible(false);
@@ -1021,6 +1039,7 @@ public class Inicio_ventas_administradorController {
         pane_modificar_inactivos_informacion.setVisible(false);
         anchor_meseras.setVisible(false);
         pane_meseras_inicio.setVisible(false);
+        anchor_caja.setVisible(false);
         configurarColumnasProductos();
         cargarProductos();
 
@@ -1032,6 +1051,60 @@ public class Inicio_ventas_administradorController {
 
     public void handleBtnCajaAction() {
         // Acción para el botón "CAJA"
+        
+        // Verificar si estás en los paneles de "Registrar Información" o "Modificar Información"
+        if ((pane_registrar_informacion.isVisible() || pane_modificar_informacion.isVisible()
+                || pane_modificar_inactivos_informacion.isVisible() || pane_nuevo_producto.isVisible()
+                || pane_nuevo_proveedor.isVisible() || pane_nueva_categoria.isVisible() || pane_reponer_producto.isVisible())
+                && !anchor_caja.isVisible()) {
+            // Mostrar advertencia de confirmación
+            Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmacion.setTitle("Confirmar");
+            confirmacion.setHeaderText("¿Está seguro de que desea cancelar el llenado del formulario?");
+            confirmacion.setContentText("Si cancela, se perderá toda la información ingresada.");
+
+            Optional<ButtonType> resultado = confirmacion.showAndWait();
+
+            if (resultado.isPresent() && resultado.get() == ButtonType.OK) {
+                // Acción para el botón "Inicio" si confirma
+
+                limpiarEstadoFormulario();
+                mostrarPanelCaja();
+                enFormulario = false; // Actualizamos correctamente el estado
+            }
+        } else {
+            // Si no estás en los formularios (ya estás en el panel de inicio), cambiar a la vista sin advertencia
+            limpiarEstadoFormulario(); // Aseguramos de limpiar correctamente
+            mostrarPanelCaja();
+            enFormulario = false; // Estado correcto para evitar conflictos
+        }
+    }
+    
+    private void mostrarPanelCaja() {
+        // Mostrar el panel de inventario y ocultar los demás paneles no relevantes
+        anchor_caja.setVisible(true);
+        
+        anchor_inventario.setVisible(false);
+        pane_inventario.setVisible(false);
+
+        pane_actualizacion_inventario.setVisible(false);
+        pane_nuevo_producto.setVisible(false);
+        pane_reponer_producto.setVisible(false);
+        pane_nuevo_proveedor.setVisible(false);
+        pane_nueva_categoria.setVisible(false);
+
+        // Ocultar otros paneles que no son relevantes
+        anchorPane_inicio.setVisible(false);
+        anchor_inicio_ventas.setVisible(false);
+        scrollPaneCamareros.setVisible(false);
+        anchor_configuracion.setVisible(false);
+        pane_configuracion.setVisible(false);
+        pane_registrar_informacion.setVisible(false);
+        pane_modificar_informacion.setVisible(false);
+        pane_modificar_inactivos_informacion.setVisible(false);
+        anchor_meseras.setVisible(false);
+        pane_meseras_inicio.setVisible(false);      
+
     }
     
     @FXML
@@ -1080,12 +1153,13 @@ public class Inicio_ventas_administradorController {
         // Ocultar otros paneles que no son relevantes
         anchorPane_inicio.setVisible(false);
         anchor_inicio_ventas.setVisible(false);
-        scroll_inicio_meseras.setVisible(false);
+        scrollPaneCamareros.setVisible(false);
         anchor_configuracion.setVisible(false);
         pane_configuracion.setVisible(false);
         pane_registrar_informacion.setVisible(false);
         pane_modificar_informacion.setVisible(false);
         pane_modificar_inactivos_informacion.setVisible(false);
+        anchor_caja.setVisible(false);
         configurarColumnasProductos();
         cargarProductos();
 
@@ -1118,13 +1192,19 @@ public class Inicio_ventas_administradorController {
 
     }
 
-    /*BOTONES DE LA VISTA DE INICIO*/
+
+
+    /*--------------------------------------------------------------------------*/
+ /* *************************MODULO DE INICIO******************************* */
+ /*--------------------------------------------------------------------------*/
+    
+        /*BOTONES DE LA VISTA DE INICIO*/
     @FXML
     public void handleBtnVentasAction() {
         // Acción para el botón "VENTAS"
         // Show the anchor_inicio_ventas container and hide the scroll_inicio_meseras container
         anchor_inicio_ventas.setVisible(true);
-        scroll_inicio_meseras.setVisible(false);
+        scrollPaneCamareros.setVisible(false);
 
         /*try {
             Parent root = FXMLLoader.load(getClass().getResource("/views/Inicio_ventas_administrador.fxml"));
@@ -1143,40 +1223,57 @@ public class Inicio_ventas_administradorController {
         // Acción para el botón "MESAS"
         // Show the scroll_inicio_meseras container and hide the anchor_inicio_ventas container
         anchor_inicio_ventas.setVisible(false);
-        scroll_inicio_meseras.setVisible(true);
+        scrollPaneCamareros.setVisible(true);
 
         limpiarCampos();
 
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/components/TarjetaMeseraAdm.fxml"));
-            loader.setLocation(getClass().getResource("/components/TarjetaMeseraAdm.fxml"));
-            Pane tarjetaMeseraPane = loader.load();
+    }
+    @FXML
+    private void cargarCamareros() {
+        List<Employees> camareros = EmployeesDao.obtenerCamareros();
+        gridPaneCamareros.getChildren().clear();
 
-            GridPane gridpane_inicio_meseras = (GridPane) scroll_inicio_meseras.getContent();
-            /*gridpane_inicio_meseras.setVisible(true); // Ensure the gridpane is visible
-            gridpane_inicio_meseras.setManaged(true); // Ensure the gridpane is managed
-            gridpane_inicio_meseras.setPrefWidth(300); // Set a non-zero pref width
-            gridpane_inicio_meseras.setPrefHeight(300); // Set a non-zero pref height*/
+        int row = 0;
+        int col = 0;
 
-            gridpane_inicio_meseras.getChildren().clear(); // clear the gridpane before adding new content
-            gridpane_inicio_meseras.add(tarjetaMeseraPane, 0, 0); // add to the first row and column
-            gridpane_inicio_meseras.setConstraints(tarjetaMeseraPane, 0, 0); // Set the constraints explicitly
-            gridpane_inicio_meseras.getColumnConstraints().clear();
-            gridpane_inicio_meseras.getRowConstraints().clear();
+        for (Employees camarero : camareros) {
+            VBox camareroCard = crearCamareroCard(camarero);
 
-            /*scroll_inicio_meseras.setFitToWidth(true); // Ensure the scrollpane fits to width
-            scroll_inicio_meseras.setFitToHeight(true); // Ensure the scrollpane fits to height
-            scroll_inicio_meseras.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS); // Show the vertical scrollbar
-            scroll_inicio_meseras.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS); // Show the horizontal scrollbar*/
-        } catch (IOException e) {
-            e.printStackTrace();
+            gridPaneCamareros.add(camareroCard, col, row);
+
+            col++;
+            if (col == 3) { // Cambiar de fila cada 3 columnas
+                col = 0;
+                row++;
+            }
         }
-
     }
 
-    /*--------------------------------------------------------------------------*/
- /* *************************MODULO DE INICIO******************************* */
- /*--------------------------------------------------------------------------*/
+    private VBox crearCamareroCard(Employees camarero) {
+        VBox card = new VBox();
+        card.setStyle("-fx-background-color: #FFCC80; -fx-padding: 10; -fx-spacing: 10; -fx-alignment: center; -fx-border-radius: 5; -fx-background-radius: 5;");
+
+        // Imagen
+        ImageView imageView = new ImageView(new Image("resources/persona-no-autorizada.png")); // Cambiar por tu imagen
+        imageView.setFitWidth(80);
+        imageView.setFitHeight(80);
+        imageView.setStyle("-fx-border-radius: 50%; -fx-background-radius: 50%;");
+
+        // Nombre, Edad, Teléfono
+        Label nombreLabel = new Label(camarero.getNombreEmpleado());
+        Label edadLabel = new Label(camarero.getEdad() + " años");
+        Label telefonoLabel = new Label( camarero.getTelefono());
+
+        card.getChildren().addAll(imageView, nombreLabel, edadLabel, telefonoLabel);
+
+        return card;
+    }
+    
+    
+    
+    
+    
+    
  /*DIFERENTES ACCIONES QUE CONTIENE LA VISTA DE INICIO*/
     @FXML
     public void cargarPedidosDelDia(Date fecha) {
@@ -2693,122 +2790,171 @@ private void eliminarMesaDeGridPane() {
  /*--------------------------------------------------------------------------*/
 
 
+/**
+     * Carga los pedidos desde la base de datos y los muestra en los FlowPane.
+     */
     private void cargarPedidos() {
         try {
-            List<Pedidos> pedidosList = PedidosDao.getAllPedidos();
-            mostrarTarjetasPedidos(pedidosList);
+            // Obtiene todos los pedidos desde el DAO
+            List<Pedidos> pedidosList = PedidosDao.getPedidosDelDia();
+
+            // Divide y muestra los pedidos según su estado
+            mostrarPedidosEnProceso(pedidosList);
+            mostrarPedidosFacturados(pedidosList);
         } catch (SQLException e) {
-            mostrarAlertaError("Error al cargar pedidos", "Hubo un problema al intentar cargar los pedidos: " + e.getMessage());
+            mostrarAlertaError("Error al cargar pedidos", 
+                "Hubo un problema al intentar cargar los pedidos: " + e.getMessage());
         }
     }
 
-    private void mostrarTarjetasPedidos(List<Pedidos> pedidosList) {
-        tarjetasContainer.getChildren().clear(); // Limpia las tarjetas antes de cargarlas.
+    /**
+     * Muestra los pedidos en proceso en su FlowPane correspondiente.
+     */
+    private void mostrarPedidosEnProceso(List<Pedidos> pedidosList) {
+        flowPanePedidosEnProceso.getChildren().clear();
 
         for (Pedidos pedido : pedidosList) {
-            tarjetasContainer.getChildren().add(crearTarjeta(pedido));
+            if ("en proceso".equalsIgnoreCase(pedido.getEstadoPedido())) {
+                flowPanePedidosEnProceso.getChildren().add(crearTarjeta(pedido));
+            }
         }
     }
 
+    /**
+     * Muestra los pedidos facturados en su FlowPane correspondiente.
+     */
+    private void mostrarPedidosFacturados(List<Pedidos> pedidosList) {
+        flowPanePedidosFacturados.getChildren().clear();
+
+        for (Pedidos pedido : pedidosList) {
+            if ("completado".equalsIgnoreCase(pedido.getEstadoPedido())) {
+                flowPanePedidosFacturados.getChildren().add(crearTarjeta(pedido));
+            }
+        }
+    }
+
+    /**
+     * Crea una tarjeta de pedido para mostrar en los FlowPane.
+     */
     private VBox crearTarjeta(Pedidos pedido) {
-    VBox tarjeta = new VBox();
-    tarjeta.setSpacing(10);
-    tarjeta.setStyle("""
-            -fx-padding: 0; 
-            -fx-background-color: #fefefe; 
-            -fx-border-color: #ddd; 
-            -fx-border-radius: 10; 
-            -fx-background-radius: 10;
-            -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 2);
-            -fx-pref-width: 260px;
-            -fx-pref-height: 130px;
-            -fx-alignment: center;
-            """);
+        VBox tarjeta = new VBox();
+        tarjeta.setSpacing(10);
+        tarjeta.setStyle("""
+                -fx-padding: 0; 
+                -fx-background-color: #fefefe; 
+                -fx-border-color: #ddd; 
+                -fx-border-radius: 10; 
+                -fx-background-radius: 10;
+                -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 2);
+                -fx-pref-width: 260px;
+                -fx-pref-height: 130px;
+                -fx-alignment: center;
+                """);
 
-    // Tiempo de pedido (parte superior)
-    HBox tiempoBox = new HBox();
-    tiempoBox.setAlignment(Pos.CENTER_LEFT);
-    tiempoBox.setSpacing(5);
-    tiempoBox.setStyle("-fx-background-color: #ffc107; -fx-padding: 5; -fx-background-radius: 5;");
+        // Tiempo de pedido (parte superior)
+        HBox tiempoBox = new HBox();
+        tiempoBox.setAlignment(Pos.CENTER_LEFT);
+        tiempoBox.setSpacing(5);
+        tiempoBox.setStyle("-fx-background-color: #ffc107; -fx-padding: 5; -fx-background-radius: 5;");
 
-    Label iconoTiempo = new Label("🕛"); // Icono de reloj (Unicode)
-    iconoTiempo.setStyle("-fx-font-size: 14px; -fx-text-fill: black;");
+        Label iconoTiempo = new Label("🕛"); // Icono de reloj (Unicode)
+        Label tiempoPedido = new Label(""); // Aquí puedes calcular la duración real si es necesario
 
-    Label tiempoPedido = new Label(""); // Aquí puedes calcular la duración real si es necesario
-    tiempoPedido.setStyle("-fx-font-size: 14px; -fx-text-fill: black;");
+        tiempoBox.getChildren().addAll(iconoTiempo, tiempoPedido);
 
-    tiempoBox.getChildren().addAll(iconoTiempo, tiempoPedido);
+        // Número de mesa
+        Label numeroMesa = new Label("MESA " + pedido.getMesasId());
+        numeroMesa.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
 
-    // Número de mesa
-    Label numeroMesa = new Label("MESA " + pedido.getMesasId());
-    numeroMesa.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: black; -fx-alignment: center;");
+        // Información del mesero y número de orden
+        Label mesero = new Label("Mesero: " + pedido.getEmpleadosId());
+        Label orden = new Label("Orden #" + pedido.getIdPedidos());
 
-    // Información del mesero y número de orden
-    Label mesero = new Label("Mesero: " + pedido.getEmpleadosId());
-    mesero.setStyle("-fx-font-size: 14px; -fx-text-fill: black; -fx-padding: 0px 0px 0px 10px");
+        VBox detallesBox = new VBox(mesero, orden);
+        detallesBox.setSpacing(5);
 
-    Label orden = new Label("Orden #" + pedido.getIdPedidos());
-    orden.setStyle("-fx-font-size: 14px; -fx-text-fill: black; -fx-padding: 0px 0px 0px 10px");
+        // Estado del pedido (parte inferior)
+        Label estado = new Label(pedido.getEstadoPedido());
+        estado.setStyle("-fx-background-color: #4caf50; -fx-text-fill: white; -fx-padding: 5 10;");
 
-    VBox detallesBox = new VBox(mesero, orden);
-    detallesBox.setSpacing(5);
+        tarjeta.getChildren().addAll(tiempoBox, numeroMesa, detallesBox, estado);
 
-    // Estado del pedido (parte inferior)
-    Label estado = new Label(pedido.getEstadoPedido());
-    estado.setStyle("""
-            -fx-background-color: #4caf50; 
-            -fx-text-fill: white; 
-            -fx-padding:  5 10; 
-            -fx-border-radius: 5; 
-            -fx-background-radius: 5;
-            -fx-font-size: 12px;
-            
-                        
-            """);
+        // Configuración de evento clic (opcional)
+        tarjeta.setOnMouseClicked(event -> mostrarDetallesPedido(pedido));
 
-    // Estructura principal
-    tarjeta.getChildren().addAll(tiempoBox, numeroMesa, detallesBox, estado);
+        return tarjeta;
+    }
 
-    // Configuración de evento clic (opcional)
-    tarjeta.setOnMouseClicked(event -> mostrarDetallesPedido(pedido));
+    /**
+     * Muestra los detalles de un pedido en un cuadro de diálogo.
+     */
+private void mostrarDetallesPedido(Pedidos pedido) {
+    // Crear un diálogo personalizado
+    Dialog<Void> dialog = new Dialog<>();
+    dialog.setTitle("Detalles del Pedido");
+    dialog.setHeaderText(null); // Eliminamos el encabezado predeterminado
 
-    return tarjeta;
+    // Personalizar el diseño principal
+    VBox contenido = new VBox(15); // Espaciado entre elementos
+    contenido.setPadding(new Insets(20));
+    contenido.setStyle("-fx-background-color: #fef9e7; -fx-border-color: #d4ac0d; "
+            + "-fx-border-radius: 20; -fx-background-radius: 20;");
+
+    // Crear un encabezado con un ícono de restaurante
+    HBox encabezado = new HBox(10);
+    encabezado.setAlignment(Pos.CENTER_LEFT);
+
+    Label titulo = new Label("Detalles del Pedido");
+    titulo.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #d35400;");
+
+    // Ícono de restaurante (puedes reemplazar con un recurso gráfico)
+    Label iconoRestaurante = new Label("\uD83C\uDF7D"); // Emoji de plato de comida
+    iconoRestaurante.setStyle("-fx-font-size: 24px;");
+
+    encabezado.getChildren().addAll(iconoRestaurante, titulo);
+
+    // Crear etiquetas estilizadas para los detalles
+    Label mesaLabel = crearEtiquetaDetalle("Mesa: ", pedido.getMesasId());
+    Label meseroLabel = crearEtiquetaDetalle("Mesero: ", pedido.getEmpleadosId());
+    Label fechaLabel = crearEtiquetaDetalle("Fecha: ", pedido.getFechaPedido().toString());
+    Label estadoLabel = crearEtiquetaDetalle("Estado: ", pedido.getEstadoPedido(), obtenerColorEstado(pedido.getEstadoPedido()));
+    Label totalLabel = crearEtiquetaDetalle("Total: ", String.format("$%.2f", pedido.getPrecioTotal()));
+
+    // Agregar detalles al contenedor principal
+    contenido.getChildren().addAll(encabezado, mesaLabel, meseroLabel, fechaLabel, estadoLabel, totalLabel);
+
+    // Botón personalizado para cerrar el diálogo
+    ButtonType aceptarBotonTipo = new ButtonType("Aceptar", ButtonBar.ButtonData.OK_DONE);
+    dialog.getDialogPane().getButtonTypes().add(aceptarBotonTipo);
+
+    // Estilizar el botón
+    Button aceptarBoton = (Button) dialog.getDialogPane().lookupButton(aceptarBotonTipo);
+    aceptarBoton.setStyle("-fx-background-color: #d35400; -fx-text-fill: white; -fx-font-size: 14px; "
+            + "-fx-background-radius: 20; -fx-border-radius: 20; -fx-padding: 5 15;");
+
+    // Aplicar el diseño personalizado al contenido del diálogo
+    dialog.getDialogPane().setContent(contenido);
+
+    // Mostrar el diálogo
+    dialog.showAndWait();
 }
 
-private void mostrarDetallesPedido(Pedidos pedido) {
-    Alert detalles = new Alert(Alert.AlertType.INFORMATION);
-    detalles.setTitle("Detalles del Pedido");
-    detalles.setHeaderText("Información del Pedido");
+// Método auxiliar para crear etiquetas estilizadas
+private Label crearEtiquetaDetalle(String titulo, String valor) {
+    return crearEtiquetaDetalle(titulo, valor, "#000000");
+}
 
-    // Crear el contenido con formato simple
-    String contenido = String.format(
-            "Mesa: %s\nMesero: %s\nFecha: %s\nEstado: %s\nTotal: $%.2f",
-            pedido.getMesasId(),
-            pedido.getEmpleadosId(),
-            pedido.getFechaPedido(),
-            pedido.getEstadoPedido(),
-            pedido.getPrecioTotal()
-    );
-
-    // Obtener el color asociado al estado
-    String colorEstado = obtenerColorEstado(pedido.getEstadoPedido());
-
-    // Crear un TextArea para mostrar los detalles con formato simple
-    TextArea textArea = new TextArea(contenido);
-    textArea.setEditable(false);
-    textArea.setWrapText(true);
-    textArea.setStyle("-fx-font-size: 14px; -fx-background-color: #f0f0f0; -fx-border-color: #ccc; -fx-padding: 10; -fx-text-fill: " + colorEstado + ";");
-
-    // Colocar el TextArea dentro de la alerta
-    detalles.getDialogPane().setContent(textArea);
-    
-    detalles.showAndWait();
+private Label crearEtiquetaDetalle(String titulo, String valor, String color) {
+    Label etiqueta = new Label();
+    etiqueta.setText(titulo + valor);
+    etiqueta.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: " + color + ";");
+    return etiqueta;
 }
 
 // Método para obtener color del estado basado en el valor
 private String obtenerColorEstado(String estado) {
     switch (estado.toLowerCase()) {
-        case "facturado":
+        case "completado":
             return "#4caf50";  // Verde
         case "pendiente":
             return "#ff9800";  // Naranja
@@ -2820,6 +2966,11 @@ private String obtenerColorEstado(String estado) {
 }
 
 
+
+
+    /**
+     * Muestra una alerta de error.
+     */
     private void mostrarAlertaError(String titulo, String mensaje) {
         Alert alerta = new Alert(Alert.AlertType.ERROR);
         alerta.setTitle(titulo);
