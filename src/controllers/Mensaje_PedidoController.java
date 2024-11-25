@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,6 +30,9 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import models.CategoriaPlatosDao;
+import models.Employees;
+import models.Pedidos;
+import models.PedidosDao;
 import models.PlatosDao;
 import models.Principio;
 import models.PrincipioDao;
@@ -82,6 +86,7 @@ public class Mensaje_PedidoController implements Initializable {
     private PrincipioDao principiosDao = new PrincipioDao();
     private String nombreMenuSeleccionado;
     private String PrincipioSeleccionado;
+    private String meseraSeleccionadaId; // ID de la mesera seleccionada
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -90,7 +95,7 @@ public class Mensaje_PedidoController implements Initializable {
         btn_Back.setVisible(false);
         glassPane1.setVisible(false);
         btn_aceptarItems.setOnAction(e -> handleAceptarItemsClick());
-        btn_enviarCocina.setOnAction(e -> handleEnviarCocinaClick());
+        //btn_enviarCocina.setOnAction(e -> handleEnviarCocinaClick());
         ObservableList<String> opciones = FXCollections.observableArrayList("Mini", "Normal");
         ComboBoxTamaño.setItems(opciones);
         checkBoxCarga();
@@ -416,46 +421,13 @@ public class Mensaje_PedidoController implements Initializable {
         return precio.isEmpty() ? "$0" : "$" + precio;
     }
 
-    @FXML
-    private void handleEnviarCocinaClick() {
-        // Lógica para enviar el pedido a la cocina
-        //enviarPedidoACocina();
+    
 
-        // Obtener el Stage actual y cerrarlo
-        Stage stage = (Stage) btn_enviarCocina.getScene().getWindow();
-        stage.close();
-
-        // Abrir la vista de inicio_mesera
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/Inicio_mesera.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-
-            // Obtener el Stage principal y cambiar la escena
-            Stage primaryStage = new Stage();
-            primaryStage.setScene(scene);
-            primaryStage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void mostrarAlerta(String mensaje) {
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setTitle("Información");
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
     }
-
-    private void actualizarPedidoEnVista(String platoOriginal, String nuevoPlato, Principio nuevoPrincipio, String nuevoComentario) {
-        // Aquí debes encontrar el VBox correspondiente al pedido y actualizar sus valores
-        for (Node node : gridPanePedidos.getChildren()) {
-            if (node instanceof VBox) {
-                VBox vbox = (VBox) node;
-                Label labelPlato = (Label) vbox.getChildren().get(0);
-                if (labelPlato.getText().equals(platoOriginal)) {
-                    labelPlato.setText(nuevoPlato);
-                    // Actualizar los demás detalles del pedido (principio y comentario)
-                    ((Label) vbox.getChildren().get(1)).setText(nuevoPrincipio.getNombre());
-                    ((Label) vbox.getChildren().get(2)).setText(nuevoComentario);
-                    break;
-                }
-            }
-        }
-    }
-
 }

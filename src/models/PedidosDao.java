@@ -78,7 +78,8 @@ public class PedidosDao {
                 + "e.nombreEmpleado AS nombreEmpleado, m.numeroMesa "
                 + "FROM pedidos p "
                 + "JOIN empleados e ON p.empleadosId = e.idEmpleados "
-                + "JOIN mesas m ON p.mesasId = m.idMesas";
+                + "JOIN mesas m "
+                + "ON p.mesasId = m.idMesas";
 
         try (PreparedStatement stmt = conn.prepareStatement(query); ResultSet rs = stmt.executeQuery()) {
 
@@ -246,4 +247,34 @@ public List<Pedidos> getPedidosDelDia() throws SQLException {
         }
         return pedidosList;
     }
+    
+    
+    public String generarNuevoIdPedido() {
+    String query = "SELECT idPedidos FROM pedidos ORDER BY idPedidos DESC LIMIT 1";
+
+    try (Connection conn = cn.getConnection(); 
+         PreparedStatement pst = conn.prepareStatement(query); 
+         ResultSet rs = pst.executeQuery()) {
+
+        if (rs.next()) {
+            String ultimoId = rs.getString("idPedidos"); // Por ejemplo, "pedido005"
+            // Extraer el número y generar el siguiente ID
+            int numero = Integer.parseInt(ultimoId.substring(6)); // Obtiene "005" como número
+            String nuevoId = String.format("pedido%03d", numero + 1); // Incrementa y formatea con ceros
+            return nuevoId;
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    // Si no hay registros, comienza desde "pedido001"
+    return "pedido001";
 }
+
+
+}
+
+    
+    
+  

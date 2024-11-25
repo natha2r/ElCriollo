@@ -97,14 +97,12 @@ public class Inicio_ventas_administradorController {
 
     @FXML
     public Label jlabel_sum_pedido;
-    
+
     @FXML
     private ScrollPane scrollPaneCamareros;
 
     @FXML
     private FlowPane flowPaneCamareros;
-    
-    
 
     /*BOTON DE PRINCIPAL DE CONFIGURACION*/
     @FXML
@@ -113,7 +111,6 @@ public class Inicio_ventas_administradorController {
     /*son subbotones del boton configuracion*/
     @FXML
     private Button btn_personal_roles;
-
 
     @FXML
     private Button btn_volver_config;
@@ -426,27 +423,21 @@ public class Inicio_ventas_administradorController {
     @FXML
     private Pane pane_meseras_inicio;
 
-
-    
-    
     /*boton que principal de caja*/
     @FXML
     private Button btn_caja;
-    
+
     /*recursos de apoyo para vista caja*/
     @FXML
     private FlowPane flowPanePedidosEnProceso;
 
     @FXML
     private FlowPane flowPanePedidosFacturados;
-    
 
     @FXML
     private Button btn_salir;
 
     /*son recursos necesiarios para todas las vistas**/
-    
-
     @FXML
     private ScrollPane scroll_inicio_meseras;
 
@@ -464,10 +455,10 @@ public class Inicio_ventas_administradorController {
 
     @FXML
     private AnchorPane anchor_meseras;
-    
+
     @FXML
     private AnchorPane anchor_caja;
-    
+
     @FXML
     private Pane pane_personal_roles;
 
@@ -500,7 +491,6 @@ public class Inicio_ventas_administradorController {
 
     @FXML
     private Pane pane_nueva_categoria;
-
 
     @FXML
     private boolean enFormulario = false;
@@ -642,7 +632,7 @@ public class Inicio_ventas_administradorController {
         this.gridPaneMesas = gridPaneMesas;
         this.pane_meseras_inicio = pane_meseras_inicio;
         this.btn_caja = btn_caja;
-        
+
         this.btn_salir = btn_salir;
         this.scroll_inicio_meseras = scroll_inicio_meseras;
         this.anchor_inicio_ventas = anchor_inicio_ventas;
@@ -665,9 +655,7 @@ public class Inicio_ventas_administradorController {
         this.conn = conn;
     }
 
-    
-
-    public void initialize() {    
+    public void initialize() {
         // No hacer nada aquí
         /*onShown();
         UpdatePedidosLabels();*/
@@ -785,16 +773,13 @@ public class Inicio_ventas_administradorController {
                 cargarDatosProductoSeleccionado(newSelection);
             }
         });
-        
-        
+
         gridPaneMesas.getColumnConstraints().clear();
         gridPaneMesas.getRowConstraints().clear();
         gridPaneMesas.getChildren().clear();
-        
-        
+
         cargarMesasDesdeBaseDeDatos();
 
-        
         cargarPedidos(); // Llama al método que gestiona la carga con manejo de excepciones.
         cargarCamareros();
     }
@@ -980,7 +965,6 @@ public class Inicio_ventas_administradorController {
         anchor_meseras.setVisible(false);
         pane_meseras_inicio.setVisible(false);
         anchor_caja.setVisible(false);
-        
 
         // Llamar al método para agregar el efecto 3D si es necesario
         agregarEfecto3D(btn_personal_roles);
@@ -1055,7 +1039,7 @@ public class Inicio_ventas_administradorController {
 
     public void handleBtnCajaAction() {
         // Acción para el botón "CAJA"
-        
+
         // Verificar si estás en los paneles de "Registrar Información" o "Modificar Información"
         if ((pane_registrar_informacion.isVisible() || pane_modificar_informacion.isVisible()
                 || pane_modificar_inactivos_informacion.isVisible() || pane_nuevo_producto.isVisible()
@@ -1083,11 +1067,11 @@ public class Inicio_ventas_administradorController {
             enFormulario = false; // Estado correcto para evitar conflictos
         }
     }
-    
+
     private void mostrarPanelCaja() {
         // Mostrar el panel de inventario y ocultar los demás paneles no relevantes
         anchor_caja.setVisible(true);
-        
+
         anchor_inventario.setVisible(false);
         pane_inventario.setVisible(false);
 
@@ -1107,10 +1091,10 @@ public class Inicio_ventas_administradorController {
         pane_modificar_informacion.setVisible(false);
         pane_modificar_inactivos_informacion.setVisible(false);
         anchor_meseras.setVisible(false);
-        pane_meseras_inicio.setVisible(false);      
+        pane_meseras_inicio.setVisible(false);
 
     }
-    
+
     @FXML
     private void handleBtnMeserasPrincipalAction() {
         // Verificar si estás en los paneles de "Registrar Información" o "Modificar Información"
@@ -1196,20 +1180,16 @@ public class Inicio_ventas_administradorController {
 
     }
 
-
-
     /*--------------------------------------------------------------------------*/
  /* *************************MODULO DE INICIO******************************* */
  /*--------------------------------------------------------------------------*/
-    
-        /*BOTONES DE LA VISTA DE INICIO*/
+ /*BOTONES DE LA VISTA DE INICIO*/
     @FXML
     public void handleBtnVentasAction() {
         // Acción para el botón "VENTAS"
         // Show the anchor_inicio_ventas container and hide the scroll_inicio_meseras container
         anchor_inicio_ventas.setVisible(true);
         scrollPaneCamareros.setVisible(false);
-
 
         limpiarCampos();
     }
@@ -1225,37 +1205,33 @@ public class Inicio_ventas_administradorController {
         limpiarCampos();
 
     }
-   @FXML
-private void cargarCamareros() {
-    List<Employees> camareros = EmployeesDao.obtenerCamareros();
-    flowPaneCamareros.getChildren().clear(); // Limpiar el FlowPane antes de cargar los nuevos elementos
 
-    // Establecer el espaciado entre tarjetas
-    flowPaneCamareros.setHgap(40); // Espacio horizontal entre tarjetas
-    flowPaneCamareros.setVgap(30); // Espacio vertical entre tarjetas
+    @FXML
+    private void cargarCamareros() {
+        List<Employees> camareros = EmployeesDao.obtenerCamareros();
+        flowPaneCamareros.getChildren().clear(); // Limpiar el FlowPane antes de cargar los nuevos elementos
 
-    // Establecer un tamaño máximo para cada tarjeta
-    //double preferredWidth = 220; // El tamaño de cada tarjeta (puedes ajustarlo si es necesario)
-    //flowPaneCamareros.setPrefWidth(preferredWidth * 3 + 40); // Ajustar el ancho del FlowPane para 3 tarjetas por fila
+        // Establecer el espaciado entre tarjetas
+        flowPaneCamareros.setHgap(40); // Espacio horizontal entre tarjetas
+        flowPaneCamareros.setVgap(30); // Espacio vertical entre tarjetas
 
-    // Centrar las tarjetas dentro del FlowPane
-    //flowPaneCamareros.setAlignment(Pos.CENTER); // Centrar el contenido del FlowPane
-
-    // Agregar cada camarero al FlowPane
-    for (Employees camarero : camareros) {
-        VBox camareroCard = crearCamareroCard(camarero);
-        flowPaneCamareros.getChildren().add(camareroCard); // Agregar la tarjeta al FlowPane
+        // Establecer un tamaño máximo para cada tarjeta
+        //double preferredWidth = 220; // El tamaño de cada tarjeta (puedes ajustarlo si es necesario)
+        //flowPaneCamareros.setPrefWidth(preferredWidth * 3 + 40); // Ajustar el ancho del FlowPane para 3 tarjetas por fila
+        // Centrar las tarjetas dentro del FlowPane
+        //flowPaneCamareros.setAlignment(Pos.CENTER); // Centrar el contenido del FlowPane
+        // Agregar cada camarero al FlowPane
+        for (Employees camarero : camareros) {
+            VBox camareroCard = crearCamareroCard(camarero);
+            flowPaneCamareros.getChildren().add(camareroCard); // Agregar la tarjeta al FlowPane
+        }
     }
-}
 
+    private VBox crearCamareroCard(Employees camarero) {
+        // Contenedor principal de la tarjeta
+        VBox card = new VBox();
 
-
-
-private VBox crearCamareroCard(Employees camarero) {
-    // Contenedor principal de la tarjeta
-    VBox card = new VBox();
-    
-    card.setStyle("""
+        card.setStyle("""
         -fx-background-color: linear-gradient(to bottom, #FFD9A3, #FFA94D); 
         -fx-padding: 20; 
         -fx-spacing: 15; 
@@ -1264,152 +1240,135 @@ private VBox crearCamareroCard(Employees camarero) {
         -fx-background-radius: 15px 15px 15px 15px; 
         -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 12, 0, 4, 4);
     """);
-    card.setPrefWidth(220);
+        card.setPrefWidth(220);
 
-    // Contenedor para el marco circular
-    StackPane marcoCircular = new StackPane();
-    marcoCircular.setStyle("""
+        // Contenedor para el marco circular
+        StackPane marcoCircular = new StackPane();
+        marcoCircular.setStyle("""
         -fx-border-radius: 50; 
         -fx-background-radius: 50; 
         -fx-background-color: linear-gradient(to bottom, #FFCC80, #FF8C42); 
         -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 12, 0, 3, 3);
     """);
-    marcoCircular.setPrefSize(100, 100);
+        marcoCircular.setPrefSize(100, 100);
 
-    // Fondo circular 3D
-    Circle fondo3D = new Circle(50, Paint.valueOf("#FFF8E1"));
-    fondo3D.setStyle("""
+        // Fondo circular 3D
+        Circle fondo3D = new Circle(50, Paint.valueOf("#FFF8E1"));
+        fondo3D.setStyle("""
         -fx-stroke: linear-gradient(to bottom, #FFA94D, #D97720); 
         -fx-stroke-width: 3; 
         -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0, 2, 2);
     """);
 
-    // Imagen del camarero como patrón dentro del círculo
-    Circle imagenCamarero = new Circle(45); // Ajustar tamaño del círculo interior
-    Image image = new Image("resources/persona-no-autorizada.png", false);
-    imagenCamarero.setFill(new ImagePattern(image)); // Pintar la imagen dentro del círculo
+        // Imagen del camarero como patrón dentro del círculo
+        Circle imagenCamarero = new Circle(45); // Ajustar tamaño del círculo interior
+        Image image = new Image("resources/persona-no-autorizada.png", false);
+        imagenCamarero.setFill(new ImagePattern(image)); // Pintar la imagen dentro del círculo
 
-    // Agregar fondo e imagen al marco
-    StackPane contenedorImagen = new StackPane(fondo3D, imagenCamarero);
-    marcoCircular.getChildren().add(contenedorImagen);
+        // Agregar fondo e imagen al marco
+        StackPane contenedorImagen = new StackPane(fondo3D, imagenCamarero);
+        marcoCircular.getChildren().add(contenedorImagen);
 
-    // Contenedor para la información
-    VBox infoBox = new VBox();
-    infoBox.setStyle("-fx-alignment: center; -fx-spacing: 8;");
+        // Contenedor para la información
+        VBox infoBox = new VBox();
+        infoBox.setStyle("-fx-alignment: center; -fx-spacing: 8;");
 
-    // Etiqueta para el nombre
-    Label nombreLabel = new Label(camarero.getNombreEmpleado());
-    nombreLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #6B4226;"); 
+        // Etiqueta para el nombre
+        Label nombreLabel = new Label(camarero.getNombreEmpleado());
+        nombreLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #6B4226;");
 
-    // Etiqueta para la edad
-    Label edadLabel = new Label(camarero.getEdad() + " años");
-    edadLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #7B3E1D;");
+        // Etiqueta para la edad
+        Label edadLabel = new Label(camarero.getEdad() + " años");
+        edadLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #7B3E1D;");
 
-    // Etiqueta para el teléfono
-    Label telefonoLabel = new Label(camarero.getTelefono());
-    telefonoLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #7B3E1D;");
+        // Etiqueta para el teléfono
+        Label telefonoLabel = new Label(camarero.getTelefono());
+        telefonoLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #7B3E1D;");
 
-    // Divisor decorativo
-    Separator separator = new Separator();
-    separator.setStyle("-fx-background-color: #FFD9A3; -fx-opacity: 0.6;");
-    separator.setPrefWidth(160);
+        // Divisor decorativo
+        Separator separator = new Separator();
+        separator.setStyle("-fx-background-color: #FFD9A3; -fx-opacity: 0.6;");
+        separator.setPrefWidth(160);
 
-    // Agregar elementos al contenedor de información
-    infoBox.getChildren().addAll(nombreLabel, separator, edadLabel, telefonoLabel);
+        // Agregar elementos al contenedor de información
+        infoBox.getChildren().addAll(nombreLabel, separator, edadLabel, telefonoLabel);
 
-    // Combinar el marco circular y la información en la tarjeta
-    card.getChildren().addAll(marcoCircular, infoBox);
+        // Combinar el marco circular y la información en la tarjeta
+        card.getChildren().addAll(marcoCircular, infoBox);
 
-    card.setOnMouseClicked(event -> {
-    mostrarDialogoInformacionCamarero(camarero.getIdEmpleados()); // Pasar el idEmpleados
-});
+        card.setOnMouseClicked(event -> {
+            mostrarDialogoInformacionCamarero(camarero.getIdEmpleados()); // Pasar el idEmpleados
+        });
 
-    return card;
-}
-
-private void mostrarDialogoInformacionCamarero(String idEmpleado) {
-    // Obtener la información completa del camarero desde el DAO
-    Employees camarero = new EmployeesDao().obtenerCamareroPorId(idEmpleado);
-
-    if (camarero != null) {
-        // Crear un diálogo personalizado
-        Dialog<Void> dialog = new Dialog<>();
-        dialog.setTitle("Detalles del Camarero");
-        dialog.setHeaderText(null); // Eliminamos el encabezado predeterminado
-
-        // Personalizar el diseño principal
-        VBox contenido = new VBox(15); // Espaciado entre elementos
-        contenido.setPadding(new Insets(20));
-        contenido.setStyle("-fx-background-color: #fef9e7; -fx-border-color: #d4ac0d; "
-                + "-fx-border-radius: 20; -fx-background-radius: 20;");
-
-        // Crear un encabezado con un ícono de camarero
-        HBox encabezado = new HBox(10);
-        encabezado.setAlignment(Pos.CENTER_LEFT);
-
-        Label titulo = new Label("Detalles del Camarero");
-        titulo.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #d35400;");
-
-        // Ícono de camarero (puedes reemplazar con un recurso gráfico o emoji)
-        Label iconoCamarero = new Label("\uD83C\uDF7F"); // Emoji de camarero (puedes cambiarlo por otro)
-        iconoCamarero.setStyle("-fx-font-size: 24px;");
-
-        encabezado.getChildren().addAll(iconoCamarero, titulo);
-
-        // Crear etiquetas estilizadas para los detalles del camarero
-        Label nombreLabel = crearEtiquetaDetalle("Nombre: ", camarero.getNombreEmpleado());
-        Label rolLabel = crearEtiquetaDetalle("Rol: ", camarero.getRol());
-        Label edadLabel = crearEtiquetaDetalle("Edad: ", String.valueOf(camarero.getEdad()));
-        Label telefonoLabel = crearEtiquetaDetalle("Teléfono: ", camarero.getTelefono());
-        Label direccionLabel = crearEtiquetaDetalle("Dirección: ", camarero.getDireccion());
-        Label emailLabel = crearEtiquetaDetalle("Email: ", camarero.getEmail());
-        Label salarioLabel = crearEtiquetaDetalle("Salario: ", String.format("$%.2f", camarero.getSalario()));
-
-        // Agregar detalles al contenedor principal
-        contenido.getChildren().addAll(encabezado, nombreLabel, rolLabel, edadLabel, telefonoLabel, direccionLabel, emailLabel, salarioLabel);
-
-        // Botón personalizado para cerrar el diálogo
-        ButtonType aceptarBotonTipo = new ButtonType("Aceptar", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().add(aceptarBotonTipo);
-
-        // Estilizar el botón
-        Button aceptarBoton = (Button) dialog.getDialogPane().lookupButton(aceptarBotonTipo);
-        aceptarBoton.setStyle("-fx-background-color: #d35400; -fx-text-fill: white; -fx-font-size: 14px; "
-                + "-fx-background-radius: 20; -fx-border-radius: 20; -fx-padding: 5 15;");
-
-        // Aplicar el diseño personalizado al contenido del diálogo
-        dialog.getDialogPane().setContent(contenido);
-
-        // Mostrar el diálogo
-        dialog.showAndWait();
-    } else {
-        // Si no se encuentra el camarero, mostrar un mensaje de error
-        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-        errorAlert.setTitle("Error");
-        errorAlert.setHeaderText("Camarero no encontrado");
-        errorAlert.setContentText("No se ha encontrado un camarero con el ID proporcionado.");
-        errorAlert.showAndWait();
+        return card;
     }
-}
 
+    private void mostrarDialogoInformacionCamarero(String idEmpleado) {
+        // Obtener la información completa del camarero desde el DAO
+        Employees camarero = new EmployeesDao().obtenerCamareroPorId(idEmpleado);
 
+        if (camarero != null) {
+            // Crear un diálogo personalizado
+            Dialog<Void> dialog = new Dialog<>();
+            dialog.setTitle("Detalles del Camarero");
+            dialog.setHeaderText(null); // Eliminamos el encabezado predeterminado
 
+            // Personalizar el diseño principal
+            VBox contenido = new VBox(15); // Espaciado entre elementos
+            contenido.setPadding(new Insets(20));
+            contenido.setStyle("-fx-background-color: #fef9e7; -fx-border-color: #d4ac0d; "
+                    + "-fx-border-radius: 20; -fx-background-radius: 20;");
 
+            // Crear un encabezado con un ícono de camarero
+            HBox encabezado = new HBox(10);
+            encabezado.setAlignment(Pos.CENTER_LEFT);
 
+            Label titulo = new Label("Detalles del Camarero");
+            titulo.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #d35400;");
 
+            // Ícono de camarero (puedes reemplazar con un recurso gráfico o emoji)
+            Label iconoCamarero = new Label("\uD83C\uDF7F"); // Emoji de camarero (puedes cambiarlo por otro)
+            iconoCamarero.setStyle("-fx-font-size: 24px;");
 
+            encabezado.getChildren().addAll(iconoCamarero, titulo);
 
+            // Crear etiquetas estilizadas para los detalles del camarero
+            Label nombreLabel = crearEtiquetaDetalle("Nombre: ", camarero.getNombreEmpleado());
+            Label rolLabel = crearEtiquetaDetalle("Rol: ", camarero.getRol());
+            Label edadLabel = crearEtiquetaDetalle("Edad: ", String.valueOf(camarero.getEdad()));
+            Label telefonoLabel = crearEtiquetaDetalle("Teléfono: ", camarero.getTelefono());
+            Label direccionLabel = crearEtiquetaDetalle("Dirección: ", camarero.getDireccion());
+            Label emailLabel = crearEtiquetaDetalle("Email: ", camarero.getEmail());
+            Label salarioLabel = crearEtiquetaDetalle("Salario: ", String.format("$%.2f", camarero.getSalario()));
 
+            // Agregar detalles al contenedor principal
+            contenido.getChildren().addAll(encabezado, nombreLabel, rolLabel, edadLabel, telefonoLabel, direccionLabel, emailLabel, salarioLabel);
 
+            // Botón personalizado para cerrar el diálogo
+            ButtonType aceptarBotonTipo = new ButtonType("Aceptar", ButtonBar.ButtonData.OK_DONE);
+            dialog.getDialogPane().getButtonTypes().add(aceptarBotonTipo);
 
+            // Estilizar el botón
+            Button aceptarBoton = (Button) dialog.getDialogPane().lookupButton(aceptarBotonTipo);
+            aceptarBoton.setStyle("-fx-background-color: #d35400; -fx-text-fill: white; -fx-font-size: 14px; "
+                    + "-fx-background-radius: 20; -fx-border-radius: 20; -fx-padding: 5 15;");
 
-    
-    
-    
-    
-    
-    
- /*DIFERENTES ACCIONES QUE CONTIENE LA VISTA DE INICIO*/
+            // Aplicar el diseño personalizado al contenido del diálogo
+            dialog.getDialogPane().setContent(contenido);
+
+            // Mostrar el diálogo
+            dialog.showAndWait();
+        } else {
+            // Si no se encuentra el camarero, mostrar un mensaje de error
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setTitle("Error");
+            errorAlert.setHeaderText("Camarero no encontrado");
+            errorAlert.setContentText("No se ha encontrado un camarero con el ID proporcionado.");
+            errorAlert.showAndWait();
+        }
+    }
+
+    /*DIFERENTES ACCIONES QUE CONTIENE LA VISTA DE INICIO*/
     @FXML
     public void cargarPedidosDelDia(Date fecha) {
         try {
@@ -2768,10 +2727,8 @@ private void mostrarDialogoInformacionCamarero(String idEmpleado) {
     private void handleBtnPedidosVisual() {
 
     }
-
-
-
     
+
     private void cargarMesasDesdeBaseDeDatos() {
         try {
             MesasDao mesasDao = new MesasDao();
@@ -2784,148 +2741,136 @@ private void mostrarDialogoInformacionCamarero(String idEmpleado) {
             e.printStackTrace();
         }
     }
-    
-    
-    
-    
+
     @FXML
-private void handleBtnAgregarMesa() {
-    try {
-        // Obtener la última mesa de la base de datos
-        MesasDao mesasDao = new MesasDao();
-        String ultimoId = mesasDao.obtenerUltimaMesa();
+    private void handleBtnAgregarMesa() {
+        try {
+            // Obtener la última mesa de la base de datos
+            MesasDao mesasDao = new MesasDao();
+            String ultimoId = mesasDao.obtenerUltimaMesa();
 
-        // Generar el nuevo ID
-        String nuevoId = generarSiguienteId(ultimoId);
+            // Generar el nuevo ID
+            String nuevoId = generarSiguienteId(ultimoId);
 
-        // Crear un nuevo registro en la base de datos
-        mesasDao.insertarMesa(nuevoId);
+            // Crear un nuevo registro en la base de datos
+            mesasDao.insertarMesa(nuevoId);
 
-        // Actualizar la vista con la nueva mesa
-        agregarMesaAGridPane(nuevoId);
+            // Actualizar la vista con la nueva mesa
+            agregarMesaAGridPane(nuevoId);
 
-    } catch (Exception e) {
-        e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-}
 
 // Método para generar el siguiente ID de mesa
-private String generarSiguienteId(String ultimoId) {
-    if (ultimoId == null || ultimoId.isEmpty()) {
-        return "mesa001"; // Si no hay mesas, empezar con mesa001
+    private String generarSiguienteId(String ultimoId) {
+        if (ultimoId == null || ultimoId.isEmpty()) {
+            return "mesa001"; // Si no hay mesas, empezar con mesa001
+        }
+
+        // Extraer el número del último ID
+        int numero = Integer.parseInt(ultimoId.replace("mesa0", ""));
+        return String.format("mesa%03d", numero + 1);
     }
 
-    // Extraer el número del último ID
-    int numero = Integer.parseInt(ultimoId.replace("mesa0", ""));
-    return String.format("mesa%03d", numero + 1);
-}
-
 // Método para agregar la mesa al GridPane
-private void agregarMesaAGridPane(String nuevoId) {
-    StackPane mesaContainer = new StackPane();
-    mesaContainer.setAlignment(Pos.CENTER);
+    private void agregarMesaAGridPane(String nuevoId) {
+        StackPane mesaContainer = new StackPane();
+        mesaContainer.setAlignment(Pos.CENTER);
 
-    // Crear la imagen de la mesa
-    ImageView mesaImage = new ImageView(new Image("resources/mesaoficial.png"));
-    mesaImage.setFitWidth(106);
-    mesaImage.setFitHeight(98);
+        // Crear la imagen de la mesa
+        ImageView mesaImage = new ImageView(new Image("resources/mesaoficial.png"));
+        mesaImage.setFitWidth(106);
+        mesaImage.setFitHeight(98);
 
-    // Obtener el número de la mesa a partir del ID
-    int numeroMesa = mesaCounter; // `mesaCounter` ya lleva el conteo secuencial
+        // Obtener el número de la mesa a partir del ID
+        int numeroMesa = mesaCounter; // `mesaCounter` ya lleva el conteo secuencial
 
-    // Crear el número de la mesa y colocarlo encima de la imagen
-    Label lblMesaNumero = new Label(String.valueOf(numeroMesa));
-    lblMesaNumero.setStyle("-fx-font-size: 16px; -fx-text-fill: #000000; -fx-font-weight: bold;");
-    StackPane.setAlignment(lblMesaNumero, Pos.TOP_CENTER);
+        // Crear el número de la mesa y colocarlo encima de la imagen
+        Label lblMesaNumero = new Label(String.valueOf(numeroMesa));
+        lblMesaNumero.setStyle("-fx-font-size: 16px; -fx-text-fill: #000000; -fx-font-weight: bold;");
+        StackPane.setAlignment(lblMesaNumero, Pos.TOP_CENTER);
 
-    // Agregar la imagen y el número al contenedor
-    mesaContainer.getChildren().addAll(mesaImage, lblMesaNumero);
+        // Agregar la imagen y el número al contenedor
+        mesaContainer.getChildren().addAll(mesaImage, lblMesaNumero);
 
-    // Calcular la posición de la nueva mesa en el GridPane
-    int maxColumns = 4;
-    int row = (mesaCounter - 1) / maxColumns;
-    int col = (mesaCounter - 1) % maxColumns;
+        // Calcular la posición de la nueva mesa en el GridPane
+        int maxColumns = 4;
+        int row = (mesaCounter - 1) / maxColumns;
+        int col = (mesaCounter - 1) % maxColumns;
 
-    // Agregar el contenedor de la mesa al GridPane
-    gridPaneMesas.add(mesaContainer, col, row);
+        // Agregar el contenedor de la mesa al GridPane
+        gridPaneMesas.add(mesaContainer, col, row);
 
-    // Incrementar el contador de mesas
-    mesaCounter++;
-}
+        // Incrementar el contador de mesas
+        mesaCounter++;
+    }
 
+    /*boton de eliminar mesa*/
+    @FXML
+    private void handleBtnEliminarMesa() {
+        try {
+            // Obtener el último ID de la mesa de la base de datos
+            MesasDao mesasDao = new MesasDao();
+            String ultimoId = mesasDao.obtenerUltimaMesa();
 
+            if (ultimoId == null) {
+                // No hay mesas para eliminar
+                mostrarAlerta("No hay mesas para eliminar.");
+                return;
+            }
 
-/*boton de eliminar mesa*/
+            // Eliminar la última mesa de la base de datos
+            mesasDao.eliminarUltimaMesa(ultimoId);
 
-@FXML
-private void handleBtnEliminarMesa() {
-    try {
-        // Obtener el último ID de la mesa de la base de datos
-        MesasDao mesasDao = new MesasDao();
-        String ultimoId = mesasDao.obtenerUltimaMesa();
+            // Eliminar la última mesa visualmente
+            eliminarMesaDeGridPane();
 
-        if (ultimoId == null) {
-            // No hay mesas para eliminar
-            mostrarAlerta("No hay mesas para eliminar.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarAlerta("Ocurrió un error al intentar eliminar la mesa.");
+        }
+    }
+
+// Método para eliminar la última mesa del GridPane
+    private void eliminarMesaDeGridPane() {
+        if (mesaCounter <= 1) {
+            mostrarAlerta("No hay mesas para eliminar visualmente.");
             return;
         }
 
-        // Eliminar la última mesa de la base de datos
-        mesasDao.eliminarUltimaMesa(ultimoId);
+        // Calcular la posición de la última mesa en el GridPane
+        int maxColumns = 4;
+        int row = (mesaCounter - 2) / maxColumns;
+        int col = (mesaCounter - 2) % maxColumns;
 
-        // Eliminar la última mesa visualmente
-        eliminarMesaDeGridPane();
-
-    } catch (Exception e) {
-        e.printStackTrace();
-        mostrarAlerta("Ocurrió un error al intentar eliminar la mesa.");
-    }
-}
-
-// Método para eliminar la última mesa del GridPane
-private void eliminarMesaDeGridPane() {
-    if (mesaCounter <= 1) {
-        mostrarAlerta("No hay mesas para eliminar visualmente.");
-        return;
-    }
-
-    // Calcular la posición de la última mesa en el GridPane
-    int maxColumns = 4;
-    int row = (mesaCounter - 2) / maxColumns;
-    int col = (mesaCounter - 2) % maxColumns;
-
-    // Eliminar el último nodo del GridPane
-    Node nodoEliminar = null;
-    for (Node nodo : gridPaneMesas.getChildren()) {
-        if (GridPane.getRowIndex(nodo) == row && GridPane.getColumnIndex(nodo) == col) {
-            nodoEliminar = nodo;
-            break;
+        // Eliminar el último nodo del GridPane
+        Node nodoEliminar = null;
+        for (Node nodo : gridPaneMesas.getChildren()) {
+            if (GridPane.getRowIndex(nodo) == row && GridPane.getColumnIndex(nodo) == col) {
+                nodoEliminar = nodo;
+                break;
+            }
         }
+
+        if (nodoEliminar != null) {
+            gridPaneMesas.getChildren().remove(nodoEliminar);
+        }
+
+        // Decrementar el contador de mesas
+        mesaCounter--;
     }
-
-    if (nodoEliminar != null) {
-        gridPaneMesas.getChildren().remove(nodoEliminar);
-    }
-
-    // Decrementar el contador de mesas
-    mesaCounter--;
-}
-
-
-
 
     /*--------------------------------------------------------------------------*/
  /* *********************FIN DEL MODULO DE MESERAS************************** */
  /*--------------------------------------------------------------------------*/
-
 ////////////////////////////////////////////////////////////////////////////////
 
     /*--------------------------------------------------------------------------*/
  /* *********************INICIO DEL MODULO DE CAJA************************** */
  /*--------------------------------------------------------------------------*/
-
-
-/**
+    /**
      * Carga los pedidos desde la base de datos y los muestra en los FlowPane.
      */
     private void cargarPedidos() {
@@ -2937,8 +2882,8 @@ private void eliminarMesaDeGridPane() {
             mostrarPedidosEnProceso(pedidosList);
             mostrarPedidosFacturados(pedidosList);
         } catch (SQLException e) {
-            mostrarAlertaError("Error al cargar pedidos", 
-                "Hubo un problema al intentar cargar los pedidos: " + e.getMessage());
+            mostrarAlertaError("Error al cargar pedidos",
+                    "Hubo un problema al intentar cargar los pedidos: " + e.getMessage());
         }
     }
 
@@ -3023,85 +2968,82 @@ private void eliminarMesaDeGridPane() {
     /**
      * Muestra los detalles de un pedido en un cuadro de diálogo.
      */
-private void mostrarDetallesPedido(Pedidos pedido) {
-    // Crear un diálogo personalizado
-    Dialog<Void> dialog = new Dialog<>();
-    dialog.setTitle("Detalles del Pedido");
-    dialog.setHeaderText(null); // Eliminamos el encabezado predeterminado
+    private void mostrarDetallesPedido(Pedidos pedido) {
+        // Crear un diálogo personalizado
+        Dialog<Void> dialog = new Dialog<>();
+        dialog.setTitle("Detalles del Pedido");
+        dialog.setHeaderText(null); // Eliminamos el encabezado predeterminado
 
-    // Personalizar el diseño principal
-    VBox contenido = new VBox(15); // Espaciado entre elementos
-    contenido.setPadding(new Insets(20));
-    contenido.setStyle("-fx-background-color: #fef9e7; -fx-border-color: #d4ac0d; "
-            + "-fx-border-radius: 20; -fx-background-radius: 20;");
+        // Personalizar el diseño principal
+        VBox contenido = new VBox(15); // Espaciado entre elementos
+        contenido.setPadding(new Insets(20));
+        contenido.setStyle("-fx-background-color: #fef9e7; -fx-border-color: #d4ac0d; "
+                + "-fx-border-radius: 20; -fx-background-radius: 20;");
 
-    // Crear un encabezado con un ícono de restaurante
-    HBox encabezado = new HBox(10);
-    encabezado.setAlignment(Pos.CENTER_LEFT);
+        // Crear un encabezado con un ícono de restaurante
+        HBox encabezado = new HBox(10);
+        encabezado.setAlignment(Pos.CENTER_LEFT);
 
-    Label titulo = new Label("Detalles del Pedido");
-    titulo.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #d35400;");
+        Label titulo = new Label("Detalles del Pedido");
+        titulo.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #d35400;");
 
-    // Ícono de restaurante (puedes reemplazar con un recurso gráfico)
-    Label iconoRestaurante = new Label("\uD83C\uDF7D"); // Emoji de plato de comida
-    iconoRestaurante.setStyle("-fx-font-size: 24px;");
+        // Ícono de restaurante (puedes reemplazar con un recurso gráfico)
+        Label iconoRestaurante = new Label("\uD83C\uDF7D"); // Emoji de plato de comida
+        iconoRestaurante.setStyle("-fx-font-size: 24px;");
 
-    encabezado.getChildren().addAll(iconoRestaurante, titulo);
+        encabezado.getChildren().addAll(iconoRestaurante, titulo);
 
-    // Crear etiquetas estilizadas para los detalles
-    Label mesaLabel = crearEtiquetaDetalle("Mesa: ", pedido.getMesasId());
-    Label meseroLabel = crearEtiquetaDetalle("Mesero: ", pedido.getEmpleadosId());
-    Label fechaLabel = crearEtiquetaDetalle("Fecha: ", pedido.getFechaPedido().toString());
-    Label estadoLabel = crearEtiquetaDetalle("Estado: ", pedido.getEstadoPedido(), obtenerColorEstado(pedido.getEstadoPedido()));
-    Label totalLabel = crearEtiquetaDetalle("Total: ", String.format("$%.2f", pedido.getPrecioTotal()));
+        // Crear etiquetas estilizadas para los detalles
+        Label mesaLabel = crearEtiquetaDetalle("Mesa: ", pedido.getMesasId());
+        Label meseroLabel = crearEtiquetaDetalle("Mesero: ", pedido.getEmpleadosId());
+        Label fechaLabel = crearEtiquetaDetalle("Fecha: ", pedido.getFechaPedido().toString());
+        Label estadoLabel = crearEtiquetaDetalle("Estado: ", pedido.getEstadoPedido(), obtenerColorEstado(pedido.getEstadoPedido()));
+        Label totalLabel = crearEtiquetaDetalle("Total: ", String.format("$%.2f", pedido.getPrecioTotal()));
 
-    // Agregar detalles al contenedor principal
-    contenido.getChildren().addAll(encabezado, mesaLabel, meseroLabel, fechaLabel, estadoLabel, totalLabel);
+        // Agregar detalles al contenedor principal
+        contenido.getChildren().addAll(encabezado, mesaLabel, meseroLabel, fechaLabel, estadoLabel, totalLabel);
 
-    // Botón personalizado para cerrar el diálogo
-    ButtonType aceptarBotonTipo = new ButtonType("Aceptar", ButtonBar.ButtonData.OK_DONE);
-    dialog.getDialogPane().getButtonTypes().add(aceptarBotonTipo);
+        // Botón personalizado para cerrar el diálogo
+        ButtonType aceptarBotonTipo = new ButtonType("Aceptar", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().add(aceptarBotonTipo);
 
-    // Estilizar el botón
-    Button aceptarBoton = (Button) dialog.getDialogPane().lookupButton(aceptarBotonTipo);
-    aceptarBoton.setStyle("-fx-background-color: #d35400; -fx-text-fill: white; -fx-font-size: 14px; "
-            + "-fx-background-radius: 20; -fx-border-radius: 20; -fx-padding: 5 15;");
+        // Estilizar el botón
+        Button aceptarBoton = (Button) dialog.getDialogPane().lookupButton(aceptarBotonTipo);
+        aceptarBoton.setStyle("-fx-background-color: #d35400; -fx-text-fill: white; -fx-font-size: 14px; "
+                + "-fx-background-radius: 20; -fx-border-radius: 20; -fx-padding: 5 15;");
 
-    // Aplicar el diseño personalizado al contenido del diálogo
-    dialog.getDialogPane().setContent(contenido);
+        // Aplicar el diseño personalizado al contenido del diálogo
+        dialog.getDialogPane().setContent(contenido);
 
-    // Mostrar el diálogo
-    dialog.showAndWait();
-}
+        // Mostrar el diálogo
+        dialog.showAndWait();
+    }
 
 // Método auxiliar para crear etiquetas estilizadas
-private Label crearEtiquetaDetalle(String titulo, String valor) {
-    return crearEtiquetaDetalle(titulo, valor, "#000000");
-}
+    private Label crearEtiquetaDetalle(String titulo, String valor) {
+        return crearEtiquetaDetalle(titulo, valor, "#000000");
+    }
 
-private Label crearEtiquetaDetalle(String titulo, String valor, String color) {
-    Label etiqueta = new Label();
-    etiqueta.setText(titulo + valor);
-    etiqueta.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: " + color + ";");
-    return etiqueta;
-}
+    private Label crearEtiquetaDetalle(String titulo, String valor, String color) {
+        Label etiqueta = new Label();
+        etiqueta.setText(titulo + valor);
+        etiqueta.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: " + color + ";");
+        return etiqueta;
+    }
 
 // Método para obtener color del estado basado en el valor
-private String obtenerColorEstado(String estado) {
-    switch (estado.toLowerCase()) {
-        case "completado":
-            return "#4caf50";  // Verde
-        case "pendiente":
-            return "#ff9800";  // Naranja
-        case "en proceso":
-            return "#2196f3";  // Azul
-        default:
-            return "#9e9e9e";  // Gris
+    private String obtenerColorEstado(String estado) {
+        switch (estado.toLowerCase()) {
+            case "completado":
+                return "#4caf50";  // Verde
+            case "pendiente":
+                return "#ff9800";  // Naranja
+            case "en proceso":
+                return "#2196f3";  // Azul
+            default:
+                return "#9e9e9e";  // Gris
+        }
     }
-}
-
-
-
 
     /**
      * Muestra una alerta de error.
@@ -3137,7 +3079,7 @@ private String obtenerColorEstado(String estado) {
         }
     }*/
 
-    /*--------------------------------------------------------------------------*/
+ /*--------------------------------------------------------------------------*/
  /* *********************FIN DEL MODULO DE CAJA************************** */
  /*--------------------------------------------------------------------------*/
 }

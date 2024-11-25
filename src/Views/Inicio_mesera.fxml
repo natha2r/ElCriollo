@@ -25,549 +25,472 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="744.0" prefWidth="1133.0" styleClass="mainFxmlClass" stylesheets="@../swing/inicio_mesera.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Inicio_meseraController">
-   <children>
-      <BorderPane layoutX="263.0" prefHeight="138.0" prefWidth="871.0" style="-fx-background-color: #2E1B10;" AnchorPane.leftAnchor="263.0" AnchorPane.rightAnchor="0.0">
-         <center>
-            <ImageView fitHeight="86.0" fitWidth="200.0" BorderPane.alignment="CENTER">
-               <image>
-                  <Image url="@../resources/Letra_Criollo.png" />
-               </image>
-            </ImageView>
-         </center>
-      </BorderPane>
-      <Pane prefHeight="744.0" prefWidth="263.0" style="-fx-background-color: FFB94F;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <Pane layoutX="45.0" layoutY="18.0" prefHeight="179.0" prefWidth="174.0">
-               <children>
-                  <ImageView disable="true" fitHeight="179.0" fitWidth="174.0">
-                     <image>
-                        <Image url="@../resources/el_criollo-removebg%202.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </Pane>
-            <BorderPane layoutY="241.0" prefHeight="320.0" prefWidth="263.0">
-               <center>
-                  <VBox prefHeight="266.0" prefWidth="263.0" spacing="40.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <Button fx:id="btn_inicio" alignment="TOP_CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" prefHeight="37.0" prefWidth="201.0" styleClass="boton" stylesheets="@../swing/inicio_mesera.css" text="INICIO">
-                           <VBox.margin>
-                              <Insets left="30.0" right="30.0" />
-                           </VBox.margin>
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
+    <children>
+        <BorderPane layoutX="263.0" prefHeight="138.0" prefWidth="871.0" style="-fx-background-color: #2E1B10;" AnchorPane.leftAnchor="263.0" AnchorPane.rightAnchor="0.0">
+            <center>
+                <ImageView fitHeight="86.0" fitWidth="200.0" BorderPane.alignment="CENTER">
+                    <image>
+                        <Image url="@../resources/Letra_Criollo.png" />
+                    </image>
+                </ImageView>
+            </center>
+        </BorderPane>
+        <Pane prefHeight="744.0" prefWidth="263.0" style="-fx-background-color: FFB94F;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Pane layoutX="45.0" layoutY="18.0" prefHeight="179.0" prefWidth="174.0">
+                    <children>
+                        <ImageView disable="true" fitHeight="179.0" fitWidth="174.0">
+                            <image>
+                                <Image url="@../resources/el_criollo-removebg%202.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </Pane>
+                <BorderPane layoutY="241.0" prefHeight="320.0" prefWidth="263.0">
+                    <center>
+                        <VBox prefHeight="266.0" prefWidth="263.0" spacing="40.0" BorderPane.alignment="CENTER">
+                            <children>
+                                <Button fx:id="btn_inicio" alignment="TOP_CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" prefHeight="37.0" prefWidth="201.0" styleClass="boton" stylesheets="@../swing/inicio_mesera.css" text="INICIO">
+                                    <VBox.margin>
+                                        <Insets left="30.0" right="30.0" />
+                                    </VBox.margin>
+                                    <font>
+                                        <Font size="20.0" />
+                                    </font>
+                                    <opaqueInsets>
+                                        <Insets />
+                                    </opaqueInsets>
+                                </Button>
+                                <Button fx:id="btn_menu" contentDisplay="BOTTOM" depthTest="DISABLE" mnemonicParsing="false" prefHeight="44.0" prefWidth="80.0" styleClass="boton" stylesheets="@../swing/inicio_mesera.css" text="MENÚ">
+                                    <VBox.margin>
+                                        <Insets left="30.0" right="30.0" />
+                                    </VBox.margin>
+                                    <font>
+                                        <Font name="System Bold" size="22.0" />
+                                    </font>
+                                </Button>
+                                <Button fx:id="btn_salir" contentDisplay="BOTTOM" depthTest="DISABLE" mnemonicParsing="false" prefHeight="32.0" prefWidth="80.0" styleClass="boton" stylesheets="@../swing/inicio_mesera.css" text="SALIR">
+                                    <VBox.margin>
+                                        <Insets left="30.0" right="30.0" />
+                                    </VBox.margin>
+                                    <font>
+                                        <Font size="22.0" />
+                                    </font>
+                                </Button>
+                            </children>
+                            <padding>
+                                <Insets top="20.0" />
+                            </padding>
+                        </VBox>
+                    </center>
+                </BorderPane>
+                <Separator layoutY="224.0" prefHeight="0.0" prefWidth="263.0" />
+            </children>
+        </Pane>
+        <Pane layoutX="463.0" layoutY="423.0" prefHeight="186.0" prefWidth="263.0" AnchorPane.bottomAnchor="-4.0" AnchorPane.leftAnchor="0.0">
+            <children>
+                <ImageView fitHeight="179.0" fitWidth="282.0" layoutX="-1.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../resources/el%20criollo%202.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </Pane>
+        <Pane fx:id="pane_inicio" cache="true" depthTest="DISABLE" layoutX="263.0" layoutY="138.0" prefHeight="606.0" prefWidth="871.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="263.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="138.0">
+            <children>
+                <ScrollPane fx:id="scrollPaneMesas" fitToHeight="true" fitToWidth="true" layoutX="117.0" layoutY="150.0" pannable="true" prefHeight="422.0" prefWidth="655.0">
+                    <content>
+                        <GridPane fx:id="gridPaneMesas" alignment="TOP_CENTER" hgap="60.0" vgap="10.0">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            </rowConstraints>
+                            <padding>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </padding>
+                        </GridPane>
+                    </content>
+                </ScrollPane>
+                <Button fx:id="btn_pedidos" alignment="CENTER" contentDisplay="BOTTOM" layoutX="131.0" layoutY="27.0" mnemonicParsing="false" onAction="#closePopup" prefHeight="37.0" prefWidth="201.0" styleClass="btn_pedidos" stylesheets="@../swing/inicio_mesera.css" text="PEDIDOS">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                    <opaqueInsets>
+                        <Insets />
+                    </opaqueInsets>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
+                <Button fx:id="btn_mesas" alignment="CENTER" contentDisplay="BOTTOM" layoutX="422.0" layoutY="27.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="201.0" styleClass="btn_mesas" stylesheets="@../swing/inicio_mesera.css" text="MESAS">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                    <opaqueInsets>
+                        <Insets />
+                    </opaqueInsets>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
+            </children>
+        </Pane>
+        <Pane id="glassPane" fx:id="glassPane" prefHeight="744.0" prefWidth="1133.0" styleClass="glassPane" stylesheets="@../swing/mensaje_pedido.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Pane id="popupPane" fx:id="popupPane" layoutX="437.0" layoutY="259.0" prefHeight="328.0" prefWidth="517.0" styleClass="popupPane" stylesheets="@../swing/mensaje_pedido.css">
+                    <children>
+                        <Button layoutX="39.0" layoutY="240.0" mnemonicParsing="false" onAction="#closePopup" styleClass="btn_cancelar" stylesheets="@../swing/inicio_mesera.css" text="Cancelar">
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
                         </Button>
-                        <Button fx:id="btn_menu" contentDisplay="BOTTOM" depthTest="DISABLE" mnemonicParsing="false" prefHeight="44.0" prefWidth="80.0" styleClass="boton" stylesheets="@../swing/inicio_mesera.css" text="MENÚ">
-                           <VBox.margin>
-                              <Insets left="30.0" right="30.0" />
-                           </VBox.margin>
-                           <font>
-                              <Font name="System Bold" size="22.0" />
-                           </font>
+                        <Label id="popupLabel" fx:id="popupLabel" layoutX="219.0" layoutY="18.0" styleClass="popupLabel" stylesheets="@../swing/mensaje_pedido.css" text="Label" />
+                        <Button id="btn_tomarPedido" fx:id="btn_tomarPedido" layoutX="283.0" layoutY="240.0" mnemonicParsing="false" styleClass="btn_tomarPedido" stylesheets="@../swing/mensaje_pedido.css" text="Tomar Pedido">
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
                         </Button>
-                        <Button fx:id="btn_salir" contentDisplay="BOTTOM" depthTest="DISABLE" mnemonicParsing="false" prefHeight="32.0" prefWidth="80.0" styleClass="boton" stylesheets="@../swing/inicio_mesera.css" text="SALIR">
-                           <VBox.margin>
-                              <Insets left="30.0" right="30.0" />
-                           </VBox.margin>
-                           <font>
-                              <Font size="22.0" />
-                           </font>
+                        <ComboBox id="comboBoxselecMesera" fx:id="comboBoxselecMesera" layoutX="40.0" layoutY="71.0" prefWidth="150.0" promptText="Seleccione Mesera" styleClass="comboBoxselecMesera" stylesheets="@../swing/inicio_mesera.css">
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </ComboBox>
+                        <ComboBox id="comboBoxselecMesera" fx:id="menuComboBox" layoutX="40.0" layoutY="139.0" prefWidth="150.0" promptText="Seleccione Menú" styleClass="comboBoxselecMesera" stylesheets="@../swing/inicio_mesera.css">
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </ComboBox>
+                    </children>
+                </Pane>
+            </children>
+        </Pane>
+        <Pane fx:id="pane_menu" layoutX="263.0" layoutY="138.0" prefHeight="606.0" prefWidth="871.0" visible="false">
+            <children>
+                <Label layoutX="58.0" layoutY="29.0" style="-fx-font-weight: bold;" styleClass="texto" text="MENU" />
+                <Pane fx:id="pane_principio" layoutX="527.0" layoutY="22.0" prefHeight="200.0" prefWidth="200.0" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 4 ,4);;" styleClass="pane_principio">
+                    <children>
+                        <Button fx:id="btn_editPrincipio" contentDisplay="GRAPHIC_ONLY" layoutX="258.0" layoutY="224.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4);">
+                            <graphic>
+                                <ImageView fitHeight="22.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../resources/editar%204.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
                         </Button>
-                     </children>
-                     <padding>
-                        <Insets top="20.0" />
-                     </padding>
-                  </VBox>
-               </center>
-            </BorderPane>
-            <Separator layoutY="224.0" prefHeight="0.0" prefWidth="263.0" />
-         </children>
-      </Pane>
-      <Pane layoutX="463.0" layoutY="423.0" prefHeight="186.0" prefWidth="263.0" AnchorPane.bottomAnchor="-4.0" AnchorPane.leftAnchor="0.0">
-         <children>
-            <ImageView fitHeight="179.0" fitWidth="282.0" layoutX="-1.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../resources/el%20criollo%202.png" />
-               </image>
-            </ImageView>
-         </children>
-      </Pane>
-     <Pane fx:id="pane_inicio" cache="true" depthTest="DISABLE" layoutX="263.0" layoutY="138.0" prefHeight="606.0" prefWidth="871.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="263.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="138.0">
-         <children>
-            <ScrollPane layoutX="127.0" layoutY="158.0">
-               <content>
-                  <GridPane fx:id="gridPane" prefHeight="432.0" prefWidth="664.0">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                     <children>
-                        <ImageView fx:id="mesa2" accessibleRole="BUTTON" cache="true" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="1">
-                           <image>
-                              <Image url="@../resources/Mesa2.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="mesa3" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="2">
-                           <image>
-                              <Image url="@../resources/Mesa3.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="mesa4" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="3">
-                           <image>
-                              <Image url="@../resources/Mesa4.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="mesa5" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.rowIndex="1">
-                           <image>
-                              <Image url="@../resources/Mesa5.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="mesa6" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <image>
-                              <Image url="@../resources/Mesa6.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="mesa7" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                           <image>
-                              <Image url="@../resources/Mesa7.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="mesa8" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                           <image>
-                              <Image url="@../resources/Mesa8.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="mesa9" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.rowIndex="2">
-                           <image>
-                              <Image url="@../resources/Mesa9.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="mesa10" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                           <image>
-                              <Image url="@../resources/Mesa10.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="mesa11" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="2" GridPane.rowIndex="2"> 
-                           <image>
-                              <Image url="@../resources/Mesa11.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="mesa12" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="3" GridPane.rowIndex="2">
-                           <image>
-                              <Image url="@../resources/Mesa12.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="mesa13" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.rowIndex="3">
-                           <image>
-                              <Image url="@../resources/Mesa13.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="mesa14" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                           <image>
-                              <Image url="@../resources/Mesa14.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="mesa15" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="2" GridPane.rowIndex="3">
-                           <image>
-                              <Image url="@../resources/Mesa15.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="mesa16" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="3" GridPane.rowIndex="3">
-                           <image>
-                              <Image url="@../resources/Mesa16.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="mesa1" accessibleRole="BUTTON" cache="true" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton">  
-                           <image>
-                              <Image url="@../resources/Mesa1.png" />
-                           </image>
-                        </ImageView>
-                     </children>
-                  </GridPane>
-               </content>
-            </ScrollPane>
-            <Button fx:id="btn_pedidos" alignment="CENTER" contentDisplay="BOTTOM" layoutX="131.0" layoutY="27.0" mnemonicParsing="false" onAction="#closePopup" prefHeight="37.0" prefWidth="201.0" styleClass="btn_pedidos" stylesheets="@../swing/inicio_mesera.css" text="PEDIDOS">
-               <font>
-                  <Font size="20.0" />
-               </font>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Button fx:id="btn_mesas" alignment="CENTER" contentDisplay="BOTTOM" layoutX="422.0" layoutY="27.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="201.0" styleClass="btn_mesas" stylesheets="@../swing/inicio_mesera.css" text="MESAS">
-               <font>
-                  <Font size="20.0" />
-               </font>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-         </children>
-      </Pane>
-      <Pane id="glassPane" fx:id="glassPane" prefHeight="744.0" prefWidth="1133.0" styleClass="glassPane" stylesheets="@../swing/mensaje_pedido.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <Pane id="popupPane" fx:id="popupPane" layoutX="437.0" layoutY="259.0" prefHeight="328.0" prefWidth="517.0" styleClass="popupPane" stylesheets="@../swing/mensaje_pedido.css">
-               <children>
-                  <Button layoutX="39.0" layoutY="240.0" mnemonicParsing="false" onAction="#closePopup" styleClass="btn_cancelar" stylesheets="@../swing/inicio_mesera.css" text="Cancelar">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor></Button>
-                  <Label id="popupLabel" fx:id="popupLabel" layoutX="219.0" layoutY="18.0" styleClass="popupLabel" stylesheets="@../swing/mensaje_pedido.css" text="Label" />
-                  <Button id="btn_tomarPedido" fx:id="btn_tomarPedido" layoutX="283.0" layoutY="240.0" mnemonicParsing="false" styleClass="btn_tomarPedido" stylesheets="@../swing/mensaje_pedido.css" text="Tomar Pedido">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor></Button>
-                  <ComboBox id="comboBoxselecMesera" fx:id="comboBoxselecMesera" layoutX="40.0" layoutY="71.0" prefWidth="150.0" promptText="Seleccione Mesera" styleClass="comboBoxselecMesera" stylesheets="@../swing/inicio_mesera.css">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor></ComboBox>
-                  <ComboBox id="comboBoxselecMesera" fx:id="menuComboBox" layoutX="40.0" layoutY="139.0" prefWidth="150.0" promptText="Seleccione Menú" styleClass="comboBoxselecMesera" stylesheets="@../swing/inicio_mesera.css">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor></ComboBox>
-               </children>
-            </Pane>
-         </children>
-      </Pane>
-      <Pane fx:id="pane_menu" layoutX="263.0" layoutY="138.0" prefHeight="606.0" prefWidth="871.0" visible="false">
-         <children>
-            <Label layoutX="58.0" layoutY="29.0" style="-fx-font-weight: bold;" styleClass="texto" text="MENU" />
-            <Pane fx:id="pane_principio" layoutX="527.0" layoutY="22.0" prefHeight="200.0" prefWidth="200.0" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 4 ,4);;" styleClass="pane_principio">
-               <children>
-                  <Button fx:id="btn_editPrincipio" contentDisplay="GRAPHIC_ONLY" layoutX="258.0" layoutY="224.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4);">
-                     <graphic>
+                        <VBox alignment="CENTER" layoutX="76.0" layoutY="34.0" prefHeight="200.0" prefWidth="158.0" spacing="20.0">
+                            <children>
+                                <Label alignment="CENTER" contentDisplay="CENTER" style="-fx-font-weight: bold; -fx-font-size: 25;" styleClass="texto" text="PRINCIPIO" VBox.vgrow="ALWAYS">
+                                    <VBox.margin>
+                                        <Insets bottom="30.0" />
+                                    </VBox.margin>
+                                </Label>
+                                <Label fx:id="txt_grano" style="-fx-font-size: 20;" styleClass="texto" text="GARBANZOS" />
+                                <Label fx:id="txt_verdura" style="-fx-font-size: 20;" styleClass="texto" text="AHUYAMA">
+                                    <VBox.margin>
+                                        <Insets />
+                                    </VBox.margin>
+                                </Label>
+                            </children>
+                        </VBox>
+                    </children>
+                </Pane>
+                <Pane fx:id="pane_principio1" layoutX="527.0" layoutY="304.0" prefHeight="200.0" prefWidth="200.0" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 4 ,4);" styleClass="pane_principio">
+                    <children>
+                        <Button fx:id="btn_editSopa" contentDisplay="GRAPHIC_ONLY" layoutX="262.0" layoutY="222.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4);;">
+                            <graphic>
+                                <ImageView fitHeight="22.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../resources/editar%204.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Button>
+                        <VBox alignment="CENTER" layoutX="76.0" layoutY="49.0" prefHeight="138.0" prefWidth="158.0" spacing="20.0">
+                            <children>
+                                <Label alignment="CENTER" contentDisplay="CENTER" style="-fx-font-weight: bold; -fx-font-size: 25;" styleClass="texto" text="SOPA" VBox.vgrow="ALWAYS">
+                                    <VBox.margin>
+                                        <Insets bottom="15.0" />
+                                    </VBox.margin>
+                                </Label>
+                                <Label fx:id="txt_sopa" style="-fx-font-size: 20;" styleClass="texto" text="SANCOCHO" />
+                            </children>
+                        </VBox>
+                    </children>
+                </Pane>
+                <Button fx:id="btn_editMenu" contentDisplay="GRAPHIC_ONLY" layoutX="135.0" layoutY="25.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4);">
+                    <graphic>
                         <ImageView fitHeight="22.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../resources/editar%204.png" />
-                           </image>
+                            <image>
+                                <Image url="@../resources/editar%204.png" />
+                            </image>
                         </ImageView>
-                     </graphic>
-                     <cursor>
+                    </graphic>
+                    <cursor>
                         <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <VBox alignment="CENTER" layoutX="76.0" layoutY="34.0" prefHeight="200.0" prefWidth="158.0" spacing="20.0">
-                     <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" style="-fx-font-weight: bold; -fx-font-size: 25;" styleClass="texto" text="PRINCIPIO" VBox.vgrow="ALWAYS">
-                           <VBox.margin>
-                              <Insets bottom="30.0" />
-                           </VBox.margin>
-                        </Label>
-                        <Label fx:id="txt_grano" style="-fx-font-size: 20;" styleClass="texto" text="GARBANZOS" />
-                        <Label fx:id="txt_verdura" style="-fx-font-size: 20;" styleClass="texto" text="AHUYAMA">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                        </Label>
-                     </children>
-                  </VBox>
-               </children>
-            </Pane>
-            <Pane fx:id="pane_principio1" layoutX="527.0" layoutY="304.0" prefHeight="200.0" prefWidth="200.0" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 4 ,4);" styleClass="pane_principio">
-               <children>
-                  <Button fx:id="btn_editSopa" contentDisplay="GRAPHIC_ONLY" layoutX="262.0" layoutY="222.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4);;">
-                     <graphic>
-                        <ImageView fitHeight="22.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../resources/editar%204.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <cursor>
+                    </cursor>
+                </Button>
+                <ScrollPane layoutX="35.0" layoutY="69.0" prefHeight="505.0" prefWidth="474.0">
+                    <content>
+                        <GridPane prefHeight="441.0" prefWidth="471.0">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            </rowConstraints>
+                            <children>
+                                <ImageView fx:id="imageView1" fitHeight="65.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true" styleClass="circular-image">
+                                    <image>
+                                        <Image url="@../resources/pepitoria.png" />
+                                    </image>
+                                    <GridPane.margin>
+                                        <Insets left="30.0" />
+                                    </GridPane.margin>
+                                </ImageView>
+                                <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
+                            </children>
+                        </GridPane>
+                    </content>
+                </ScrollPane>
+            </children>
+        </Pane>
+        <Pane fx:id="glassPane3" prefHeight="744.0" prefWidth="1133.0" style="-fx-background-color: rgba(0, 0, 0, 0.38);" visible="false">
+            <children>
+                <VBox fx:id="vBox_editPrincipio" alignment="CENTER" layoutX="390.0" layoutY="196.0" prefHeight="328.0" prefWidth="517.0" styleClass="popupPane" stylesheets="@../swing/mensaje_pedido.css">
+                    <children>
+                        <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+                            <children>
+                                <Label alignment="TOP_CENTER" style="-fx-font-size: 32;" styleClass="texto" text="GRANO">
+                                    <HBox.margin>
+                                        <Insets top="40.0" />
+                                    </HBox.margin>
+                                </Label>
+                                <ComboBox fx:id="comboBoxGranos" prefHeight="50.0" prefWidth="220.0" promptText="Seleccione" styleClass="seleccion" stylesheets="@../swing/mensaje_pedido.css">
+                                    <HBox.margin>
+                                        <Insets left="55.0" top="30.0" />
+                                    </HBox.margin>
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                </ComboBox>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                            <children>
+                                <Label alignment="TOP_CENTER" style="-fx-font-size: 32;" styleClass="texto" text="VERDURA" />
+                                <ComboBox fx:id="comboBoxVerduras" prefHeight="50.0" prefWidth="220.0" promptText="Seleccione" styleClass="seleccion">
+                                    <HBox.margin>
+                                        <Insets left="20.0" />
+                                    </HBox.margin>
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                </ComboBox>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                            <children>
+                                <Button fx:id="btn_cancelarEditPrincipio" mnemonicParsing="false" prefHeight="46.0" prefWidth="186.0" style="-fx-font-size: 24;" styleClass="btn_defauld" text="Cancelar">
+                                    <HBox.margin>
+                                        <Insets right="50.0" />
+                                    </HBox.margin>
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                </Button>
+                                <Button fx:id="btn_aceptarEditPrincipio" mnemonicParsing="false" prefHeight="46.0" prefWidth="186.0" style="-fx-font-size: 24; -fx-background-color: FFB94F;" styleClass="btn_defauld" text="Aceptar">
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                </Button>
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+                <VBox fx:id="vBox_editSopa" alignment="CENTER" layoutX="390.0" layoutY="196.0" prefHeight="328.0" prefWidth="517.0" styleClass="popupPane" stylesheets="@../swing/mensaje_pedido.css">
+                    <children>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                            <children>
+                                <Label alignment="TOP_CENTER" style="-fx-font-size: 32;" styleClass="texto" text="SOPA" />
+                                <ComboBox fx:id="sopasComboBox" prefHeight="50.0" prefWidth="220.0" promptText="Seleccione" style="-fx-background-size: 25;" styleClass="seleccion">
+                                    <HBox.margin>
+                                        <Insets left="20.0" />
+                                    </HBox.margin>
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                </ComboBox>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                            <children>
+                                <Button fx:id="btn_cancelarEditSopa" mnemonicParsing="false" prefHeight="46.0" prefWidth="186.0" style="-fx-font-size: 24;" styleClass="btn_defauld" text="Cancelar">
+                                    <HBox.margin>
+                                        <Insets right="50.0" />
+                                    </HBox.margin>
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                </Button>
+                                <Button fx:id="btn_aceptarEditSopa" mnemonicParsing="false" prefHeight="46.0" prefWidth="186.0" style="-fx-font-size: 24; -fx-background-color: FFB94F;" styleClass="btn_defauld" text="Aceptar">
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                </Button>
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+            </children>
+        </Pane>
+        <Pane fx:id="pane_editMenu" layoutX="263.0" layoutY="138.0" prefHeight="606.0" prefWidth="871.0" style="-fx-background-color: FFFFFF;" visible="false">
+            <children>
+                <Button fx:id="btn_arrowMenu2" contentDisplay="GRAPHIC_ONLY" layoutX="430.0" layoutY="96.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="41.0" style="-fx-background-color: TRANSPARENT;">
+                    <cursor>
                         <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <VBox alignment="CENTER" layoutX="76.0" layoutY="49.0" prefHeight="138.0" prefWidth="158.0" spacing="20.0">
-                     <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" style="-fx-font-weight: bold; -fx-font-size: 25;" styleClass="texto" text="SOPA" VBox.vgrow="ALWAYS">
-                           <VBox.margin>
-                              <Insets bottom="15.0" />
-                           </VBox.margin>
-                        </Label>
-                        <Label fx:id="txt_sopa" style="-fx-font-size: 20;" styleClass="texto" text="SANCOCHO" />
-                     </children>
-                  </VBox>
-               </children>
-            </Pane>
-            <Button fx:id="btn_editMenu" contentDisplay="GRAPHIC_ONLY" layoutX="135.0" layoutY="25.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4);">
-               <graphic>
-                  <ImageView fitHeight="22.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../resources/editar%204.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <ScrollPane layoutX="35.0" layoutY="69.0" prefHeight="505.0" prefWidth="474.0">
-               <content>
-                  <GridPane prefHeight="441.0" prefWidth="471.0">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                     <children>
-                        <ImageView fx:id="imageView1" fitHeight="65.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true" styleClass="circular-image">
-                           <image>
-                              <Image url="@../resources/pepitoria.png" />
-                           </image>
-                           <GridPane.margin>
-                              <Insets left="30.0" />
-                           </GridPane.margin>
+                    </cursor>
+                    <graphic>
+                        <ImageView fitHeight="53.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../resources/casa%20(1).png" />
+                            </image>
                         </ImageView>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
-                     </children>
-                  </GridPane>
-               </content>
-            </ScrollPane>
-         </children>
-      </Pane>
-      <Pane fx:id="glassPane3" prefHeight="744.0" prefWidth="1133.0" style="-fx-background-color: rgba(0, 0, 0, 0.38);" visible="false">
-         <children>
-            <VBox fx:id="vBox_editPrincipio" alignment="CENTER" layoutX="390.0" layoutY="196.0" prefHeight="328.0" prefWidth="517.0" styleClass="popupPane" stylesheets="@../swing/mensaje_pedido.css">
-               <children>
-                  <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Label alignment="TOP_CENTER" style="-fx-font-size: 32;" styleClass="texto" text="GRANO">
-                           <HBox.margin>
-                              <Insets top="40.0" />
-                           </HBox.margin>
-                        </Label>
-                        <ComboBox fx:id="comboBoxGranos" prefHeight="50.0" prefWidth="220.0" promptText="Seleccione" styleClass="seleccion" stylesheets="@../swing/mensaje_pedido.css">
-                           <HBox.margin>
-                              <Insets left="55.0" top="30.0" />
-                           </HBox.margin>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </ComboBox>
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Label alignment="TOP_CENTER" style="-fx-font-size: 32;" styleClass="texto" text="VERDURA" />
-                        <ComboBox fx:id="comboBoxVerduras" prefHeight="50.0" prefWidth="220.0" promptText="Seleccione" styleClass="seleccion">
-                           <HBox.margin>
-                              <Insets left="20.0" />
-                           </HBox.margin>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </ComboBox>
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Button fx:id="btn_cancelarEditPrincipio" mnemonicParsing="false" prefHeight="46.0" prefWidth="186.0" style="-fx-font-size: 24;" styleClass="btn_defauld" text="Cancelar">
-                           <HBox.margin>
-                              <Insets right="50.0" />
-                           </HBox.margin>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                        <Button fx:id="btn_aceptarEditPrincipio" mnemonicParsing="false" prefHeight="46.0" prefWidth="186.0" style="-fx-font-size: 24; -fx-background-color: FFB94F;" styleClass="btn_defauld" text="Aceptar">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                     </children>
-                  </HBox>
-               </children>
-            </VBox>
-            <VBox fx:id="vBox_editSopa" alignment="CENTER" layoutX="390.0" layoutY="196.0" prefHeight="328.0" prefWidth="517.0" styleClass="popupPane" stylesheets="@../swing/mensaje_pedido.css">
-               <children>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Label alignment="TOP_CENTER" style="-fx-font-size: 32;" styleClass="texto" text="SOPA" />
-                        <ComboBox fx:id="sopasComboBox" prefHeight="50.0" prefWidth="220.0" promptText="Seleccione" style="-fx-background-size: 25;" styleClass="seleccion">
-                           <HBox.margin>
-                              <Insets left="20.0" />
-                           </HBox.margin>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </ComboBox>
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Button fx:id="btn_cancelarEditSopa" mnemonicParsing="false" prefHeight="46.0" prefWidth="186.0" style="-fx-font-size: 24;" styleClass="btn_defauld" text="Cancelar">
-                           <HBox.margin>
-                              <Insets right="50.0" />
-                           </HBox.margin>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                        <Button fx:id="btn_aceptarEditSopa" mnemonicParsing="false" prefHeight="46.0" prefWidth="186.0" style="-fx-font-size: 24; -fx-background-color: FFB94F;" styleClass="btn_defauld" text="Aceptar">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                     </children>
-                  </HBox>
-               </children>
-            </VBox>
-         </children>
-      </Pane>
-      <Pane fx:id="pane_editMenu" layoutX="263.0" layoutY="138.0" prefHeight="606.0" prefWidth="871.0" style="-fx-background-color: FFFFFF;" visible="false">
-         <children>
-            <Button fx:id="btn_arrowMenu2" contentDisplay="GRAPHIC_ONLY" layoutX="430.0" layoutY="96.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="41.0" style="-fx-background-color: TRANSPARENT;">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <graphic>
-                  <ImageView fitHeight="53.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../resources/casa%20(1).png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="btn_editCarta" layoutX="212.0" layoutY="303.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="456.0" styleClass="btn_personal_registro" stylesheets="@../swing/inicio_administrador.css" text="PLATOS A LA CARTA">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Button fx:id="btn_editDia" layoutX="212.0" layoutY="191.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="456.0" styleClass="btn_personal_registro" stylesheets="@../swing/inicio_administrador.css" text="MENÚ DEL DÍA">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-         </children>
-      </Pane>
-      <Pane fx:id="pane_menuDia" layoutX="263.0" layoutY="138.0" prefHeight="606.0" prefWidth="871.0" style="-fx-background-color: ffff;" visible="false">
-         <children>
-            <TableView fx:id="tablaPlatosDia" editable="true" layoutX="243.0" layoutY="34.0" prefHeight="369.0" prefWidth="594.0">
-              <columns>
-                <TableColumn fx:id="columnaNombrePlatoDia" prefWidth="197.0" text="Nombre" />
-                <TableColumn fx:id="columnaPrecioDia" prefWidth="193.0" text="Precio " />
-                  <TableColumn fx:id="columnaEsMiniDia" editable="false" prefWidth="228.0" text="Mini" />
-              </columns>
-            </TableView>
-            <ListView fx:id="listViewCategorias" layoutX="27.0" layoutY="86.0" prefHeight="320.0" prefWidth="158.0" stylesheets="@../swing/inicio_mesera.css" />
-            <Separator layoutX="198.0" layoutY="34.0" orientation="VERTICAL" prefHeight="551.0" prefWidth="0.0" />
-            <Button fx:id="btn_arrowMenu1" contentDisplay="GRAPHIC_ONLY" layoutX="71.0" layoutY="25.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="41.0" style="-fx-background-color: TRANSPARENT;">
-               <graphic>
-                  <ImageView fitHeight="53.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
+                    </graphic>
+                </Button>
+                <Button fx:id="btn_editCarta" layoutX="212.0" layoutY="303.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="456.0" styleClass="btn_personal_registro" stylesheets="@../swing/inicio_administrador.css" text="PLATOS A LA CARTA">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
+                <Button fx:id="btn_editDia" layoutX="212.0" layoutY="191.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="456.0" styleClass="btn_personal_registro" stylesheets="@../swing/inicio_administrador.css" text="MENÚ DEL DÍA">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
+            </children>
+        </Pane>
+        <Pane fx:id="pane_menuDia" layoutX="263.0" layoutY="138.0" prefHeight="606.0" prefWidth="871.0" style="-fx-background-color: ffff;" visible="false">
+            <children>
+                <TableView fx:id="tablaPlatosDia" editable="true" layoutX="243.0" layoutY="34.0" prefHeight="369.0" prefWidth="594.0">
+                    <columns>
+                        <TableColumn fx:id="columnaNombrePlatoDia" prefWidth="197.0" text="Nombre" />
+                        <TableColumn fx:id="columnaPrecioDia" prefWidth="193.0" text="Precio " />
+                        <TableColumn fx:id="columnaEsMiniDia" editable="false" prefWidth="228.0" text="Mini" />
+                    </columns>
+                </TableView>
+                <ListView fx:id="listViewCategorias" layoutX="27.0" layoutY="86.0" prefHeight="320.0" prefWidth="158.0" stylesheets="@../swing/inicio_mesera.css" />
+                <Separator layoutX="198.0" layoutY="34.0" orientation="VERTICAL" prefHeight="551.0" prefWidth="0.0" />
+                <Button fx:id="btn_arrowMenu1" contentDisplay="GRAPHIC_ONLY" layoutX="71.0" layoutY="25.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="41.0" style="-fx-background-color: TRANSPARENT;">
+                    <graphic>
+                        <ImageView fitHeight="53.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../resources/left-arrow.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
+                <HBox alignment="TOP_CENTER" layoutX="243.0" layoutY="425.0" prefHeight="92.0" prefWidth="584.0" spacing="25.0">
+                    <children>
+                        <TextField fx:id="txtNombrePlatoDia" prefHeight="30.0" prefWidth="200.0" promptText="Nombre" />
+                        <TextField fx:id="txtPrecioPlatoDia" prefHeight="30.0" prefWidth="200.0" promptText="Precio" />
+                        <VBox alignment="CENTER_LEFT" prefHeight="72.0" prefWidth="250.0" spacing="20.0">
+                            <children>
+                                <Button fx:id="btnAgregarCarta" mnemonicParsing="false" style="-fx-background-color: fffff; -fx-border-color: 2E1B10; -fx-border-radius: 10px; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 3);;" styleClass="boton" text="Agregar Producto">
+                                    <effect>
+                                        <Shadow />
+                                    </effect>
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                </Button>
+                                <Button fx:id="btnEliminarCarta" mnemonicParsing="false" style="-fx-background-color: fffff; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 3);" styleClass="boton" text="Eliminar Producto" />
+                            </children>
+                        </VBox>
+                    </children>
+                    <opaqueInsets>
+                        <Insets />
+                    </opaqueInsets>
+                </HBox>
+            </children>
+        </Pane>
+        <Pane fx:id="pane_menuCarta" layoutX="263.0" layoutY="138.0" prefHeight="606.0" prefWidth="871.0" style="-fx-background-color: ffff;">
+            <children>
+                <ListView fx:id="listViewCategoriasC" layoutX="27.0" layoutY="86.0" prefHeight="478.0" prefWidth="158.0" />
+                <Separator layoutX="198.0" layoutY="34.0" orientation="VERTICAL" prefHeight="551.0" prefWidth="0.0" />
+                <Button fx:id="btn_arrowMenu" contentDisplay="GRAPHIC_ONLY" layoutX="71.0" layoutY="25.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="41.0" style="-fx-background-color: TRANSPARENT;">
+                    <graphic>
+                        <ImageView fitHeight="53.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../resources/left-arrow.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
+                <TableView fx:id="tablaPlatosCarta" editable="true" layoutX="243.0" layoutY="34.0" prefHeight="369.0" prefWidth="594.0">
+                    <columns>
+                        <TableColumn fx:id="columnaNombrePlatoCarta" prefWidth="197.0" text="Nombre" />
+                        <TableColumn fx:id="columnaPrecioCarta" prefWidth="193.0" text="Precio " />
+                        <TableColumn fx:id="columnaEsMiniCarta" editable="false" prefWidth="228.0" text="Mini" />
+                    </columns>
+                </TableView>
+                <HBox alignment="TOP_CENTER" layoutX="243.0" layoutY="425.0" prefHeight="92.0" prefWidth="584.0" spacing="25.0">
+                    <children>
+                        <TextField fx:id="txtNombrePlatoCarta" prefHeight="30.0" prefWidth="200.0" promptText="Nombre" />
+                        <TextField fx:id="txtPrecioPlatoCarta" prefHeight="30.0" prefWidth="200.0" promptText="Precio" />
+                        <VBox alignment="CENTER_LEFT" prefHeight="72.0" prefWidth="250.0" spacing="20.0">
+                            <children>
+                                <Button fx:id="btnAgregarDia" mnemonicParsing="false" style="-fx-background-color: fffff; -fx-border-color: 2E1B10; -fx-border-radius: 10px; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 3);;" styleClass="boton" text="Agregar Producto">
+                                    <effect>
+                                        <Shadow />
+                                    </effect>
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                </Button>
+                                <Button fx:id="btnEliminarDia" mnemonicParsing="false" style="-fx-background-color: fffff; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 3);" styleClass="boton" text="Eliminar Producto" />
+                            </children>
+                        </VBox>
+                    </children>
+                    <opaqueInsets>
+                        <Insets />
+                    </opaqueInsets>
+                </HBox>
+            </children>
+        </Pane>
+        <Button fx:id="btn_arrowMenu3" contentDisplay="GRAPHIC_ONLY" layoutX="81.0" layoutY="35.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="41.0" style="-fx-background-color: TRANSPARENT;">
+            <graphic>
+                <ImageView fitHeight="53.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
                         <Image url="@../resources/left-arrow.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <HBox alignment="TOP_CENTER" layoutX="243.0" layoutY="425.0" prefHeight="92.0" prefWidth="584.0" spacing="25.0">
-               <children>
-                  <TextField fx:id="txtNombrePlatoDia" prefHeight="30.0" prefWidth="200.0" promptText="Nombre" />
-                  <TextField fx:id="txtPrecioPlatoDia" prefHeight="30.0" prefWidth="200.0" promptText="Precio" />
-                  <VBox alignment="CENTER_LEFT" prefHeight="72.0" prefWidth="250.0" spacing="20.0">
-                     <children>
-                        <Button fx:id="btnAgregarCarta" mnemonicParsing="false" style="-fx-background-color: fffff; -fx-border-color: 2E1B10; -fx-border-radius: 10px; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 3);;" styleClass="boton" text="Agregar Producto">
-                           <effect>
-                              <Shadow />
-                           </effect>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                        <Button fx:id="btnEliminarCarta" mnemonicParsing="false" style="-fx-background-color: fffff; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 3);" styleClass="boton" text="Eliminar Producto" />
-                     </children>
-                  </VBox>
-               </children>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-            </HBox>
-         </children>
-      </Pane>
-      <Pane fx:id="pane_menuCarta" layoutX="263.0" layoutY="138.0" prefHeight="606.0" prefWidth="871.0" style="-fx-background-color: ffff;">
-         <children>
-            <ListView fx:id="listViewCategoriasC" layoutX="27.0" layoutY="86.0" prefHeight="478.0" prefWidth="158.0" />
-            <Separator layoutX="198.0" layoutY="34.0" orientation="VERTICAL" prefHeight="551.0" prefWidth="0.0" />
-            <Button fx:id="btn_arrowMenu" contentDisplay="GRAPHIC_ONLY" layoutX="71.0" layoutY="25.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="41.0" style="-fx-background-color: TRANSPARENT;">
-               <graphic>
-                  <ImageView fitHeight="53.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../resources/left-arrow.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <TableView fx:id="tablaPlatosCarta" editable="true" layoutX="243.0" layoutY="34.0" prefHeight="369.0" prefWidth="594.0">
-               <columns>
-                  <TableColumn fx:id="columnaNombrePlatoCarta" prefWidth="197.0" text="Nombre" />
-                  <TableColumn fx:id="columnaPrecioCarta" prefWidth="193.0" text="Precio " />
-                  <TableColumn fx:id="columnaEsMiniCarta" editable="false" prefWidth="228.0" text="Mini" />
-               </columns>
-            </TableView>
-            <HBox alignment="TOP_CENTER" layoutX="243.0" layoutY="425.0" prefHeight="92.0" prefWidth="584.0" spacing="25.0">
-               <children>
-                  <TextField fx:id="txtNombrePlatoCarta" prefHeight="30.0" prefWidth="200.0" promptText="Nombre" />
-                  <TextField fx:id="txtPrecioPlatoCarta" prefHeight="30.0" prefWidth="200.0" promptText="Precio" />
-                  <VBox alignment="CENTER_LEFT" prefHeight="72.0" prefWidth="250.0" spacing="20.0">
-                     <children>
-                        <Button fx:id="btnAgregarDia" mnemonicParsing="false" style="-fx-background-color: fffff; -fx-border-color: 2E1B10; -fx-border-radius: 10px; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 3);;" styleClass="boton" text="Agregar Producto">
-                           <effect>
-                              <Shadow />
-                           </effect>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                        <Button fx:id="btnEliminarDia" mnemonicParsing="false" style="-fx-background-color: fffff; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 3);" styleClass="boton" text="Eliminar Producto" />
-                     </children>
-                  </VBox>
-               </children>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-            </HBox>
-         </children>
-      </Pane>
-      <Button fx:id="btn_arrowMenu3" contentDisplay="GRAPHIC_ONLY" layoutX="81.0" layoutY="35.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="41.0" style="-fx-background-color: TRANSPARENT;">
-         <graphic>
-            <ImageView fitHeight="53.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../resources/left-arrow.png" />
-               </image>
-            </ImageView>
-         </graphic>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
+                    </image>
+                </ImageView>
+            </graphic>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </Button>
 
-   </children>
+    </children>
 </AnchorPane>

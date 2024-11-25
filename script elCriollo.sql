@@ -377,8 +377,7 @@ select * from mesas;
 	INSERT INTO detallesPedido (pedidosId, platosId, cantidad, precioUnitario) VALUES
 	('pedido004', 'plato001', 2, 25000),
     ('pedido004', 'plato002', 1, 36000);
-    
-    truncate table detallesPedido;
+
     select * from detallesPedido;
     
 	-- Registros para la tabla reservas

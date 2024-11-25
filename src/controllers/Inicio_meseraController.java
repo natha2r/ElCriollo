@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.UUID;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -12,6 +11,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -26,10 +27,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -37,6 +39,7 @@ import javafx.util.converter.DoubleStringConverter;
 import models.CategoriaPlatosDao;
 import models.Employees;
 import models.EmployeesDao;
+import models.MesasDao;
 import models.Platos;
 import models.PlatosDao;
 import models.PrincipioDao;
@@ -148,6 +151,8 @@ public class Inicio_meseraController implements Initializable {
     private TextField txtNombrePlatoCarta; // Campo de texto para el nombre del plato.
     @FXML
     private TextField txtPrecioPlatoCarta;
+    @FXML
+    private GridPane gridPaneMesas;
 
     //PANEL DE MENÚ
     @FXML
@@ -176,6 +181,8 @@ public class Inicio_meseraController implements Initializable {
     private TableView<Platos> tablaActual;
     private ListView<String> listViewCategoriasActual;
     private ObservableList<Platos> listaPlatosActual;
+
+    private int mesaCounter = 1; // Inicia en 17 ya que tienes hasta la 16
 
     // --------------------------
     public Inicio_meseraController() {
@@ -244,6 +251,10 @@ public class Inicio_meseraController implements Initializable {
         pane_menuDia.setVisible(false);
         pane_inicio.setVisible(true);
 
+        gridPaneMesas.getColumnConstraints().clear();
+        gridPaneMesas.getRowConstraints().clear();
+        gridPaneMesas.getChildren().clear();
+
         principioDao = new PrincipioDao();
         platosDao = new PlatosDao();
         menuComboBox.setItems(tipoMenuDao.getAllMenus());
@@ -256,6 +267,61 @@ public class Inicio_meseraController implements Initializable {
         CargarVerduras();
         CargarGranos();
         cargarSopas();
+
+        cargarMesasDesdeBaseDeDatos();
+
+    }
+
+    private void cargarMesasDesdeBaseDeDatos() {
+        try {
+            MesasDao mesasDao = new MesasDao();
+            List<String> mesas = mesasDao.obtenerTodasLasMesas();
+
+            for (String mesaId : mesas) {
+                agregarMesaAGridPane(mesaId);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void agregarMesaAGridPane(String nuevoId) {
+        StackPane mesaContainer = new StackPane();
+        mesaContainer.setAlignment(Pos.CENTER);
+
+        // Crear la imagen de la mesa
+        ImageView mesaImage = new ImageView(new Image("resources/mesaoficial.png"));
+        mesaImage.setFitWidth(106);
+        mesaImage.setFitHeight(98);
+
+        // Obtener el número de la mesa a partir del ID
+        int numeroMesa = mesaCounter; // `mesaCounter` ya lleva el conteo secuencial
+
+        // Crear el número de la mesa y colocarlo encima de la imagen
+        Label lblMesaNumero = new Label(String.valueOf(numeroMesa));
+        lblMesaNumero.setStyle("-fx-font-size: 16px; -fx-text-fill: #000000; -fx-font-weight: bold;");
+        StackPane.setAlignment(lblMesaNumero, Pos.TOP_CENTER);
+
+        // Agregar la imagen y el número al contenedor
+        mesaContainer.getChildren().addAll(mesaImage, lblMesaNumero);
+        
+        
+
+        // Calcular la posición de la nueva mesa en el GridPane
+        int maxColumns = 4;
+        int row = (mesaCounter - 1) / maxColumns;
+        int col = (mesaCounter - 1) % maxColumns;
+
+        // Asignar evento de clic al StackPane
+        mesaContainer.setOnMouseClicked(event -> handleMesaClickAndShowPopup(String.valueOf(numeroMesa)));
+        mesaContainer.setOnMouseEntered(event -> mesaContainer.setCursor(Cursor.HAND));
+        mesaContainer.setOnMouseExited(event -> mesaContainer.setCursor(Cursor.DEFAULT));
+
+        gridPaneMesas.add(mesaContainer, col, row);
+
+        // Incrementar el contador de mesas
+        mesaCounter++;
     }
 
     private void buttons() {
@@ -324,13 +390,13 @@ public class Inicio_meseraController implements Initializable {
 
     private void handleButton1Click() {
         btn_pedidos.toFront();
-        gridPane.setVisible(false);
+        gridPaneMesas.setVisible(false);
         switchButtonStyles(btn_pedidos, btn_mesas);
     }
 
     private void handleButton2Click() {
         btn_mesas.toFront();
-        gridPane.setVisible(true);
+        gridPaneMesas.setVisible(true);
         switchButtonStyles(btn_mesas, btn_pedidos);
 
     }
@@ -420,10 +486,9 @@ public class Inicio_meseraController implements Initializable {
     }
 
     @FXML
-    private void handleMesaClickAndShowPopup(MouseEvent event) {
-        ImageView clickedMesa = (ImageView) event.getSource();
-        String mesaId = clickedMesa.getId();
-        String tableNumber = mesaId.replace("mesa", "MESA ");
+    private void handleMesaClickAndShowPopup(String mesa) {
+
+        String tableNumber = "Mesa " + mesa;
 
         popupLabel.setText(tableNumber);
 
@@ -447,6 +512,10 @@ public class Inicio_meseraController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public Employees getSelectedMesera() {
+        return (Employees) comboBoxselecMesera.getValue();
     }
 
     private void initComboBox() {
@@ -502,6 +571,8 @@ public class Inicio_meseraController implements Initializable {
 
                 mensajePedidoController.setMenuSeleccionado(menuSeleccionado);
                 mensajePedidoController.mostrarNumeroMesa(popupLabel.getText());
+                Employees meseraSeleccionada = getSelectedMesera();
+                //mensajePedidoController.setMeseraSeleccionada(meseraSeleccionada);
 
                 Scene scene = new Scene(root);
                 Stage stage = (Stage) btn_tomarPedido.getScene().getWindow();
