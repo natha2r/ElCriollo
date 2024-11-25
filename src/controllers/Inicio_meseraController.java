@@ -2,161 +2,182 @@ package controllers;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.UUID;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.image.Image;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javafx.util.converter.DoubleStringConverter;
+import models.CategoriaPlatosDao;
 import models.Employees;
 import models.EmployeesDao;
+import models.Platos;
+import models.PlatosDao;
 import models.PrincipioDao;
 import models.SopaDao;
 import models.TipoMenuDao;
 
 public class Inicio_meseraController implements Initializable {
 
+    //lISTA DE BOTONES
     @FXML
     private Button btn_pedidos;
-
-    @FXML
-    private ComboBox comboBoxselecMesera; //Lista desplegable de meseras
-
     @FXML
     private Button btn_menu;
-
     @FXML
     private Button btn_salir;
-
-    @FXML
-    private Label txt_grano;
-
-    @FXML
-    private Label txt_verdura;
-
-    @FXML
-    private Button btn_mesas;
-
     @FXML
     private Button btn_inicio;
-
-    @FXML
-    private Label popupLabel; //Texto de "MESA X"
-    private Mensaje_PedidoController mensajePedidoController;
-
-    @FXML
-    private Pane pane_inicio; //Panel de Inicio de mesera
-
-    @FXML
-    private Pane glassPane; // El Pane que actúa como GlassPane
-
     @FXML
     private Button btn_arrowMenu;
-
     @FXML
-    private GridPane gridPane; // Contenedor de las mesas
-
+    private Button btn_arrowMenu2;
     @FXML
-    private ImageView imageView1;
-
+    private Button btn_editSopa;
     @FXML
-    private VBox vBox_editSopa;
+    private Button btn_arrowMenu1;
+    @FXML
+    private Button btn_editPrincipio;
+    @FXML
+    private Button btn_cancelarEditSopa;
+    @FXML
+    private Button btn_aceptarEditSopa;
+    @FXML
+    private Button btn_cancelarEditPrincipio;
+    @FXML
+    private Button btn_editMenu;
+    @FXML
+    private Button btn_editDia;
+    @FXML
+    private Button btn_editCarta;
+    @FXML
+    private Button btn_aceptarEditPrincipio;
+    @FXML
+    private Button btn_tomarPedido;
+    @FXML
+    private Button btn_mesas;
+    @FXML
+    private Button btnAgregarDia, btnEliminarDia, btnAgregarCarta, btnEliminarCarta;
 
+    //lISTA DE PANE
     @FXML
     private Pane pane_editMenu;
-
     @FXML
     private Pane pane_menuCarta;
     @FXML
     private Pane pane_menuDia;
-
     @FXML
-    private VBox vBox_editPrincipio;
-
+    private Pane pane_inicio;
+    @FXML
+    private Pane glassPane;
+    @FXML
+    private Pane pane_editCarta;
+    @FXML
+    private Pane pane_editDia;
     @FXML
     private Pane glassPane3;
-
-    @FXML
-    private Button btn_editSopa;
-
     @FXML
     private Pane pane_menu;
 
+    // LISTA DE COMBOBOX
     @FXML
-    private Button btn_editPrincipio;
-
+    private ComboBox comboBoxselecMesera;
     @FXML
-    private Button btn_cancelarEditSopa;
-
-    @FXML
-    private Button btn_aceptarEditSopa;
-
-    @FXML
-    private Label txt_sopa;
-    private String sopaSeleccionadaActual;
-
-    @FXML
-    private Button btn_cancelarEditPrincipio;
-
-    @FXML
-    private Button btn_editMenu;
-
-    @FXML
-    private Button btn_editDia;
-
-    @FXML
-    private Button btn_editCarta;
-
-    @FXML
-    private Pane pane_editCarta;
-
-    @FXML
-    private Pane pane_editDia;
-
-    @FXML
-    private Button btn_aceptarEditPrincipio;
-
-    @FXML
-    private Label txt_cantidad;  // Label para mostrar la cantidad
-    private int cantidad = 0;  // Cantidad inicial
-
-    @FXML
-    private ComboBox<String> menuComboBox;  // El ComboBox que contiene los menús
-
+    private ComboBox<String> menuComboBox;
     @FXML
     private ComboBox<String> comboBoxGranos;
-
     @FXML
     private ComboBox<String> comboBoxVerduras;
-
     @FXML
     private ComboBox<String> sopasComboBox;
+
+    //OTROS
+    @FXML
+    private TableView<Platos> tablaPlatosDia;
+    @FXML
+    private TableView<Platos> tablaPlatosCarta;
+    @FXML
+    private TableColumn<Platos, String> columnaNombrePlatoDia;
+    @FXML
+    private TableColumn<Platos, Double> columnaPrecioDia;
+    @FXML
+    private TableColumn<Platos, CheckBox> columnaEsMiniDia;
+    @FXML
+    private TableColumn<Platos, String> columnaNombrePlatoCarta;
+    @FXML
+    private TableColumn<Platos, Double> columnaPrecioCarta;
+    @FXML
+    private TableColumn<Platos, CheckBox> columnaEsMiniCarta;
+    @FXML
+    private ListView<String> listViewCategorias;
+    @FXML
+    private ListView<String> listViewCategoriasC;
+    @FXML
+    private Label popupLabel;
+    @FXML
+    private TextField txtNombrePlatoDia; // Campo de texto para el nombre del plato.
+    @FXML
+    private TextField txtPrecioPlatoDia;
+    @FXML
+    private TextField txtNombrePlatoCarta; // Campo de texto para el nombre del plato.
+    @FXML
+    private TextField txtPrecioPlatoCarta;
+
+    //PANEL DE MENÚ
+    @FXML
+    private VBox vBox_editPrincipio;
+    @FXML
+    private Label txt_grano;
+    @FXML
+    private Label txt_verdura;
+    @FXML
+    private Label txt_sopa;
+    @FXML
+    private GridPane gridPane;
+    @FXML
+    private VBox vBox_editSopa;
+
     private SopaDao sopaDao = new SopaDao();
     private PrincipioDao principioDao;
-
-    @FXML
-    private Button btn_tomarPedido;
-
     private TipoMenuDao tipoMenuDao = new TipoMenuDao();
+    private CategoriaPlatosDao categoriaPlatosDao = new CategoriaPlatosDao();
+    private Mensaje_PedidoController mensajePedidoController;
+    private String sopaSeleccionadaActual;
+    //private PlatosDao platosDao;
+    private ObservableList<Platos> listaPlatosDia = FXCollections.observableArrayList();
+    private ObservableList<Platos> listaPlatosCarta = FXCollections.observableArrayList();
+    private PlatosDao platosDao = new PlatosDao();
+    private TableView<Platos> tablaActual;
+    private ListView<String> listViewCategoriasActual;
+    private ObservableList<Platos> listaPlatosActual;
 
+    // --------------------------
     public Inicio_meseraController() {
     }
 
@@ -175,7 +196,6 @@ public class Inicio_meseraController implements Initializable {
         this.glassPane = glassPane;
         this.btn_arrowMenu = btn_arrowMenu;
         this.gridPane = gridPane;
-        this.imageView1 = imageView1;
         this.vBox_editSopa = vBox_editSopa;
         this.pane_editMenu = pane_editMenu;
         this.pane_menuCarta = pane_menuCarta;
@@ -196,7 +216,6 @@ public class Inicio_meseraController implements Initializable {
         this.pane_editCarta = pane_editCarta;
         this.pane_editDia = pane_editDia;
         this.btn_aceptarEditPrincipio = btn_aceptarEditPrincipio;
-        this.txt_cantidad = txt_cantidad;
         this.menuComboBox = menuComboBox;
         this.comboBoxGranos = comboBoxGranos;
         this.comboBoxVerduras = comboBoxVerduras;
@@ -205,9 +224,41 @@ public class Inicio_meseraController implements Initializable {
         this.btn_tomarPedido = btn_tomarPedido;
     }
 
+    private void configurarContexto(TableView<Platos> tabla, ListView<String> listView, ObservableList<Platos> lista) {
+        this.tablaActual = tabla;
+        this.listViewCategoriasActual = listView;
+        this.listaPlatosActual = lista;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // Configura eventos para los botones
+
+        //btnAgregarPlato.setOnAction(e -> agregarPlato());
+        //btnEliminarPlato.setOnAction(e -> eliminarPlato());
+        glassPane.setVisible(false);
+        glassPane3.setVisible(false);
+
+        pane_editMenu.setVisible(false);
+        pane_menu.setVisible(false);
+        pane_menuCarta.setVisible(false);
+        pane_menuDia.setVisible(false);
+        pane_inicio.setVisible(true);
+
+        principioDao = new PrincipioDao();
+        platosDao = new PlatosDao();
+        menuComboBox.setItems(tipoMenuDao.getAllMenus());
+
+        configurarTabla(tablaPlatosDia, columnaNombrePlatoDia, columnaPrecioDia, columnaEsMiniDia);
+        configurarTabla(tablaPlatosCarta, columnaNombrePlatoCarta, columnaPrecioCarta, columnaEsMiniCarta);
+
+        buttons();
+        initComboBox();
+        CargarVerduras();
+        CargarGranos();
+        cargarSopas();
+    }
+
+    private void buttons() {
         btn_tomarPedido.setOnAction(e -> handlePedidoClick());
         btn_pedidos.setOnAction(e -> handleButton1Click());
         btn_mesas.setOnAction(e -> handleButton2Click());
@@ -218,41 +269,35 @@ public class Inicio_meseraController implements Initializable {
         btn_cancelarEditPrincipio.setOnAction(e -> handleButtoncancelarEditPrincipio());
         btn_editSopa.setOnAction(e -> handleButtonEditSopa());
         btn_cancelarEditSopa.setOnAction(e -> handleButtoncancelarEditSopa());
-        cargarSopas();
-
         btn_editMenu.setOnAction(e -> handleButtonEditMenu());
-        cargarSopas();
-
         btn_aceptarEditSopa.setOnAction(event -> mostrarSopaSeleccionada());
         btn_aceptarEditPrincipio.setOnAction(event -> mostrarPrincipioSeleccionado());
         btn_editDia.setOnAction(event -> editarMenuDia());
         btn_editCarta.setOnAction(event -> editarMenuCarta());
-
-        glassPane3.setVisible(false);
-        pane_editMenu.setVisible(false);
-
-        pane_menu.setVisible(false);
-        pane_menuCarta.setVisible(false);
-        pane_menuDia.setVisible(false);
-
-        // Ocultar el GlassPane al iniciar la aplicación
-        glassPane.setVisible(false);
-
-        // Otros componentes de la interfaz pueden ser inicializados aquí
-        pane_inicio.setVisible(true);
-
-        principioDao = new PrincipioDao();
-
-        initComboBox();
-        CargarVerduras();
-        CargarGranos();
-
+        btn_arrowMenu.setOnAction(event -> handlearrowMenu());
+        btn_arrowMenu1.setOnAction(event -> handlearrowMenu());
+        btn_arrowMenu2.setOnAction(event -> handlearrowMenu2());
         btn_tomarPedido.setOnAction(e -> handlePedidoClick());
 
-        menuComboBox.setItems(tipoMenuDao.getAllMenus());
+        btnAgregarDia.setOnAction(event -> {
+            configurarContexto(tablaPlatosDia, listViewCategorias, listaPlatosDia);
+            agregarPlato(tablaPlatosDia, listViewCategorias, listaPlatosDia, txtNombrePlatoDia, txtPrecioPlatoDia);
+        });
 
-        imageView1.setImage(new Image("/resources/pepitoria.png"));
-        makeImageViewCircular(imageView1, 50);
+        btnEliminarDia.setOnAction(event -> {
+            configurarContexto(tablaPlatosDia, listViewCategorias, listaPlatosDia);
+            eliminarPlato();
+        });
+
+        btnAgregarCarta.setOnAction(event -> {
+            configurarContexto(tablaPlatosCarta, listViewCategoriasC, listaPlatosCarta);
+            agregarPlato(tablaPlatosCarta, listViewCategoriasC, listaPlatosCarta, txtNombrePlatoCarta, txtPrecioPlatoCarta);
+        });
+
+        btnEliminarCarta.setOnAction(event -> {
+            configurarContexto(tablaPlatosCarta, listViewCategoriasC, listaPlatosCarta);
+            eliminarPlato();
+        });
 
     }
 
@@ -264,11 +309,9 @@ public class Inicio_meseraController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/LoginView.fxml"));
             Parent root = loader.load();
 
-            // Obtener el controlador y establecer el Stage
             LoginController loginController = loader.getController();
             loginController.setStage(stage);
 
-            // Configurar y mostrar la escena
             stage.setTitle("Login");
             stage.setScene(new Scene(root));
             stage.setResizable(false);
@@ -280,33 +323,23 @@ public class Inicio_meseraController implements Initializable {
     }
 
     private void handleButton1Click() {
-        // Traer el botón al frente
         btn_pedidos.toFront();
         gridPane.setVisible(false);
-
-        // Intercambiar colores entre btn_pedidos y btn_mesas
         switchButtonStyles(btn_pedidos, btn_mesas);
-
     }
 
     private void handleButton2Click() {
-        // Traer el botón al frente
         btn_mesas.toFront();
         gridPane.setVisible(true);
-
-        // Intercambiar colores entre btn_mesas y btn_pedidos
         switchButtonStyles(btn_mesas, btn_pedidos);
 
     }
 
-// Método para intercambiar estilos entre dos botones
     private void switchButtonStyles(Button btn1, Button btn2) {
-        // Guarda el estilo actual de btn1
+
         String btn1Style = btn1.getStyleClass().contains("btn_pedidos") ? "btn_pedidos" : "btn_mesas";
-        // Guarda el estilo actual de btn2
         String btn2Style = btn2.getStyleClass().contains("btn_pedidos") ? "btn_pedidos" : "btn_mesas";
 
-        // Intercambia estilos entre btn1 y btn2
         btn1.getStyleClass().remove(btn1Style);
         btn1.getStyleClass().add(btn2Style);
 
@@ -314,18 +347,27 @@ public class Inicio_meseraController implements Initializable {
         btn2.getStyleClass().add(btn1Style);
     }
 
-    private void handleButtonMenu() { //Acción para que al oprimir btn_menu se oculte el pane_inicio
+    private void handleButtonMenu() {
         pane_inicio.setVisible(false);
         pane_menu.setVisible(true);
         pane_editMenu.setVisible(false);
-
+        pane_menuCarta.setVisible(false);
+        pane_menuDia.setVisible(false);
     }
 
-    private void handleButtonArrow() {
+    private void handlearrowMenu() {
         pane_editMenu.setVisible(true);
+        pane_menuDia.setVisible(false);
+        pane_menuCarta.setVisible(false);
     }
 
-    private void handleButtonInicio() { // Acción para que al oprimir btn_inicio el pane_inicio sea visible
+    private void handlearrowMenu2() {
+        pane_editMenu.setVisible(false);
+        pane_menuDia.setVisible(false);
+        pane_menuCarta.setVisible(false);
+    }
+
+    private void handleButtonInicio() {
         pane_inicio.setVisible(true);
         pane_menu.setVisible(false);
         pane_editMenu.setVisible(false);
@@ -357,34 +399,22 @@ public class Inicio_meseraController implements Initializable {
         glassPane3.setVisible(false);
     }
 
-    private void editarMenuDia() {
-        pane_menuDia.setVisible(true);
-    }
-
-    private void editarMenuCarta() {
-        pane_menuCarta.setVisible(true);
-    }
-
     @FXML
     private void showPopup() {
 
-        // Restablecer el ComboBox al estado inicial
         comboBoxselecMesera.getSelectionModel().
-                clearSelection(); // Deseleccionar cualquier selección
-        comboBoxselecMesera.setValue(null); // Asegúrate de que no hay ningún valor seleccionado
+                clearSelection();
+        comboBoxselecMesera.setValue(null);
 
-        // Forzar la actualización del promptText
         Platform.runLater(() -> {
             comboBoxselecMesera.setPromptText("Seleccione una mesera");
         });
 
-        // Mostrar el GlassPane y el contenido del popup
         glassPane.setVisible(true);
     }
 
     @FXML
     private void closePopup() {
-        // Ocultar el GlassPane y el contenido del popup
         glassPane.setVisible(false);
 
     }
@@ -395,15 +425,12 @@ public class Inicio_meseraController implements Initializable {
         String mesaId = clickedMesa.getId();
         String tableNumber = mesaId.replace("mesa", "MESA ");
 
-        // Mostrar el número de la mesa en el popup
         popupLabel.setText(tableNumber);
 
-        // Pasar el número de mesa a Mensaje_PedidoController
         if (mensajePedidoController != null) {
             mensajePedidoController.mostrarNumeroMesa(tableNumber);
         }
 
-        // Mostrar el GlassPane con el popup
         showPopup();
     }
 
@@ -413,7 +440,6 @@ public class Inicio_meseraController implements Initializable {
             Parent root = loader.load();
             mensajePedidoController = loader.getController();
 
-            // Mostrar la nueva ventana
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
@@ -430,7 +456,6 @@ public class Inicio_meseraController implements Initializable {
 
         comboBoxselecMesera.setPromptText("Seleccione una mesera");
 
-        // Configurar el ComboBox para mostrar el nombre del empleado
         comboBoxselecMesera.setCellFactory(new Callback<ListView<Employees>, ListCell<Employees>>() {
             @Override
             public ListCell<Employees> call(ListView<Employees> param) {
@@ -439,7 +464,7 @@ public class Inicio_meseraController implements Initializable {
                     protected void updateItem(Employees employee, boolean empty) {
                         super.updateItem(employee, empty);
                         if (employee != null && !empty) {
-                            setText(employee.getNombreEmpleado()); // Asume que `getNombre()` devuelve el nombre del empleado
+                            setText(employee.getNombreEmpleado());
                         } else {
                             setText(null);
                         }
@@ -448,13 +473,12 @@ public class Inicio_meseraController implements Initializable {
             }
         });
 
-// Sobrescribe la celda que se muestra en el botón del ComboBox
         comboBoxselecMesera.setButtonCell(new ListCell<Employees>() {
             @Override
             protected void updateItem(Employees employee, boolean empty) {
                 super.updateItem(employee, empty);
                 if (employee != null && !empty) {
-                    setText(employee.getNombreEmpleado()); // Aquí también muestra el nombre en el botón
+                    setText(employee.getNombreEmpleado());
                 } else {
                     setText(null);
                 }
@@ -467,21 +491,18 @@ public class Inicio_meseraController implements Initializable {
     @FXML
     private void handlePedidoClick() {
         try {
-            // Obtener el menú seleccionado en el ComboBox
+
             String menuSeleccionado = menuComboBox.getSelectionModel().getSelectedItem();
 
             if (menuSeleccionado != null) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/components/Mensaje_Pedido.fxml"));
                 Parent root = loader.load();
 
-                // Obtener el controlador de la segunda vista
                 Mensaje_PedidoController mensajePedidoController = loader.getController();
 
-                // Pasar el menú seleccionado al controlador de la segunda vista
                 mensajePedidoController.setMenuSeleccionado(menuSeleccionado);
                 mensajePedidoController.mostrarNumeroMesa(popupLabel.getText());
 
-                // Cambiar la escena
                 Scene scene = new Scene(root);
                 Stage stage = (Stage) btn_tomarPedido.getScene().getWindow();
                 stage.setScene(scene);
@@ -493,22 +514,6 @@ public class Inicio_meseraController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private void makeImageViewCircular(ImageView imageView, double radius) {
-        // Crear un círculo que será usado como clip
-        Circle clip = new Circle(radius, radius, radius);
-        imageView.setClip(clip);
-
-        // Preservar la relación de aspecto
-        imageView.setPreserveRatio(true);
-        imageView.setSmooth(true);  // Suaviza la imagen al redimensionar
-
-        imageView.setFitWidth(100);  // Ancho de la imagen
-        imageView.setFitHeight(100); // Altura de la imagen
-
-        // Asignar una clase CSS común 
-        imageView.getStyleClass().add("circular-image");
     }
 
     private void cargarSopas() {
@@ -545,7 +550,7 @@ public class Inicio_meseraController implements Initializable {
     private void mostrarPrincipioSeleccionado() {
         String verduraSeleccionada = comboBoxVerduras.getValue();
         String granoSeleccionado = comboBoxGranos.getValue();
-        
+
         if (verduraSeleccionada != null) {
             glassPane3.setVisible(false);
             txt_verdura.setText(verduraSeleccionada.toUpperCase());
@@ -561,7 +566,261 @@ public class Inicio_meseraController implements Initializable {
         }
     }
 
-    private void prueba() {
-        txt_verdura.setText("Seleccione una verdura");
+    // -------------------------------------------------------------------------------------------------------------
+    private void editarMenuCarta() {
+        pane_menuCarta.setVisible(true);
+        String categoria = "Platos a la Carta";
+        ObservableList<String> categorias = categoriaPlatosDao.getCategoriasByMenuM(categoria);
+
+        listViewCategoriasC.getSelectionModel().clearSelection();
+        listViewCategoriasC.setItems(categorias);
+        tablaPlatosCarta.setPlaceholder(new Label("Seleccione una categoría para ver los platos."));
+        System.out.println("Tamaño de categorías: " + categorias.size());
+
+        // Agregar listener para cargar platos al seleccionar una categoría
+        listViewCategoriasC.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                cargarPlatosPorCategoria(newValue, tablaPlatosCarta);
+            } else {
+                tablaPlatosCarta.setItems(FXCollections.observableArrayList());
+            }
+        });
     }
+
+    private void editarMenuDia() {
+        pane_menuDia.setVisible(true);
+        String categoria = "Menú del Día";
+        ObservableList<String> categorias = categoriaPlatosDao.getCategoriasByMenuM(categoria);
+
+        listViewCategorias.getSelectionModel().clearSelection();
+        listViewCategorias.setItems(categorias);
+        tablaPlatosDia.setPlaceholder(new Label("Seleccione una categoría para ver los platos."));
+        System.out.println("Tamaño de categorías: " + categorias.size());
+
+        listViewCategorias.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                cargarPlatosPorCategoria(newValue, tablaPlatosDia);
+            } else {
+                tablaPlatosDia.setItems(FXCollections.observableArrayList()); // Vacía la tabla si no hay categoría seleccionada
+            }
+        });
+    }
+
+    private void cargarPlatosPorCategoria(String categoriaSeleccionada, TableView<Platos> tabla) {
+
+        List<Platos> listaPlatos = platosDao.getPlatosByCategoriaC(categoriaSeleccionada);
+        ObservableList<Platos> platosObservable = FXCollections.observableArrayList(listaPlatos);
+        tabla.setItems(platosObservable);
+    }
+
+    private void configurarTabla(TableView<Platos> tabla, TableColumn<Platos, String> columnaNombrePlato,
+            TableColumn<Platos, Double> columnaPrecio,
+            TableColumn<Platos, CheckBox> columnaEsMini) {
+        // Configurar columna de nombre
+        columnaNombrePlato.setCellValueFactory(new PropertyValueFactory<>("nombrePlato"));
+        columnaNombrePlato.setCellFactory(TextFieldTableCell.forTableColumn());
+        columnaNombrePlato.setOnEditCommit(event -> {
+            Platos plato = event.getRowValue();
+            String nuevoNombre = event.getNewValue();
+            plato.setNombrePlato(nuevoNombre); // Actualizar en el objeto
+            platosDao.actualizarPlato(plato);  // Actualizar en la base de datos
+        });
+
+        // Configurar columna de precio
+        columnaPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
+        columnaPrecio.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+        columnaPrecio.setOnEditCommit(event -> {
+            Platos plato = event.getRowValue();
+            Double nuevoPrecio = event.getNewValue();
+            plato.setPrecio(nuevoPrecio);      // Actualizar en el objeto
+            platosDao.actualizarPlato(plato);  // Actualizar en la base de datos
+        });
+
+        // Configurar columna de "es mini"
+        columnaEsMini.setCellValueFactory(cellData
+                -> new SimpleObjectProperty<>(cellData.getValue().getMiniCheckBox()));
+
+        // Asociar las columnas a la tabla
+        tabla.getColumns().clear();
+        tabla.getColumns().addAll(columnaNombrePlato, columnaPrecio, columnaEsMini);
+
+        // Permitir edición en la tabla
+        tabla.setEditable(true);
+    }
+
+    private void agregarPlato(TableView<Platos> tabla, ListView<String> listViewCategorias, ObservableList<Platos> listaPlatos, TextField txtNombrePlato, TextField txtPrecioPlato) {
+        // Verificar que se haya seleccionado una categoría válida en el ListView
+        String categoriaSeleccionada = listViewCategorias.getSelectionModel().getSelectedItem();
+        if (categoriaSeleccionada == null || categoriaSeleccionada.isEmpty()) {
+            mostrarAlerta("Debe seleccionar una categoría válida antes de agregar un plato.");
+            return;
+        }
+
+        // Obtener el ID de la categoría seleccionada utilizando el método
+        String idCategoria = platosDao.obtenerIdCategoriaPorNombre(categoriaSeleccionada);
+        if (idCategoria == null) {
+            mostrarAlerta("La categoría seleccionada no es válida o no existe en la base de datos.");
+            return;
+        }
+
+        // Capturar los valores de los TextFields para el nombre y el precio del plato
+        String nombrePlato = txtNombrePlato.getText().trim();
+        String precioTexto = txtPrecioPlato.getText().trim();
+
+        // Validar que los campos no estén vacíos
+        if (nombrePlato.isEmpty()) {
+            mostrarAlerta("Debe ingresar un nombre para el plato.");
+            return;
+        }
+
+        double precioPlato;
+        try {
+            precioPlato = Double.parseDouble(precioTexto);
+        } catch (NumberFormatException e) {
+            mostrarAlerta("Debe ingresar un precio válido para el plato.");
+            return;
+        }
+
+        // Generar un nuevo ID para el plato
+        String nuevoId = platosDao.generarNuevoIdPlato();
+        if (nuevoId == null) {
+            mostrarAlerta("No se pudo generar un nuevo ID para el plato.");
+            return;
+        }
+
+        // Crear el objeto Platos
+        Platos nuevoPlato = new Platos(
+                nuevoId, // ID generado
+                nombrePlato, // Nombre del plato ingresado
+                precioPlato, // Precio del plato ingresado
+                idCategoria, // ID de categoría obtenido de la base de datos
+                new CheckBox() // CheckBox para "esMini"
+        );
+
+        // Insertar el plato en la base de datos
+        if (platosDao.insertarPlato(nuevoPlato)) {
+            // Agregar el plato a la lista observable asociada a la tabla
+            listaPlatos.add(nuevoPlato);
+            tabla.refresh(); // Refrescar la tabla para mostrar el nuevo plato
+            mostrarAlerta("Plato agregado correctamente.");
+            limpiarCampos(); // Limpiar los TextFields después de agregar el plato
+        } else {
+            mostrarAlerta("Error al agregar el plato a la base de datos.");
+        }
+    }
+
+    private void eliminarPlato() {
+        Platos platoSeleccionado = tablaActual.getSelectionModel().getSelectedItem();
+        if (platoSeleccionado != null) {
+            if (platosDao.eliminarPlato(platoSeleccionado.getIdPlatos())) {
+                listaPlatosActual.remove(platoSeleccionado); // Eliminar el plato de la lista actual
+                tablaActual.refresh(); // Refrescar la tabla actual
+                mostrarAlerta("Plato eliminado correctamente.");
+            } else {
+                mostrarAlerta("Error al eliminar el plato de la base de datos.");
+            }
+        } else {
+            mostrarAlerta("Seleccione un plato para eliminar.");
+        }
+    }
+
+// Método para limpiar los TextFields después de agregar un plato
+    private void limpiarCampos() {
+        txtNombrePlatoDia.clear();
+        txtPrecioPlatoDia.clear();
+        txtNombrePlatoCarta.clear();
+        txtPrecioPlatoCarta.clear();
+    }
+
+    private void mostrarAlerta(String mensaje) {
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setTitle("Información");
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
+    }
+
+    // ---------------------------------
+
+    /*@FXML
+    private void agregarPlato() {
+        String categoriaSeleccionada = listViewCategorias.getSelectionModel().getSelectedItem();
+        if (categoriaSeleccionada == null || categoriaSeleccionada.isEmpty()) {
+            mostrarAlerta("Debe seleccionar una categoría válida antes de agregar un plato.");
+            return;
+        }
+
+        // Obtener el ID de la categoría seleccionada
+        String idCategoria = platosDao.obtenerIdCategoriaPorNombre(categoriaSeleccionada);
+        if (idCategoria == null) {
+            mostrarAlerta("La categoría seleccionada no es válida o no existe en la base de datos.");
+            return;
+        }
+
+        // Capturar los valores de los TextFields
+        String nombrePlato = txtNombrePlato.getText().trim();
+        String precioTexto = txtPrecioPlato.getText().trim();
+
+        if (nombrePlato.isEmpty()) {
+            mostrarAlerta("Debe ingresar un nombre para el plato.");
+            return;
+        }
+
+        double precioPlato;
+        try {
+            precioPlato = Double.parseDouble(precioTexto);
+        } catch (NumberFormatException e) {
+            mostrarAlerta("Debe ingresar un precio válido para el plato.");
+            return;
+        }
+
+        // Generar un nuevo ID para el plato
+        String nuevoId = platosDao.generarNuevoIdPlato();
+        if (nuevoId == null) {
+            mostrarAlerta("No se pudo generar un nuevo ID para el plato.");
+            return;
+        }
+
+        // Crear el objeto Platos
+        Platos nuevoPlato = new Platos(
+                nuevoId, // ID generado
+                nombrePlato, // Nombre del plato ingresado
+                precioPlato, // Precio del plato ingresado
+                idCategoria, // ID de categoría obtenido de la base de datos
+                new CheckBox() // CheckBox para "esMini"
+        );
+
+        // Insertar el plato en la base de datos
+        if (platosDao.insertarPlato(nuevoPlato)) {
+            tablaPlatosDia.getItems().add(nuevoPlato); // Agregar el plato a la tabla
+            mostrarAlerta("Plato agregado correctamente.");
+            limpiarCampos(); // Limpiar los TextFields después de agregar el plato
+        } else {
+            mostrarAlerta("Error al agregar el plato a la base de datos.");
+        }
+    }
+
+// Método para limpiar los TextFields después de agregar un plato
+    private void limpiarCampos() {
+        txtNombrePlato.clear();
+        txtPrecioPlato.clear();
+    }
+
+    private void eliminarPlato() {
+        Platos platoSeleccionado = tablaPlatosDia.getSelectionModel().getSelectedItem();
+        if (platoSeleccionado != null) {
+            platosDao.eliminarPlato(platoSeleccionado.getIdPlatos());
+            listaPlatos.remove(platoSeleccionado);
+        } else {
+            mostrarAlerta("Seleccione un plato para eliminar.");
+        }
+    }
+
+    private void mostrarAlerta(String mensaje) {
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setTitle("Información");
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
+    }*/
 }

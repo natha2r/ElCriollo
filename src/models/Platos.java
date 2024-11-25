@@ -1,19 +1,23 @@
 package models;
 
+import javafx.scene.control.CheckBox;
+
 public class Platos {
     private String idPlatos;
     private String nombrePlato;
     private Double precio;
     private String categoriaPlatosId;
+    private CheckBox miniCheckBox;
 
     public Platos() {
     }
 
-    public Platos(String idPlatos, String nombrePlato, Double precio, String categoriaPlatosId) {
+    public Platos(String idPlatos, String nombrePlato, Double precio, String categoriaPlatosId, CheckBox miniCheckBox) {
         this.idPlatos = idPlatos;
         this.nombrePlato = nombrePlato;
         this.precio = precio;
         this.categoriaPlatosId = categoriaPlatosId;
+        this.miniCheckBox = miniCheckBox;
     }
 
     public String getIdPlatos() {
@@ -47,6 +51,14 @@ public class Platos {
     public void setCategoriaPlatosId(String categoriaPlatosId) {
         this.categoriaPlatosId = categoriaPlatosId;
     }
-    
-    
+
+    public CheckBox getMiniCheckBox() {
+        return miniCheckBox;
+    }
+
+    public void setMiniCheckBox(CheckBox miniCheckBox) {
+        this.miniCheckBox = miniCheckBox;
+    }
+
+ 
 }

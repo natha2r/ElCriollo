@@ -3,12 +3,15 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -93,104 +96,108 @@
             </ImageView>
          </children>
       </Pane>
-     <Pane fx:id="pane_inicio" cache="true" depthTest="DISABLE" layoutX="263.0" layoutY="138.0" prefHeight="606.0" prefWidth="871.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="263.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="138.0">
+     <Pane fx:id="pane_inicio" cache="true" depthTest="DISABLE" layoutX="263.0" layoutY="138.0" prefHeight="606.0" prefWidth="871.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="263.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="138.0">
          <children>
-            <GridPane fx:id="gridPane" layoutX="131.0" layoutY="158.0" prefHeight="432.0" prefWidth="664.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <ImageView fx:id="mesa2" accessibleRole="BUTTON" cache="true" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="1">
-                     <image>
-                        <Image url="@../resources/Mesa2.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="mesa3" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="2">
-                     <image>
-                        <Image url="@../resources/Mesa3.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="mesa4" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="3">
-                     <image>
-                        <Image url="@../resources/Mesa4.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="mesa5" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.rowIndex="1">
-                     <image>
-                        <Image url="@../resources/Mesa5.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="mesa6" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <image>
-                        <Image url="@../resources/Mesa6.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="mesa7" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                     <image>
-                        <Image url="@../resources/Mesa7.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="mesa8" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                     <image>
-                        <Image url="@../resources/Mesa8.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="mesa9" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.rowIndex="2">
-                     <image>
-                        <Image url="@../resources/Mesa9.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="mesa10" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                     <image>
-                        <Image url="@../resources/Mesa10.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="mesa11" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="2" GridPane.rowIndex="2"> 
-                     <image>
-                        <Image url="@../resources/Mesa11.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="mesa12" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="3" GridPane.rowIndex="2">
-                     <image>
-                        <Image url="@../resources/Mesa12.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="mesa13" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.rowIndex="3">
-                     <image>
-                        <Image url="@../resources/Mesa13.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="mesa14" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                     <image>
-                        <Image url="@../resources/Mesa14.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="mesa15" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="2" GridPane.rowIndex="3">
-                     <image>
-                        <Image url="@../resources/Mesa15.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="mesa16" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="3" GridPane.rowIndex="3">
-                     <image>
-                        <Image url="@../resources/Mesa16.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="mesa1" accessibleRole="BUTTON" cache="true" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton">  
-                     <image>
-                        <Image url="@../resources/Mesa1.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </GridPane>
+            <ScrollPane layoutX="127.0" layoutY="158.0">
+               <content>
+                  <GridPane fx:id="gridPane" prefHeight="432.0" prefWidth="664.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <ImageView fx:id="mesa2" accessibleRole="BUTTON" cache="true" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="1">
+                           <image>
+                              <Image url="@../resources/Mesa2.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="mesa3" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="2">
+                           <image>
+                              <Image url="@../resources/Mesa3.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="mesa4" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="3">
+                           <image>
+                              <Image url="@../resources/Mesa4.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="mesa5" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.rowIndex="1">
+                           <image>
+                              <Image url="@../resources/Mesa5.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="mesa6" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <image>
+                              <Image url="@../resources/Mesa6.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="mesa7" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                           <image>
+                              <Image url="@../resources/Mesa7.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="mesa8" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                           <image>
+                              <Image url="@../resources/Mesa8.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="mesa9" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.rowIndex="2">
+                           <image>
+                              <Image url="@../resources/Mesa9.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="mesa10" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <image>
+                              <Image url="@../resources/Mesa10.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="mesa11" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="2" GridPane.rowIndex="2"> 
+                           <image>
+                              <Image url="@../resources/Mesa11.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="mesa12" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                           <image>
+                              <Image url="@../resources/Mesa12.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="mesa13" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.rowIndex="3">
+                           <image>
+                              <Image url="@../resources/Mesa13.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="mesa14" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <image>
+                              <Image url="@../resources/Mesa14.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="mesa15" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                           <image>
+                              <Image url="@../resources/Mesa15.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="mesa16" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                           <image>
+                              <Image url="@../resources/Mesa16.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="mesa1" accessibleRole="BUTTON" cache="true" fitHeight="98.0" fitWidth="106.0" onMouseClicked="#handleMesaClickAndShowPopup" styleClass="boton">  
+                           <image>
+                              <Image url="@../resources/Mesa1.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </GridPane>
+               </content>
+            </ScrollPane>
             <Button fx:id="btn_pedidos" alignment="CENTER" contentDisplay="BOTTOM" layoutX="131.0" layoutY="27.0" mnemonicParsing="false" onAction="#closePopup" prefHeight="37.0" prefWidth="201.0" styleClass="btn_pedidos" stylesheets="@../swing/inicio_mesera.css" text="PEDIDOS">
                <font>
                   <Font size="20.0" />
@@ -215,7 +222,7 @@
             </Button>
          </children>
       </Pane>
-      <Pane id="glassPane" fx:id="glassPane" prefHeight="744.0" prefWidth="1133.0" styleClass="glassPane" stylesheets="@../swing/mensaje_pedido.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Pane id="glassPane" fx:id="glassPane" prefHeight="744.0" prefWidth="1133.0" styleClass="glassPane" stylesheets="@../swing/mensaje_pedido.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Pane id="popupPane" fx:id="popupPane" layoutX="437.0" layoutY="259.0" prefHeight="328.0" prefWidth="517.0" styleClass="popupPane" stylesheets="@../swing/mensaje_pedido.css">
                <children>
@@ -431,69 +438,81 @@
       </Pane>
       <Pane fx:id="pane_editMenu" layoutX="263.0" layoutY="138.0" prefHeight="606.0" prefWidth="871.0" style="-fx-background-color: FFFFFF;" visible="false">
          <children>
-            <Button fx:id="btn_editCarta" layoutX="234.0" layoutY="346.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="456.0" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4); -fx-border-radius: 30px; -fx-background-radius: 30px; -fx-font-size: 23px; -fx-background-color: FFFFFF; -fx-border-color: #000000; -fx-border-width: 0.5px;" text="PLATOS A LA CARTA">
+            <Button fx:id="btn_arrowMenu2" contentDisplay="GRAPHIC_ONLY" layoutX="430.0" layoutY="96.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="41.0" style="-fx-background-color: TRANSPARENT;">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <graphic>
+                  <ImageView fitHeight="53.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/casa%20(1).png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="btn_editCarta" layoutX="212.0" layoutY="303.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="456.0" styleClass="btn_personal_registro" stylesheets="@../swing/inicio_administrador.css" text="PLATOS A LA CARTA">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="btn_editDia" layoutX="234.0" layoutY="186.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="456.0" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4); -fx-background-radius: 30px; -fx-border-radius: 30px; -fx-background-color: FFFFFF; -fx-font-size: 23px; -fx-border-color: #000000; -fx-border-width: 0.5px;" text="MENÚ DEL DÍA">
+            <Button fx:id="btn_editDia" layoutX="212.0" layoutY="191.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="456.0" styleClass="btn_personal_registro" stylesheets="@../swing/inicio_administrador.css" text="MENÚ DEL DÍA">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
          </children>
       </Pane>
-      <Pane fx:id="pane_menuCarta" layoutX="263.0" layoutY="138.0" prefHeight="606.0" prefWidth="871.0" style="-fx-background-color: ffff;" visible="false" />
       <Pane fx:id="pane_menuDia" layoutX="263.0" layoutY="138.0" prefHeight="606.0" prefWidth="871.0" style="-fx-background-color: ffff;" visible="false">
          <children>
-            <GridPane layoutX="243.0" layoutY="99.0" prefHeight="100.0" prefWidth="607.0" style="-fx-border-color: 00000;">
-              <columnConstraints>
-                <ColumnConstraints halignment="LEFT" maxWidth="95.0" minWidth="10.0" prefWidth="45.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="183.0" minWidth="10.0" prefWidth="102.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="216.0" minWidth="10.0" prefWidth="112.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="271.0" minWidth="10.0" prefWidth="138.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="318.0" minWidth="10.0" prefWidth="69.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="318.0" minWidth="10.0" prefWidth="154.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints maxHeight="36.0" minHeight="10.0" prefHeight="36.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <CheckBox mnemonicParsing="false" />
-                  <CheckBox mnemonicParsing="false" GridPane.rowIndex="2" />
-                  <CheckBox mnemonicParsing="false" GridPane.rowIndex="1" />
-                  <Label prefHeight="17.0" prefWidth="170.0" text="Pollo Apanado" GridPane.columnIndex="1" />
-                  <Label prefHeight="17.0" prefWidth="170.0" text="Carne Asada" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label prefHeight="17.0" prefWidth="170.0" text="Lomo de Cerdo" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <CheckBox mnemonicParsing="false" GridPane.columnIndex="3" />
-                  <CheckBox mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                  <CheckBox mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                  <Label text="\$13.000" GridPane.columnIndex="2" />
-                  <Label text="\$13.000" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <Label text="\$13.000" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                  <Label text="Arroz, carne, principio " GridPane.columnIndex="5" />
-               </children>
-            </GridPane>
-            <ListView layoutX="27.0" layoutY="86.0" prefHeight="478.0" prefWidth="151.0" />
+            <TableView fx:id="tablaPlatosDia" editable="true" layoutX="243.0" layoutY="34.0" prefHeight="369.0" prefWidth="594.0">
+              <columns>
+                <TableColumn fx:id="columnaNombrePlatoDia" prefWidth="197.0" text="Nombre" />
+                <TableColumn fx:id="columnaPrecioDia" prefWidth="193.0" text="Precio " />
+                  <TableColumn fx:id="columnaEsMiniDia" editable="false" prefWidth="228.0" text="Mini" />
+              </columns>
+            </TableView>
+            <ListView fx:id="listViewCategorias" layoutX="27.0" layoutY="86.0" prefHeight="320.0" prefWidth="158.0" stylesheets="@../swing/inicio_mesera.css" />
             <Separator layoutX="198.0" layoutY="34.0" orientation="VERTICAL" prefHeight="551.0" prefWidth="0.0" />
-            <Pane layoutX="222.0" layoutY="34.0" prefHeight="47.0" prefWidth="628.0" style="-fx-background-color: FFB94F; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0.0, 0, 4); -fx-background-radius: 30px;">
+            <Button fx:id="btn_arrowMenu1" contentDisplay="GRAPHIC_ONLY" layoutX="71.0" layoutY="25.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="41.0" style="-fx-background-color: TRANSPARENT;">
+               <graphic>
+                  <ImageView fitHeight="53.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/left-arrow.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <HBox alignment="TOP_CENTER" layoutX="243.0" layoutY="425.0" prefHeight="92.0" prefWidth="584.0" spacing="25.0">
                <children>
-                  <HBox alignment="CENTER" layoutY="-1.0" prefHeight="50.0" prefWidth="628.0" spacing="60.0">
+                  <TextField fx:id="txtNombrePlatoDia" prefHeight="30.0" prefWidth="200.0" promptText="Nombre" />
+                  <TextField fx:id="txtPrecioPlatoDia" prefHeight="30.0" prefWidth="200.0" promptText="Precio" />
+                  <VBox alignment="CENTER_LEFT" prefHeight="72.0" prefWidth="250.0" spacing="20.0">
                      <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" styleClass="texto" text="Platos" />
-                        <Label styleClass="texto" text="Precio" />
-                        <Label styleClass="texto" text="Mini" />
-                        <Label styleClass="texto" text="Imagen" />
-                        <Label styleClass="texto" text="Descripción" />
+                        <Button fx:id="btnAgregarCarta" mnemonicParsing="false" style="-fx-background-color: fffff; -fx-border-color: 2E1B10; -fx-border-radius: 10px; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 3);;" styleClass="boton" text="Agregar Producto">
+                           <effect>
+                              <Shadow />
+                           </effect>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="btnEliminarCarta" mnemonicParsing="false" style="-fx-background-color: fffff; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 3);" styleClass="boton" text="Eliminar Producto" />
                      </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </HBox>
+                  </VBox>
                </children>
-            </Pane>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </HBox>
+         </children>
+      </Pane>
+      <Pane fx:id="pane_menuCarta" layoutX="263.0" layoutY="138.0" prefHeight="606.0" prefWidth="871.0" style="-fx-background-color: ffff;">
+         <children>
+            <ListView fx:id="listViewCategoriasC" layoutX="27.0" layoutY="86.0" prefHeight="478.0" prefWidth="158.0" />
+            <Separator layoutX="198.0" layoutY="34.0" orientation="VERTICAL" prefHeight="551.0" prefWidth="0.0" />
             <Button fx:id="btn_arrowMenu" contentDisplay="GRAPHIC_ONLY" layoutX="71.0" layoutY="25.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="41.0" style="-fx-background-color: TRANSPARENT;">
                <graphic>
                   <ImageView fitHeight="53.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
@@ -506,8 +525,49 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
+            <TableView fx:id="tablaPlatosCarta" editable="true" layoutX="243.0" layoutY="34.0" prefHeight="369.0" prefWidth="594.0">
+               <columns>
+                  <TableColumn fx:id="columnaNombrePlatoCarta" prefWidth="197.0" text="Nombre" />
+                  <TableColumn fx:id="columnaPrecioCarta" prefWidth="193.0" text="Precio " />
+                  <TableColumn fx:id="columnaEsMiniCarta" editable="false" prefWidth="228.0" text="Mini" />
+               </columns>
+            </TableView>
+            <HBox alignment="TOP_CENTER" layoutX="243.0" layoutY="425.0" prefHeight="92.0" prefWidth="584.0" spacing="25.0">
+               <children>
+                  <TextField fx:id="txtNombrePlatoCarta" prefHeight="30.0" prefWidth="200.0" promptText="Nombre" />
+                  <TextField fx:id="txtPrecioPlatoCarta" prefHeight="30.0" prefWidth="200.0" promptText="Precio" />
+                  <VBox alignment="CENTER_LEFT" prefHeight="72.0" prefWidth="250.0" spacing="20.0">
+                     <children>
+                        <Button fx:id="btnAgregarDia" mnemonicParsing="false" style="-fx-background-color: fffff; -fx-border-color: 2E1B10; -fx-border-radius: 10px; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 3);;" styleClass="boton" text="Agregar Producto">
+                           <effect>
+                              <Shadow />
+                           </effect>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="btnEliminarDia" mnemonicParsing="false" style="-fx-background-color: fffff; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 3);" styleClass="boton" text="Eliminar Producto" />
+                     </children>
+                  </VBox>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </HBox>
          </children>
       </Pane>
+      <Button fx:id="btn_arrowMenu3" contentDisplay="GRAPHIC_ONLY" layoutX="81.0" layoutY="35.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="41.0" style="-fx-background-color: TRANSPARENT;">
+         <graphic>
+            <ImageView fitHeight="53.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/left-arrow.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
 
    </children>
 </AnchorPane>

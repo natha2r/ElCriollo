@@ -83,8 +83,13 @@ create database if not exists ElCriollo;
 		categoriaPlatosId varchar(10),
 		foreign key (categoriaPlatosId) references categoriaPlatos(idCategoriaPlatos)
 	);
+    
+    ALTER TABLE platos
+ADD COLUMN esMini TINYINT(1) DEFAULT 0;
 
-	create table if not exists detallesPedido(
+select * from platos;
+
+	create table if not exists detallesPedido( -- AGREGAR COMENTARIOS DE PEDIDO
 		pedidosId varchar(10),
 		platosId varchar(10),
 		cantidad int,
@@ -284,6 +289,7 @@ ON DELETE CASCADE;
 	('mesa002', 2),
 	('mesa003', 3);
 select * from mesas;
+
 	-- Registros para la tabla proveedores
 	INSERT INTO proveedores (idProveedores, nombreEmpresa, contacto, telefono, email, direccion, terminoPago) VALUES
 	('prov001', 'Proveedor A', 'Contacto A', '111111111', 'proveedorA@example.com', 'Calle Proveedor A 123', '30 días'),
@@ -305,23 +311,8 @@ select * from mesas;
 	-- Registros para la tabla pedidos
 	INSERT INTO pedidos (idPedidos, empleadosId, mesasId, fechaPedido, estadoPedido, precioTotal) VALUES
 	('pedido004', 'emp002', 'mesa003', '2024-04-30', 'Completado', 35.25);
-	INSERT INTO pedidos (idPedidos, empleadosId, mesasId, fechaPedido, estadoPedido, precioTotal) VALUES
-	('pedido005', 'emp002', 'mesa003', '2024-04-30', 'Completado', 35.25);
-	
-    INSERT INTO pedidos (idPedidos, empleadosId, mesasId, fechaPedido, estadoPedido, precioTotal) VALUES
-	('pedido006', 'emp002', 'mesa003', '2024-04-30', 'Completado', 35.25);
-    
-    
-    INSERT INTO pedidos (idPedidos, empleadosId, mesasId, fechaPedido, estadoPedido, precioTotal) VALUES
-	('pedido007', 'emp002', 'mesa003', '2024-11-24', 'Completado', 35.25);
-	INSERT INTO pedidos (idPedidos, empleadosId, mesasId, fechaPedido, estadoPedido, precioTotal) VALUES
-	('pedido008', 'emp002', 'mesa003', '2024-11-24', 'En proceso', 35.25);
-	
-    INSERT INTO pedidos (idPedidos, empleadosId, mesasId, fechaPedido, estadoPedido, precioTotal) VALUES
-	('pedido009', 'emp002', 'mesa003', '2024-11-24', 'Completado', 35.25);
-    
-    
-    
+
+
 	INSERT INTO pedidos (idPedidos, empleadosId, mesasId, fechaPedido, estadoPedido, precioTotal) VALUES
 	('pedido001', 'emp001', 'mesa001', '2024-04-30', 'En proceso', 13000),
 	('pedido002', 'emp002', 'mesa002', '2024-04-30', 'Completado', 42.30),
@@ -387,7 +378,7 @@ select * from mesas;
 	('pedido004', 'plato001', 2, 25000),
     ('pedido004', 'plato002', 1, 36000);
     
-     
+    truncate table detallesPedido;
     select * from detallesPedido;
     
 	-- Registros para la tabla reservas
@@ -468,20 +459,9 @@ select * from mesas;
     select *from inventario;
     select *from proveedores;
     select * from categoria;
+    select * from platos;
 SELECT idInventario FROM inventario ORDER BY idInventario DESC LIMIT 1;
 
-SELECT p.idProductos, p.nombreProducto, p.precio, c.nombreCategoria AS categoria,
-                   i.stock, pr.nombreEmpresa AS proveedor
-            FROM productos p
-            LEFT JOIN inventario i ON p.idProductos = i.productosId
-            LEFT JOIN proveedores pr ON i.proveedorId = pr.idProveedores
-            LEFT JOIN categoria c ON p.categoria = c.idCategoria
-            WHERE c.nombreCategoria ="Entrantes";
-
-SELECT p.idPedidos, p.fechaPedido, p.estadoPedido, p.precioTotal, 
-                e.nombreEmpleado AS nombreEmpleado, m.numeroMesa 
-                FROM pedidos p 
-                JOIN empleados e ON p.empleadosId = e.idEmpleados JOIN mesas m ON p.mesasId = m.idMesas;
 
 
 -- TRIGGER PARA INACTIVAR Y ACTUALIZAR LAS TABLAS RELACIONADAS CON LA LLAVE FORANEA DE EMPLEADOS.
@@ -525,4 +505,17 @@ DELIMITER ;
 /*****************************  FINALIZACION DE CAMBIOS HYRUM MOLINA  *********************************/
 
 -- ----------------------------------------------------------------------------------------------------
+SELECT 
+    p.idPedidos,
+    p.mesasId,
+    pl.nombreplato AS platoNombre,
+    dp.cantidad,
+    dp.comentario,
+    dp.precioUnitario,
+    pr.nombre AS principioNombre
+FROM pedidos p
+JOIN detallesPedido dp ON p.idPedidos = dp.pedidosId
+JOIN platos pl ON dp.platosId = pl.idPlato
+LEFT JOIN principios pr ON pl.principioId = pr.idPrincipio
+WHERE p.idPedidos = 'pedido001';  -- Reemplaza con el ID del pedido que desees ver
 

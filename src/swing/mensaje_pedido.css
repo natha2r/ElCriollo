@@ -150,3 +150,15 @@
 .custom-checkbox .checkbox:selected .tick-mark {
     -fx-background-color: transparent;
 }
+
+/* Estilos para el VBox */
+.vbox-pedido {
+    -fx-padding: 5px; /* Espaciado interno */
+}
+
+/* Estilos para las etiquetas dentro del VBox */
+.vbox-pedido .label {
+    -fx-font-size: 16px; /* Tamaño de la fuente */
+    -fx-text-fill: #333333; /* Color del texto */
+    -fx-font-family: 'Karla';
+}
