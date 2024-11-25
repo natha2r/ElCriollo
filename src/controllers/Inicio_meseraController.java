@@ -83,7 +83,7 @@ public class Inicio_meseraController implements Initializable {
     @FXML
     private Button btn_mesas;
     @FXML
-    private Button btnAgregarPlato, btnEliminarPlato;
+    private Button btnAgregarDia, btnEliminarDia, btnAgregarCarta, btnEliminarCarta;
 
     //lISTA DE PANE
     @FXML
@@ -119,13 +119,21 @@ public class Inicio_meseraController implements Initializable {
 
     //OTROS
     @FXML
-    private TableView<Platos> tablaPlatos;
+    private TableView<Platos> tablaPlatosDia;
     @FXML
-    private TableColumn<Platos, String> columnaNombrePlato;
+    private TableView<Platos> tablaPlatosCarta;
     @FXML
-    private TableColumn<Platos, Double> columnaPrecio;
+    private TableColumn<Platos, String> columnaNombrePlatoDia;
     @FXML
-    private TableColumn<Platos, CheckBox> columnaEsMini;
+    private TableColumn<Platos, Double> columnaPrecioDia;
+    @FXML
+    private TableColumn<Platos, CheckBox> columnaEsMiniDia;
+    @FXML
+    private TableColumn<Platos, String> columnaNombrePlatoCarta;
+    @FXML
+    private TableColumn<Platos, Double> columnaPrecioCarta;
+    @FXML
+    private TableColumn<Platos, CheckBox> columnaEsMiniCarta;
     @FXML
     private ListView<String> listViewCategorias;
     @FXML
@@ -133,9 +141,13 @@ public class Inicio_meseraController implements Initializable {
     @FXML
     private Label popupLabel;
     @FXML
-    private TextField txtNombrePlato; // Campo de texto para el nombre del plato.
+    private TextField txtNombrePlatoDia; // Campo de texto para el nombre del plato.
     @FXML
-    private TextField txtPrecioPlato;
+    private TextField txtPrecioPlatoDia;
+    @FXML
+    private TextField txtNombrePlatoCarta; // Campo de texto para el nombre del plato.
+    @FXML
+    private TextField txtPrecioPlatoCarta;
 
     //PANEL DE MENÚ
     @FXML
@@ -158,8 +170,12 @@ public class Inicio_meseraController implements Initializable {
     private Mensaje_PedidoController mensajePedidoController;
     private String sopaSeleccionadaActual;
     //private PlatosDao platosDao;
-    private ObservableList<Platos> listaPlatos = FXCollections.observableArrayList();
+    private ObservableList<Platos> listaPlatosDia = FXCollections.observableArrayList();
+    private ObservableList<Platos> listaPlatosCarta = FXCollections.observableArrayList();
     private PlatosDao platosDao = new PlatosDao();
+    private TableView<Platos> tablaActual;
+    private ListView<String> listViewCategoriasActual;
+    private ObservableList<Platos> listaPlatosActual;
 
     // --------------------------
     public Inicio_meseraController() {
@@ -208,15 +224,17 @@ public class Inicio_meseraController implements Initializable {
         this.btn_tomarPedido = btn_tomarPedido;
     }
 
+    private void configurarContexto(TableView<Platos> tabla, ListView<String> listView, ObservableList<Platos> lista) {
+        this.tablaActual = tabla;
+        this.listViewCategoriasActual = listView;
+        this.listaPlatosActual = lista;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        configurarTabla();
-        cargarDatosTabla();
-
-        btnAgregarPlato.setOnAction(e -> agregarPlato());
-        btnEliminarPlato.setOnAction(e -> eliminarPlato());
-
+        //btnAgregarPlato.setOnAction(e -> agregarPlato());
+        //btnEliminarPlato.setOnAction(e -> eliminarPlato());
         glassPane.setVisible(false);
         glassPane3.setVisible(false);
 
@@ -230,37 +248,14 @@ public class Inicio_meseraController implements Initializable {
         platosDao = new PlatosDao();
         menuComboBox.setItems(tipoMenuDao.getAllMenus());
 
+        configurarTabla(tablaPlatosDia, columnaNombrePlatoDia, columnaPrecioDia, columnaEsMiniDia);
+        configurarTabla(tablaPlatosCarta, columnaNombrePlatoCarta, columnaPrecioCarta, columnaEsMiniCarta);
+
         buttons();
         initComboBox();
         CargarVerduras();
         CargarGranos();
         cargarSopas();
-
-        columnaNombrePlato.setCellValueFactory(new PropertyValueFactory<>("nombrePlato"));
-        columnaPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
-        //columnaEsMini.setCellValueFactory(new PropertyValueFactory<>("esMini"));
-        columnaEsMini.setCellValueFactory(cellData -> {
-            CheckBox checkBox = cellData.getValue().getMiniCheckBox();
-
-            // Asigna el evento para actualizar la base de datos al cambiar el estado del CheckBox
-            checkBox.setOnAction(event -> {
-                boolean esMini = checkBox.isSelected();
-                String idPlato = cellData.getValue().getIdPlatos(); // Obtén el ID del plato
-                boolean actualizado = platosDao.actualizarEsMini(idPlato, esMini);
-                if (actualizado) {
-                    System.out.println("Plato " + idPlato + " actualizado correctamente.");
-                } else {
-                    System.out.println("Error al actualizar el plato " + idPlato + ".");
-                }
-            });
-            return new SimpleObjectProperty<>(checkBox);
-        });
-
-        listViewCategorias.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                cargarPlatosPorCategoria(newValue);
-            }
-        });
     }
 
     private void buttons() {
@@ -283,6 +278,27 @@ public class Inicio_meseraController implements Initializable {
         btn_arrowMenu1.setOnAction(event -> handlearrowMenu());
         btn_arrowMenu2.setOnAction(event -> handlearrowMenu2());
         btn_tomarPedido.setOnAction(e -> handlePedidoClick());
+
+        btnAgregarDia.setOnAction(event -> {
+            configurarContexto(tablaPlatosDia, listViewCategorias, listaPlatosDia);
+            agregarPlato(tablaPlatosDia, listViewCategorias, listaPlatosDia, txtNombrePlatoDia, txtPrecioPlatoDia);
+        });
+
+        btnEliminarDia.setOnAction(event -> {
+            configurarContexto(tablaPlatosDia, listViewCategorias, listaPlatosDia);
+            eliminarPlato();
+        });
+
+        btnAgregarCarta.setOnAction(event -> {
+            configurarContexto(tablaPlatosCarta, listViewCategoriasC, listaPlatosCarta);
+            agregarPlato(tablaPlatosCarta, listViewCategoriasC, listaPlatosCarta, txtNombrePlatoCarta, txtPrecioPlatoCarta);
+        });
+
+        btnEliminarCarta.setOnAction(event -> {
+            configurarContexto(tablaPlatosCarta, listViewCategoriasC, listaPlatosCarta);
+            eliminarPlato();
+        });
+
     }
 
     private void handleButton5Click() {
@@ -550,6 +566,27 @@ public class Inicio_meseraController implements Initializable {
         }
     }
 
+    // -------------------------------------------------------------------------------------------------------------
+    private void editarMenuCarta() {
+        pane_menuCarta.setVisible(true);
+        String categoria = "Platos a la Carta";
+        ObservableList<String> categorias = categoriaPlatosDao.getCategoriasByMenuM(categoria);
+
+        listViewCategoriasC.getSelectionModel().clearSelection();
+        listViewCategoriasC.setItems(categorias);
+        tablaPlatosCarta.setPlaceholder(new Label("Seleccione una categoría para ver los platos."));
+        System.out.println("Tamaño de categorías: " + categorias.size());
+
+        // Agregar listener para cargar platos al seleccionar una categoría
+        listViewCategoriasC.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                cargarPlatosPorCategoria(newValue, tablaPlatosCarta);
+            } else {
+                tablaPlatosCarta.setItems(FXCollections.observableArrayList());
+            }
+        });
+    }
+
     private void editarMenuDia() {
         pane_menuDia.setVisible(true);
         String categoria = "Menú del Día";
@@ -557,27 +594,36 @@ public class Inicio_meseraController implements Initializable {
 
         listViewCategorias.getSelectionModel().clearSelection();
         listViewCategorias.setItems(categorias);
-
+        tablaPlatosDia.setPlaceholder(new Label("Seleccione una categoría para ver los platos."));
         System.out.println("Tamaño de categorías: " + categorias.size());
+
+        listViewCategorias.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                cargarPlatosPorCategoria(newValue, tablaPlatosDia);
+            } else {
+                tablaPlatosDia.setItems(FXCollections.observableArrayList()); // Vacía la tabla si no hay categoría seleccionada
+            }
+        });
     }
 
-    
+    private void cargarPlatosPorCategoria(String categoriaSeleccionada, TableView<Platos> tabla) {
 
-    private void cargarPlatosPorCategoria(String categoria) {
-        List<Platos> listaPlatos = platosDao.getPlatosByCategoriaC(categoria);
-        ObservableList<Platos> platos = FXCollections.observableArrayList(listaPlatos);
-        tablaPlatos.setItems(platos);
-
+        List<Platos> listaPlatos = platosDao.getPlatosByCategoriaC(categoriaSeleccionada);
+        ObservableList<Platos> platosObservable = FXCollections.observableArrayList(listaPlatos);
+        tabla.setItems(platosObservable);
     }
 
-    private void configurarTabla() {
+    private void configurarTabla(TableView<Platos> tabla, TableColumn<Platos, String> columnaNombrePlato,
+            TableColumn<Platos, Double> columnaPrecio,
+            TableColumn<Platos, CheckBox> columnaEsMini) {
         // Configurar columna de nombre
         columnaNombrePlato.setCellValueFactory(new PropertyValueFactory<>("nombrePlato"));
         columnaNombrePlato.setCellFactory(TextFieldTableCell.forTableColumn());
         columnaNombrePlato.setOnEditCommit(event -> {
             Platos plato = event.getRowValue();
-            plato.setNombrePlato(event.getNewValue());
-            platosDao.actualizarPlato(plato); // Actualizar en la base de datos
+            String nuevoNombre = event.getNewValue();
+            plato.setNombrePlato(nuevoNombre); // Actualizar en el objeto
+            platosDao.actualizarPlato(plato);  // Actualizar en la base de datos
         });
 
         // Configurar columna de precio
@@ -585,25 +631,118 @@ public class Inicio_meseraController implements Initializable {
         columnaPrecio.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
         columnaPrecio.setOnEditCommit(event -> {
             Platos plato = event.getRowValue();
-            Double nuevoPrecio = event.getNewValue(); // Obtener el nuevo precio editado
-            plato.setPrecio(nuevoPrecio); // Actualizar el precio en el objeto
-            platosDao.actualizarPlato(plato); // Actualizar en la base de datos
+            Double nuevoPrecio = event.getNewValue();
+            plato.setPrecio(nuevoPrecio);      // Actualizar en el objeto
+            platosDao.actualizarPlato(plato);  // Actualizar en la base de datos
         });
 
         // Configurar columna de "es mini"
         columnaEsMini.setCellValueFactory(cellData
-                -> new SimpleObjectProperty<>(cellData.getValue().getMiniCheckBox())
+                -> new SimpleObjectProperty<>(cellData.getValue().getMiniCheckBox()));
+
+        // Asociar las columnas a la tabla
+        tabla.getColumns().clear();
+        tabla.getColumns().addAll(columnaNombrePlato, columnaPrecio, columnaEsMini);
+
+        // Permitir edición en la tabla
+        tabla.setEditable(true);
+    }
+
+    private void agregarPlato(TableView<Platos> tabla, ListView<String> listViewCategorias, ObservableList<Platos> listaPlatos, TextField txtNombrePlato, TextField txtPrecioPlato) {
+        // Verificar que se haya seleccionado una categoría válida en el ListView
+        String categoriaSeleccionada = listViewCategorias.getSelectionModel().getSelectedItem();
+        if (categoriaSeleccionada == null || categoriaSeleccionada.isEmpty()) {
+            mostrarAlerta("Debe seleccionar una categoría válida antes de agregar un plato.");
+            return;
+        }
+
+        // Obtener el ID de la categoría seleccionada utilizando el método
+        String idCategoria = platosDao.obtenerIdCategoriaPorNombre(categoriaSeleccionada);
+        if (idCategoria == null) {
+            mostrarAlerta("La categoría seleccionada no es válida o no existe en la base de datos.");
+            return;
+        }
+
+        // Capturar los valores de los TextFields para el nombre y el precio del plato
+        String nombrePlato = txtNombrePlato.getText().trim();
+        String precioTexto = txtPrecioPlato.getText().trim();
+
+        // Validar que los campos no estén vacíos
+        if (nombrePlato.isEmpty()) {
+            mostrarAlerta("Debe ingresar un nombre para el plato.");
+            return;
+        }
+
+        double precioPlato;
+        try {
+            precioPlato = Double.parseDouble(precioTexto);
+        } catch (NumberFormatException e) {
+            mostrarAlerta("Debe ingresar un precio válido para el plato.");
+            return;
+        }
+
+        // Generar un nuevo ID para el plato
+        String nuevoId = platosDao.generarNuevoIdPlato();
+        if (nuevoId == null) {
+            mostrarAlerta("No se pudo generar un nuevo ID para el plato.");
+            return;
+        }
+
+        // Crear el objeto Platos
+        Platos nuevoPlato = new Platos(
+                nuevoId, // ID generado
+                nombrePlato, // Nombre del plato ingresado
+                precioPlato, // Precio del plato ingresado
+                idCategoria, // ID de categoría obtenido de la base de datos
+                new CheckBox() // CheckBox para "esMini"
         );
+
+        // Insertar el plato en la base de datos
+        if (platosDao.insertarPlato(nuevoPlato)) {
+            // Agregar el plato a la lista observable asociada a la tabla
+            listaPlatos.add(nuevoPlato);
+            tabla.refresh(); // Refrescar la tabla para mostrar el nuevo plato
+            mostrarAlerta("Plato agregado correctamente.");
+            limpiarCampos(); // Limpiar los TextFields después de agregar el plato
+        } else {
+            mostrarAlerta("Error al agregar el plato a la base de datos.");
+        }
     }
 
-
-    private void cargarDatosTabla() {
-        listaPlatos.setAll(platosDao.obtenerTodosLosPlatos());
-        tablaPlatos.setItems(listaPlatos);
-        tablaPlatos.setEditable(true);
+    private void eliminarPlato() {
+        Platos platoSeleccionado = tablaActual.getSelectionModel().getSelectedItem();
+        if (platoSeleccionado != null) {
+            if (platosDao.eliminarPlato(platoSeleccionado.getIdPlatos())) {
+                listaPlatosActual.remove(platoSeleccionado); // Eliminar el plato de la lista actual
+                tablaActual.refresh(); // Refrescar la tabla actual
+                mostrarAlerta("Plato eliminado correctamente.");
+            } else {
+                mostrarAlerta("Error al eliminar el plato de la base de datos.");
+            }
+        } else {
+            mostrarAlerta("Seleccione un plato para eliminar.");
+        }
     }
 
-    @FXML
+// Método para limpiar los TextFields después de agregar un plato
+    private void limpiarCampos() {
+        txtNombrePlatoDia.clear();
+        txtPrecioPlatoDia.clear();
+        txtNombrePlatoCarta.clear();
+        txtPrecioPlatoCarta.clear();
+    }
+
+    private void mostrarAlerta(String mensaje) {
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setTitle("Información");
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
+    }
+
+    // ---------------------------------
+
+    /*@FXML
     private void agregarPlato() {
         String categoriaSeleccionada = listViewCategorias.getSelectionModel().getSelectedItem();
         if (categoriaSeleccionada == null || categoriaSeleccionada.isEmpty()) {
@@ -653,7 +792,7 @@ public class Inicio_meseraController implements Initializable {
 
         // Insertar el plato en la base de datos
         if (platosDao.insertarPlato(nuevoPlato)) {
-            tablaPlatos.getItems().add(nuevoPlato); // Agregar el plato a la tabla
+            tablaPlatosDia.getItems().add(nuevoPlato); // Agregar el plato a la tabla
             mostrarAlerta("Plato agregado correctamente.");
             limpiarCampos(); // Limpiar los TextFields después de agregar el plato
         } else {
@@ -668,7 +807,7 @@ public class Inicio_meseraController implements Initializable {
     }
 
     private void eliminarPlato() {
-        Platos platoSeleccionado = tablaPlatos.getSelectionModel().getSelectedItem();
+        Platos platoSeleccionado = tablaPlatosDia.getSelectionModel().getSelectedItem();
         if (platoSeleccionado != null) {
             platosDao.eliminarPlato(platoSeleccionado.getIdPlatos());
             listaPlatos.remove(platoSeleccionado);
@@ -683,33 +822,5 @@ public class Inicio_meseraController implements Initializable {
         alerta.setHeaderText(null);
         alerta.setContentText(mensaje);
         alerta.showAndWait();
-    }
-    
-    
-    // --------------------------------------------------------------------------------------------------------
-    
-    //PANE EDIT MENÚ DE CARTA
-
-    private void editarMenuCarta() {
-        pane_menuCarta.setVisible(true);
-        String categoria = "Platos a la Carta";
-        ObservableList<String> categorias = categoriaPlatosDao.getCategoriasByMenuM(categoria);
-
-        listViewCategoriasC.getSelectionModel().clearSelection();
-        listViewCategoriasC.setItems(categorias);
-        System.out.println("Tamaño de categorías: " + categorias.size());
-    }
-    
-    // configurar en el inizialice
-    
-    private void cargarPlatosPorCategoria1(String categoria) {
-
-        List<Platos> listaPlatos1 = platosDao.getPlatosByCategoriaC(categoria);
-
-        ObservableList<Platos> platos = FXCollections.observableArrayList(listaPlatos);
-        tablaPlatos.setItems(platos);
-
-    }
-    
-    
+    }*/
 }

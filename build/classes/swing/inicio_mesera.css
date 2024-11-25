@@ -223,4 +223,31 @@
     -fx-font-weight: bold;
 }
 
+/* Personalizar el ScrollBar */
+.list-view .scroll-bar {
+    -fx-background-color: transparent; /* Fondo transparente */
+}
+
+.list-view .scroll-bar .thumb {
+    -fx-background-color: #FFB94F; /* Color del deslizador (thumb) */
+    -fx-background-radius: 10px; /* Bordes redondeados */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 0); /* Sombra sutil */
+}
+
+
+.list-view .scroll-bar .track {
+    -fx-background-color: #e0e0e0; /* Color de la pista */
+    -fx-background-radius: 10px; /* Bordes redondeados */
+}
+
+.list-view .scroll-bar:vertical {
+    -fx-pref-width: 10px; /* Ancho del ScrollBar vertical */
+}
+
+.list-view .scroll-bar:horizontal {
+    -fx-pref-height: 10px; /* Alto del ScrollBar horizontal */
+}
+
+
+
 

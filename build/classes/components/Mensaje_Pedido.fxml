@@ -36,7 +36,7 @@
       <BorderPane id="bdrpane" layoutX="975.0" layoutY="295.0" prefHeight="424.0" prefWidth="140.0" styleClass="bdr_Pane" stylesheets="@../swing/mensaje_pedido.css" />
       <Button id="btn_categorias" layoutX="538.0" layoutY="223.0" mnemonicParsing="false" styleClass="btn_pedido" stylesheets="@../swing/mensaje_pedido.css" text="PEDIDO GENERAL" />
       <Button id="btn_categorias" fx:id="btn_txtCategorias" alignment="CENTER" layoutX="30.0" layoutY="223.0" mnemonicParsing="false" styleClass="btn_categorias" stylesheets="@../swing/mensaje_pedido.css" text="CATEGORIAS" textAlignment="CENTER" />
-      <GridPane layoutX="22.0" layoutY="301.0" prefHeight="424.0" prefWidth="1091.0" styleClass="bdr_pane" stylesheets="@../swing/mensaje_pedido.css" AnchorPane.bottomAnchor="19.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="301.0">
+      <GridPane hgap="10.0" layoutX="22.0" layoutY="301.0" prefHeight="424.0" prefWidth="1091.0" styleClass="bdr_pane" stylesheets="@../swing/mensaje_pedido.css" AnchorPane.bottomAnchor="19.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="301.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="554.0" minWidth="10.0" prefWidth="546.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="563.0" minWidth="10.0" prefWidth="545.0" />
@@ -62,7 +62,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Label styleClass="txt1" text="TOTAL  $" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Label fx:id="labelTotal" styleClass="txt1" text="TOTAL  $" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="30.0" top="9.5" />
                </GridPane.margin>
@@ -83,23 +83,24 @@
                   <Insets />
                </opaqueInsets>
             </Separator>
-           <ScrollPane prefHeight="312.0" prefWidth="500.0" GridPane.columnIndex="1">
+           <ScrollPane prefHeight="312.0" prefWidth="500.0" style="-fx-background-color: #FFFFFF;" styleClass="list-view" stylesheets="@../swing/inicio_mesera.css" GridPane.columnIndex="1">
                <content>
-                  <GridPane fx:id="gridPanePedidos" hgap="5.0" prefHeight="60.0" prefWidth="440.0" vgap="5.0">
+                  <GridPane fx:id="gridPanePedidos" prefHeight="30.0" prefWidth="502.0">
                     <columnConstraints>
-                      <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="252.0" minWidth="10.0" prefWidth="252.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="95.0" minWidth="0.0" prefWidth="79.0" />
-                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="31.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
-                      <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" valignment="CENTER" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
+                     <padding>
+                        <Insets left="30.0" />
+                     </padding>
                   </GridPane>
                </content>
             </ScrollPane>
 
-            <ListView fx:id="listViewCategorias" prefHeight="311.0" prefWidth="532.0" />
-            <ListView fx:id="listViewPlatos" prefHeight="311.0" prefWidth="532.0" />
+            <ListView fx:id="listViewCategorias" prefHeight="311.0" prefWidth="532.0" stylesheets="@../swing/inicio_mesera.css" />
+            <ListView fx:id="listViewPlatos" prefHeight="311.0" prefWidth="532.0" stylesheets="@../swing/inicio_mesera.css" />
          </children>
       </GridPane>
       <Pane layoutX="30.0" layoutY="144.0" prefHeight="60.0" prefWidth="1078.0" styleClass="panePeople" stylesheets="@../swing/mensaje_pedido.css">
@@ -122,7 +123,7 @@
                                           <Insets top="30.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <ComboBox prefHeight="46.0" prefWidth="150.0" promptText="Seleccione" styleClass="seleccion" />
+                                    <ComboBox fx:id="ComboBoxTamaño" prefHeight="46.0" prefWidth="150.0" promptText="Seleccione" styleClass="seleccion" />
                                  </children>
                               </VBox>
                            </children>
@@ -144,7 +145,7 @@
                                           <Insets right="10.0" />
                                        </HBox.margin>
                                     </ImageView>
-                                    <CheckBox alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" styleClass="custom-checkbox">
+                                    <CheckBox fx:id="checkBoxConsumoMesa" alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" styleClass="custom-checkbox">
                                        <HBox.margin>
                                           <Insets right="90.0" />
                                        </HBox.margin>
@@ -152,7 +153,7 @@
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
                                     </CheckBox>
-                                    <CheckBox mnemonicParsing="false" styleClass="custom-checkbox">
+                                    <CheckBox fx:id="checkBoxParaLlevar" mnemonicParsing="false" styleClass="custom-checkbox">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor></CheckBox>

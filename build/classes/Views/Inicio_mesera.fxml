@@ -464,11 +464,11 @@
       </Pane>
       <Pane fx:id="pane_menuDia" layoutX="263.0" layoutY="138.0" prefHeight="606.0" prefWidth="871.0" style="-fx-background-color: ffff;" visible="false">
          <children>
-            <TableView fx:id="tablaPlatos" editable="true" layoutX="243.0" layoutY="34.0" prefHeight="369.0" prefWidth="594.0">
+            <TableView fx:id="tablaPlatosDia" editable="true" layoutX="243.0" layoutY="34.0" prefHeight="369.0" prefWidth="594.0">
               <columns>
-                <TableColumn fx:id="columnaNombrePlato" prefWidth="197.0" text="Nombre" />
-                <TableColumn fx:id="columnaPrecio" prefWidth="193.0" text="Precio " />
-                  <TableColumn fx:id="columnaEsMini" editable="false" prefWidth="228.0" text="Mini" />
+                <TableColumn fx:id="columnaNombrePlatoDia" prefWidth="197.0" text="Nombre" />
+                <TableColumn fx:id="columnaPrecioDia" prefWidth="193.0" text="Precio " />
+                  <TableColumn fx:id="columnaEsMiniDia" editable="false" prefWidth="228.0" text="Mini" />
               </columns>
             </TableView>
             <ListView fx:id="listViewCategorias" layoutX="27.0" layoutY="86.0" prefHeight="320.0" prefWidth="158.0" stylesheets="@../swing/inicio_mesera.css" />
@@ -487,11 +487,11 @@
             </Button>
             <HBox alignment="TOP_CENTER" layoutX="243.0" layoutY="425.0" prefHeight="92.0" prefWidth="584.0" spacing="25.0">
                <children>
-                  <TextField fx:id="txtNombrePlato" prefHeight="30.0" prefWidth="200.0" promptText="Nombre" />
-                  <TextField fx:id="txtPrecioPlato" prefHeight="30.0" prefWidth="200.0" promptText="Precio" />
+                  <TextField fx:id="txtNombrePlatoDia" prefHeight="30.0" prefWidth="200.0" promptText="Nombre" />
+                  <TextField fx:id="txtPrecioPlatoDia" prefHeight="30.0" prefWidth="200.0" promptText="Precio" />
                   <VBox alignment="CENTER_LEFT" prefHeight="72.0" prefWidth="250.0" spacing="20.0">
                      <children>
-                        <Button fx:id="btnAgregarPlato" mnemonicParsing="false" style="-fx-background-color: fffff; -fx-border-color: 2E1B10; -fx-border-radius: 10px; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 3);;" styleClass="boton" text="Agregar Producto">
+                        <Button fx:id="btnAgregarCarta" mnemonicParsing="false" style="-fx-background-color: fffff; -fx-border-color: 2E1B10; -fx-border-radius: 10px; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 3);;" styleClass="boton" text="Agregar Producto">
                            <effect>
                               <Shadow />
                            </effect>
@@ -499,7 +499,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Button fx:id="btnEliminarPlato" mnemonicParsing="false" style="-fx-background-color: fffff; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 3);" styleClass="boton" text="Eliminar Producto" />
+                        <Button fx:id="btnEliminarCarta" mnemonicParsing="false" style="-fx-background-color: fffff; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 3);" styleClass="boton" text="Eliminar Producto" />
                      </children>
                   </VBox>
                </children>
@@ -525,20 +525,20 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <TableView fx:id="tablaPlatos1" editable="true" layoutX="243.0" layoutY="34.0" prefHeight="369.0" prefWidth="594.0">
+            <TableView fx:id="tablaPlatosCarta" editable="true" layoutX="243.0" layoutY="34.0" prefHeight="369.0" prefWidth="594.0">
                <columns>
-                  <TableColumn fx:id="columnaNombrePlato1" prefWidth="197.0" text="Nombre" />
-                  <TableColumn fx:id="columnaPrecio1" prefWidth="193.0" text="Precio " />
-                  <TableColumn fx:id="columnaEsMini1" editable="false" prefWidth="228.0" text="Mini" />
+                  <TableColumn fx:id="columnaNombrePlatoCarta" prefWidth="197.0" text="Nombre" />
+                  <TableColumn fx:id="columnaPrecioCarta" prefWidth="193.0" text="Precio " />
+                  <TableColumn fx:id="columnaEsMiniCarta" editable="false" prefWidth="228.0" text="Mini" />
                </columns>
             </TableView>
             <HBox alignment="TOP_CENTER" layoutX="243.0" layoutY="425.0" prefHeight="92.0" prefWidth="584.0" spacing="25.0">
                <children>
-                  <TextField fx:id="txtNombrePlato1" prefHeight="30.0" prefWidth="200.0" promptText="Nombre" />
-                  <TextField fx:id="txtPrecioPlato1" prefHeight="30.0" prefWidth="200.0" promptText="Precio" />
+                  <TextField fx:id="txtNombrePlatoCarta" prefHeight="30.0" prefWidth="200.0" promptText="Nombre" />
+                  <TextField fx:id="txtPrecioPlatoCarta" prefHeight="30.0" prefWidth="200.0" promptText="Precio" />
                   <VBox alignment="CENTER_LEFT" prefHeight="72.0" prefWidth="250.0" spacing="20.0">
                      <children>
-                        <Button fx:id="btnAgregarPlato1" mnemonicParsing="false" style="-fx-background-color: fffff; -fx-border-color: 2E1B10; -fx-border-radius: 10px; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 3);;" styleClass="boton" text="Agregar Producto">
+                        <Button fx:id="btnAgregarDia" mnemonicParsing="false" style="-fx-background-color: fffff; -fx-border-color: 2E1B10; -fx-border-radius: 10px; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 3);;" styleClass="boton" text="Agregar Producto">
                            <effect>
                               <Shadow />
                            </effect>
@@ -546,7 +546,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Button fx:id="btnEliminarPlato1" mnemonicParsing="false" style="-fx-background-color: fffff; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 3);" styleClass="boton" text="Eliminar Producto" />
+                        <Button fx:id="btnEliminarDia" mnemonicParsing="false" style="-fx-background-color: fffff; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 3);" styleClass="boton" text="Eliminar Producto" />
                      </children>
                   </VBox>
                </children>

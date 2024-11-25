@@ -83,6 +83,25 @@ public class PlatosDao {
     }
 
     // Método para obtener los platos según la categoría seleccionada
+    public ObservableList<String> getCategoriasByMenuM(String nombreMenu) {
+    ObservableList<String> categorias = FXCollections.observableArrayList();
+    String query = "SELECT cp.nombreCategoriaPlatos " +
+                   "FROM CategoriaPlatos cp " +
+                   "JOIN TipoMenu tm ON cp.idTipoMenu = tm.idTipoMenu " +
+                   "WHERE tm.nombreMenu = ?";
+    try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
+        pst.setString(1, nombreMenu);
+        ResultSet rs = pst.executeQuery();
+        while (rs.next()) {
+            categorias.add(rs.getString("nombreCategoriaPlatos"));
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return categorias;
+    
+}
+     // Método para obtener los platos según la categoría seleccionada
     public ObservableList<String> getPlatosByCategoriaM(String nombreCategoria) {
         ObservableList<String> platos = FXCollections.observableArrayList();
 
@@ -119,6 +138,8 @@ public class PlatosDao {
 
         return platos;
     }
+    
+
 
     // ************************************************** 07/11/24 *******************************************************
     // Método para obtener el precio de un plato por su nombre
@@ -297,16 +318,18 @@ public class PlatosDao {
             e.printStackTrace();
         }
     }
-
-    public void eliminarPlato(String idPlatos) {
+    
+    
+    public boolean eliminarPlato(String idPlato) {
         String query = "DELETE FROM platos WHERE idPlatos = ?";
         try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
-
-            pst.setString(1, idPlatos);
-            pst.executeUpdate();
+            pst.setString(1, idPlato);
+            int filasAfectadas = pst.executeUpdate();
+            return filasAfectadas > 0; // Devuelve true si se eliminó al menos un registro
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false; // Devuelve false si hubo algún problema
     }
 
     public String generarNuevoIdPlato() {
@@ -327,23 +350,48 @@ public class PlatosDao {
     }
 
     public String obtenerIdCategoriaPorNombre(String nombreCategoria) {
-    String idCategoria = null;
-    String query = "SELECT idCategoriaPlatos FROM categoriaPlatos WHERE nombreCategoriaPlatos = ?";
+        String idCategoria = null;
+        String query = "SELECT idCategoriaPlatos FROM categoriaPlatos WHERE nombreCategoriaPlatos = ?";
 
-    try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
-        pst.setString(1, nombreCategoria);
-        ResultSet rs = pst.executeQuery();
+        try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
+            pst.setString(1, nombreCategoria);
+            ResultSet rs = pst.executeQuery();
 
-        if (rs.next()) {
-            idCategoria = rs.getString("idCategoriaPlatos");
+            if (rs.next()) {
+                idCategoria = rs.getString("idCategoriaPlatos");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return idCategoria;
+    }
+    
+    public boolean esMiniPorNombre(String nombrePlato) {
+    boolean esMini = false; // Valor predeterminado (si no se encuentra el plato, asumimos que no es mini)
+    String query = "SELECT esMini FROM platos WHERE nombrePlato = ?";
+
+    try (Connection conn = cn.getConnection(); 
+         PreparedStatement pst = conn.prepareStatement(query)) {
+
+        // Establecer el parámetro para la consulta
+        pst.setString(1, nombrePlato);
+
+        // Ejecutar la consulta
+        try (ResultSet rs = pst.executeQuery()) {
+            if (rs.next()) {
+                // Obtener el valor de la columna esMini
+                esMini = rs.getBoolean("esMini");
+            }
         }
     } catch (SQLException e) {
         e.printStackTrace();
+        // Manejo adecuado de excepciones (puedes lanzar una excepción o loguear el error)
     }
 
-    return idCategoria;
+    return esMini; // Retorna si el plato es Mini o no
 }
 
-
+    
 
 }

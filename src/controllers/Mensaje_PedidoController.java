@@ -10,16 +10,22 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import models.CategoriaPlatosDao;
@@ -55,7 +61,21 @@ public class Mensaje_PedidoController implements Initializable {
     private ScrollPane scrollPanePedidos; // Asegúrate de enlazarlo desde el FXML
     @FXML
     private GridPane gridPanePedidos;
+    @FXML
+    private ComboBox<String> ComboBoxTamaño;
+    @FXML
+    private Label labelTotal; // Label para mostrar el total del pedido
+    @FXML
+    private CheckBox checkBoxConsumoMesa;
+    @FXML
+    private CheckBox checkBoxParaLlevar;
+    @FXML
+    private HBox hboxBotones;
+    @FXML
+    private Button btnEditar;
+
     private int rowIndex = 1; // Para llevar el control de las filas
+    private double totalPedido = 0.0; // Para llevar el seguimiento del total
 
     private CategoriaPlatosDao categoriaPlatosDao = new CategoriaPlatosDao();
     private PlatosDao platosDao = new PlatosDao();
@@ -65,17 +85,20 @@ public class Mensaje_PedidoController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // Inicialmente, carga las categorías
         cargarCategorias();
-
-        // Configura el botón de regreso
         btn_Back.setOnAction(event -> showCategories());
-
-        // Oculta inicialmente el GlassPane y el botón de regreso
         btn_Back.setVisible(false);
         glassPane1.setVisible(false);
         btn_aceptarItems.setOnAction(e -> handleAceptarItemsClick());
         btn_enviarCocina.setOnAction(e -> handleEnviarCocinaClick());
+        ObservableList<String> opciones = FXCollections.observableArrayList("Mini", "Normal");
+        ComboBoxTamaño.setItems(opciones);
+        checkBoxCarga();
+
+        listViewPlatos.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> handlePlatoSeleccionado()
+        );
+
     }
 
     // Método para mostrar el número de mesa
@@ -203,59 +226,184 @@ public class Mensaje_PedidoController implements Initializable {
         btn_Back.setVisible(false);
     }
 
+    private void checkBoxCarga() {
+        checkBoxConsumoMesa.setOnAction(event -> {
+            if (checkBoxConsumoMesa.isSelected()) {
+                checkBoxParaLlevar.setSelected(false); // Desmarcar el otro
+            }
+        });
+
+        checkBoxParaLlevar.setOnAction(event -> {
+            if (checkBoxParaLlevar.isSelected()) {
+                checkBoxConsumoMesa.setSelected(false); // Desmarcar el otro
+            }
+        });
+    }
+
     @FXML
     private void handleBtnBackClick(ActionEvent event) {
         cargarCategorias();
     }
 
     @FXML
+    private void handlePlatoSeleccionado() {
+        String platoSeleccionado = listViewPlatos.getSelectionModel().getSelectedItem();
+
+        if (platoSeleccionado != null) {
+            // Verificar si el plato es Mini
+            boolean esMini = platosDao.esMiniPorNombre(platoSeleccionado);
+            System.out.println("Plato seleccionado: " + platoSeleccionado);
+            System.out.println("¿Es Mini?: " + esMini);
+
+            // Habilitar o deshabilitar el ComboBox de tamaño según el resultado
+            ComboBoxTamaño.setDisable(!esMini); // Si no es Mini, deshabilitar
+            System.out.println("ComboBox Tamaño deshabilitado: " + ComboBoxTamaño.isDisabled());
+        }
+    }
+
+    @FXML
     private void handleAceptarItemsClick() {
         String platoSeleccionado = listViewPlatos.getSelectionModel().getSelectedItem();
         Principio principioSeleccionado = ComboBoxPrincipio.getSelectionModel().getSelectedItem();
-        String comentarioSeleccionado = textAreaComentario.getText().trim(); // Obtener texto del TextArea
+        String comentarioSeleccionado = textAreaComentario.getText().trim();
+        String tamañoSeleccionado = ComboBoxTamaño.getSelectionModel().getSelectedItem();
 
-        // Validación de selección
+        // Validar que se seleccionaron plato y principio
         if (platoSeleccionado == null || principioSeleccionado == null) {
             System.out.println("Por favor, seleccione un plato y un principio.");
             return;
         }
 
-        // Obtener precio del plato (supón que tienes un método para obtener el precio)
-        String precio = obtenerPrecioPlato(platoSeleccionado);
+        // Obtener precio del plato
+        String precioString = obtenerPrecioPlato(platoSeleccionado);
+        if (precioString == null || precioString.isEmpty()) {
+            System.out.println("El precio del plato no está disponible.");
+            return;
+        }
 
-        // Crear el VBox del pedido
-        VBox pedidoVBox = crearPedidoVBox(platoSeleccionado, principioSeleccionado.getNombre(), comentarioSeleccionado);
+        // Limpiar caracteres no numéricos del precio
+        precioString = precioString.replaceAll("[^\\d.]", ""); // Eliminar caracteres como "$"
+        double precio;
+        try {
+            precio = Double.parseDouble(precioString);
+        } catch (NumberFormatException e) {
+            System.out.println("Error al convertir el precio a número: " + precioString);
+            return;
+        }
 
-        // Agregar el VBox y el precio al GridPane
-        gridPanePedidos.add(pedidoVBox, 0, rowIndex); // Columna 0 para los detalles del pedido
-        gridPanePedidos.add(new Label(precio), 1, rowIndex); // Columna 1 para el precio
+        // Si el tamaño es "Mini", asignar precio fijo
+        if ("Mini".equals(tamañoSeleccionado)) {
+            precio = 11000; // Precio fijo para tamaño "Mini"
+        }
 
-        rowIndex++; // Incrementa la fila para el siguiente pedido
+        // CheckBox: Verificar si es "Para llevar" y sumar costo adicional
+        if (checkBoxParaLlevar.isSelected()) {
+            precio += 1000; // Costo adicional por "Para llevar"
+        }
+
+        // Actualizar el total del pedido
+        totalPedido += precio;
+
+        // Crear el VBox para el pedido
+        VBox pedidoVBox = crearPedidoVBox(
+                "Mini".equals(tamañoSeleccionado) ? platoSeleccionado + " - Mini" : platoSeleccionado,
+                principioSeleccionado.getNombre(),
+                comentarioSeleccionado + (checkBoxParaLlevar.isSelected() ? " (Para llevar)" : " (En mesa)"),
+                precio
+        );
+
+        // Agregar el pedido al GridPane
+        gridPanePedidos.add(pedidoVBox, 0, rowIndex);
+        rowIndex++;
 
         // Limpiar selecciones y comentario
         listViewPlatos.getSelectionModel().clearSelection();
         ComboBoxPrincipio.getSelectionModel().clearSelection();
-        textAreaComentario.clear(); // Limpiar el TextArea después de enviar
+        ComboBoxTamaño.getSelectionModel().clearSelection();
+        textAreaComentario.clear();
+        checkBoxParaLlevar.setSelected(false);
+        checkBoxConsumoMesa.setSelected(false);
         glassPane1.setVisible(false);
 
+        // Actualizar el Label con el total del pedido
+        labelTotal.setText("Total: $" + String.format("%.2f", totalPedido));
     }
 
 // Método auxiliar para crear el VBox del pedido
-    private VBox crearPedidoVBox(String plato, String principio, String comentario) {
+    private VBox crearPedidoVBox(String plato, String principio, String comentario, double precio) {
         VBox vbox = new VBox();
-        vbox.setSpacing(3.0);
-        vbox.setStyle("-fx-padding: 5px"); // Aplica el estilo del VBox
+        vbox.setSpacing(2.0); // Espaciado entre líneas del pedido
+        vbox.setPadding(new Insets(10));
+        vbox.setStyle("vbox-pedido");
 
-        Label txtPlato = new Label(plato);
-        Label txtPrincipio = new Label(principio);
-        Label txtComentario = new Label((comentario.isEmpty() ? "Sin comentario" : comentario));
+        // Cantidad inicial del pedido
+        int[] cantidad = {1}; // Usamos un array para que sea mutable dentro de los lambdas
 
-        txtPlato.getStyleClass().add("label");
-        txtPrincipio.getStyleClass().add("label");
-        txtComentario.getStyleClass().add("label");
+        // Label para el plato principal con precio
+        HBox hboxTitulo = new HBox();
+        hboxTitulo.setAlignment(Pos.CENTER_LEFT);
+        hboxTitulo.setSpacing(5);
 
-        vbox.getChildren().addAll(txtPlato, txtPrincipio, txtComentario);
+        Label labelPlato = new Label(cantidad[0] + " " + plato); // Cantidad inicial
+        labelPlato.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #333;-fx-font-family: 'Karla';");
+
+        Label labelPrecio = new Label(String.format("$%.0f", precio)); // Precio inicial
+        labelPrecio.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #333;-fx-font-family: 'Karla';");
+        HBox.setHgrow(labelPrecio, Priority.ALWAYS);
+
+        // Botón para eliminar el pedido
+        Button btnEliminar = new Button("❌");
+        btnEliminar.setStyle("-fx-background-color: transparent; -fx-text-fill: red; -fx-font-size: 16px; "
+                + "-fx-cursor: hand;");
+        btnEliminar.setOnAction(e -> eliminarPedido(vbox, precio * cantidad[0])); // Considera la cantidad al eliminar
+
+        // Botón para editar el pedido
+        Button btnEditar = new Button("✏️");
+        btnEditar.setStyle("-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-size: 16px; "
+                + "-fx-cursor: hand;");
+        // Agregar lógica para editar si es necesario
+
+        // Botón para incrementar la cantidad
+        Button btnIncrementar = new Button("➕");
+        btnIncrementar.setStyle("-fx-background-color: transparent; -fx-text-fill: green; -fx-font-size: 16px; "
+                + "-fx-cursor: hand;");
+        btnIncrementar.setOnAction(e -> {
+            // Incrementar la cantidad
+            cantidad[0]++;
+            labelPlato.setText(cantidad[0] + " " + plato);
+
+            // Actualizar el precio total
+            double nuevoPrecio = precio * cantidad[0];
+            labelPrecio.setText(String.format("$%.0f", nuevoPrecio));
+
+            // Actualizar el total del pedido general
+            totalPedido += precio;
+            labelTotal.setText("Total: $" + String.format("", totalPedido));
+        });
+
+        hboxTitulo.getChildren().addAll(labelPlato, labelPrecio, btnEliminar, btnEditar, btnIncrementar);
+
+        // Label para el principio
+        Label labelPrincipio = new Label(principio);
+        labelPrincipio.setStyle("-fx-font-size: 14px; -fx-text-fill: #555;-fx-font-family: 'Karla';");
+
+        // Label para el comentario (opcional)
+        Label labelComentario = new Label(comentario.isEmpty() ? "" : comentario);
+        labelComentario.setStyle("-fx-font-size: 14px; -fx-text-fill: #555;");
+
+        // Agregar elementos al VBox
+        vbox.getChildren().addAll(hboxTitulo, labelPrincipio);
+        if (!comentario.isEmpty()) {
+            vbox.getChildren().add(labelComentario);
+        }
+
         return vbox;
+    }
+
+    private void eliminarPedido(VBox pedidoVBox, double precio) {
+        gridPanePedidos.getChildren().remove(pedidoVBox);
+        totalPedido -= precio;
+        labelTotal.setText("Total: $" + String.format("%.2f", totalPedido));
     }
 
 // Método auxiliar para obtener el precio del plato
@@ -289,6 +437,23 @@ public class Mensaje_PedidoController implements Initializable {
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void actualizarPedidoEnVista(String platoOriginal, String nuevoPlato, Principio nuevoPrincipio, String nuevoComentario) {
+        // Aquí debes encontrar el VBox correspondiente al pedido y actualizar sus valores
+        for (Node node : gridPanePedidos.getChildren()) {
+            if (node instanceof VBox) {
+                VBox vbox = (VBox) node;
+                Label labelPlato = (Label) vbox.getChildren().get(0);
+                if (labelPlato.getText().equals(platoOriginal)) {
+                    labelPlato.setText(nuevoPlato);
+                    // Actualizar los demás detalles del pedido (principio y comentario)
+                    ((Label) vbox.getChildren().get(1)).setText(nuevoPrincipio.getNombre());
+                    ((Label) vbox.getChildren().get(2)).setText(nuevoComentario);
+                    break;
+                }
+            }
         }
     }
 
