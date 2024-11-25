@@ -336,56 +336,39 @@ public class Mensaje_PedidoController implements Initializable {
         vbox.setPadding(new Insets(10));
         vbox.setStyle("vbox-pedido");
 
-        // Cantidad inicial del pedido
-        int[] cantidad = {1}; // Usamos un array para que sea mutable dentro de los lambdas
-
         // Label para el plato principal con precio
         HBox hboxTitulo = new HBox();
         hboxTitulo.setAlignment(Pos.CENTER_LEFT);
         hboxTitulo.setSpacing(5);
 
-        Label labelPlato = new Label(cantidad[0] + " " + plato); // Cantidad inicial
-        labelPlato.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #333;-fx-font-family: 'Karla';");
+        Label labelPlato = new Label("1 " + plato); // Cantidad inicial de 1
+        labelPlato.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #333,-fx-font-family: 'Karla';");
 
-        Label labelPrecio = new Label(String.format("$%.0f", precio)); // Precio inicial
-        labelPrecio.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #333;-fx-font-family: 'Karla';");
+        Label labelPrecio = new Label(String.format("$%.0f", precio)); // Precio sin decimales
+        labelPrecio.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #333, -fx-font-family: 'Karla';");
         HBox.setHgrow(labelPrecio, Priority.ALWAYS);
 
-        // Botón para eliminar el pedido
+        // Botones de eliminar, editar y sumar cantidad
         Button btnEliminar = new Button("❌");
         btnEliminar.setStyle("-fx-background-color: transparent; -fx-text-fill: red; -fx-font-size: 16px; "
                 + "-fx-cursor: hand;");
-        btnEliminar.setOnAction(e -> eliminarPedido(vbox, precio * cantidad[0])); // Considera la cantidad al eliminar
+        btnEliminar.setOnAction(e -> eliminarPedido(vbox, precio));
 
-        // Botón para editar el pedido
         Button btnEditar = new Button("✏️");
         btnEditar.setStyle("-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-size: 16px; "
                 + "-fx-cursor: hand;");
         // Agregar lógica para editar si es necesario
 
-        // Botón para incrementar la cantidad
-        Button btnIncrementar = new Button("➕");
-        btnIncrementar.setStyle("-fx-background-color: transparent; -fx-text-fill: green; -fx-font-size: 16px; "
+        Button btnSumarCantidad = new Button("➕");
+        btnSumarCantidad.setStyle("-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-size: 16px; "
                 + "-fx-cursor: hand;");
-        btnIncrementar.setOnAction(e -> {
-            // Incrementar la cantidad
-            cantidad[0]++;
-            labelPlato.setText(cantidad[0] + " " + plato);
+        btnSumarCantidad.setOnAction(e -> incrementarCantidad(labelPlato, labelPrecio, precio));
 
-            // Actualizar el precio total
-            double nuevoPrecio = precio * cantidad[0];
-            labelPrecio.setText(String.format("$%.0f", nuevoPrecio));
-
-            // Actualizar el total del pedido general
-            totalPedido += precio;
-            labelTotal.setText("Total: $" + String.format("", totalPedido));
-        });
-
-        hboxTitulo.getChildren().addAll(labelPlato, labelPrecio, btnEliminar, btnEditar, btnIncrementar);
+        hboxTitulo.getChildren().addAll(labelPlato, labelPrecio, btnEliminar, btnEditar, btnSumarCantidad);
 
         // Label para el principio
         Label labelPrincipio = new Label(principio);
-        labelPrincipio.setStyle("-fx-font-size: 14px; -fx-text-fill: #555;-fx-font-family: 'Karla';");
+        labelPrincipio.setStyle("-fx-font-size: 14px; -fx-text-fill: #555, -fx-font-family: 'Karla';");
 
         // Label para el comentario (opcional)
         Label labelComentario = new Label(comentario.isEmpty() ? "" : comentario);
@@ -398,6 +381,24 @@ public class Mensaje_PedidoController implements Initializable {
         }
 
         return vbox;
+    }
+
+    private void incrementarCantidad(Label labelPlato, Label labelPrecio, double precio) {
+        // Obtener la cantidad actual
+        String textoPlato = labelPlato.getText();
+        int cantidadActual = Integer.parseInt(textoPlato.split(" ")[0]);
+
+        // Incrementar la cantidad
+        cantidadActual++;
+        labelPlato.setText(cantidadActual + " " + textoPlato.substring(2));
+
+        // Actualizar el precio total
+        double nuevoPrecio = precio * cantidadActual;
+        labelPrecio.setText(String.format("$%.0f", nuevoPrecio));
+
+        // Actualizar el total del pedido
+        totalPedido += precio;
+        labelTotal.setText("Total: $" + String.format("%.2f", totalPedido));
     }
 
     private void eliminarPedido(VBox pedidoVBox, double precio) {
