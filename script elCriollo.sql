@@ -305,8 +305,23 @@ select * from mesas;
 	-- Registros para la tabla pedidos
 	INSERT INTO pedidos (idPedidos, empleadosId, mesasId, fechaPedido, estadoPedido, precioTotal) VALUES
 	('pedido004', 'emp002', 'mesa003', '2024-04-30', 'Completado', 35.25);
-
-
+	INSERT INTO pedidos (idPedidos, empleadosId, mesasId, fechaPedido, estadoPedido, precioTotal) VALUES
+	('pedido005', 'emp002', 'mesa003', '2024-04-30', 'Completado', 35.25);
+	
+    INSERT INTO pedidos (idPedidos, empleadosId, mesasId, fechaPedido, estadoPedido, precioTotal) VALUES
+	('pedido006', 'emp002', 'mesa003', '2024-04-30', 'Completado', 35.25);
+    
+    
+    INSERT INTO pedidos (idPedidos, empleadosId, mesasId, fechaPedido, estadoPedido, precioTotal) VALUES
+	('pedido007', 'emp002', 'mesa003', '2024-11-24', 'Completado', 35.25);
+	INSERT INTO pedidos (idPedidos, empleadosId, mesasId, fechaPedido, estadoPedido, precioTotal) VALUES
+	('pedido008', 'emp002', 'mesa003', '2024-11-24', 'En proceso', 35.25);
+	
+    INSERT INTO pedidos (idPedidos, empleadosId, mesasId, fechaPedido, estadoPedido, precioTotal) VALUES
+	('pedido009', 'emp002', 'mesa003', '2024-11-24', 'Completado', 35.25);
+    
+    
+    
 	INSERT INTO pedidos (idPedidos, empleadosId, mesasId, fechaPedido, estadoPedido, precioTotal) VALUES
 	('pedido001', 'emp001', 'mesa001', '2024-04-30', 'En proceso', 13000),
 	('pedido002', 'emp002', 'mesa002', '2024-04-30', 'Completado', 42.30),

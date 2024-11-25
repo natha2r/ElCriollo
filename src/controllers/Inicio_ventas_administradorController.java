@@ -48,6 +48,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.Separator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -62,6 +63,9 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 import javafx.scene.web.WebView;
 import javax.swing.JOptionPane;
 import models.CategoriasDao;
@@ -98,7 +102,7 @@ public class Inicio_ventas_administradorController {
     private ScrollPane scrollPaneCamareros;
 
     @FXML
-    private GridPane gridPaneCamareros;
+    private FlowPane flowPaneCamareros;
     
     
 
@@ -1206,14 +1210,7 @@ public class Inicio_ventas_administradorController {
         anchor_inicio_ventas.setVisible(true);
         scrollPaneCamareros.setVisible(false);
 
-        /*try {
-            Parent root = FXMLLoader.load(getClass().getResource("/views/Inicio_ventas_administrador.fxml"));
-            Stage newStage = new Stage();
-            newStage.setScene(new Scene(root));
-            newStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
+
         limpiarCampos();
     }
 
@@ -1228,46 +1225,184 @@ public class Inicio_ventas_administradorController {
         limpiarCampos();
 
     }
-    @FXML
-    private void cargarCamareros() {
-        List<Employees> camareros = EmployeesDao.obtenerCamareros();
-        gridPaneCamareros.getChildren().clear();
+   @FXML
+private void cargarCamareros() {
+    List<Employees> camareros = EmployeesDao.obtenerCamareros();
+    flowPaneCamareros.getChildren().clear(); // Limpiar el FlowPane antes de cargar los nuevos elementos
 
-        int row = 0;
-        int col = 0;
+    // Establecer el espaciado entre tarjetas
+    flowPaneCamareros.setHgap(40); // Espacio horizontal entre tarjetas
+    flowPaneCamareros.setVgap(30); // Espacio vertical entre tarjetas
 
-        for (Employees camarero : camareros) {
-            VBox camareroCard = crearCamareroCard(camarero);
+    // Establecer un tamaño máximo para cada tarjeta
+    //double preferredWidth = 220; // El tamaño de cada tarjeta (puedes ajustarlo si es necesario)
+    //flowPaneCamareros.setPrefWidth(preferredWidth * 3 + 40); // Ajustar el ancho del FlowPane para 3 tarjetas por fila
 
-            gridPaneCamareros.add(camareroCard, col, row);
+    // Centrar las tarjetas dentro del FlowPane
+    //flowPaneCamareros.setAlignment(Pos.CENTER); // Centrar el contenido del FlowPane
 
-            col++;
-            if (col == 3) { // Cambiar de fila cada 3 columnas
-                col = 0;
-                row++;
-            }
-        }
+    // Agregar cada camarero al FlowPane
+    for (Employees camarero : camareros) {
+        VBox camareroCard = crearCamareroCard(camarero);
+        flowPaneCamareros.getChildren().add(camareroCard); // Agregar la tarjeta al FlowPane
     }
+}
 
-    private VBox crearCamareroCard(Employees camarero) {
-        VBox card = new VBox();
-        card.setStyle("-fx-background-color: #FFCC80; -fx-padding: 10; -fx-spacing: 10; -fx-alignment: center; -fx-border-radius: 5; -fx-background-radius: 5;");
 
-        // Imagen
-        ImageView imageView = new ImageView(new Image("resources/persona-no-autorizada.png")); // Cambiar por tu imagen
-        imageView.setFitWidth(80);
-        imageView.setFitHeight(80);
-        imageView.setStyle("-fx-border-radius: 50%; -fx-background-radius: 50%;");
 
-        // Nombre, Edad, Teléfono
-        Label nombreLabel = new Label(camarero.getNombreEmpleado());
-        Label edadLabel = new Label(camarero.getEdad() + " años");
-        Label telefonoLabel = new Label( camarero.getTelefono());
 
-        card.getChildren().addAll(imageView, nombreLabel, edadLabel, telefonoLabel);
+private VBox crearCamareroCard(Employees camarero) {
+    // Contenedor principal de la tarjeta
+    VBox card = new VBox();
+    
+    card.setStyle("""
+        -fx-background-color: linear-gradient(to bottom, #FFD9A3, #FFA94D); 
+        -fx-padding: 20; 
+        -fx-spacing: 15; 
+        -fx-alignment: center; 
+        -fx-border-radius: 15px 15px 15px 15px; 
+        -fx-background-radius: 15px 15px 15px 15px; 
+        -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 12, 0, 4, 4);
+    """);
+    card.setPrefWidth(220);
 
-        return card;
+    // Contenedor para el marco circular
+    StackPane marcoCircular = new StackPane();
+    marcoCircular.setStyle("""
+        -fx-border-radius: 50; 
+        -fx-background-radius: 50; 
+        -fx-background-color: linear-gradient(to bottom, #FFCC80, #FF8C42); 
+        -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 12, 0, 3, 3);
+    """);
+    marcoCircular.setPrefSize(100, 100);
+
+    // Fondo circular 3D
+    Circle fondo3D = new Circle(50, Paint.valueOf("#FFF8E1"));
+    fondo3D.setStyle("""
+        -fx-stroke: linear-gradient(to bottom, #FFA94D, #D97720); 
+        -fx-stroke-width: 3; 
+        -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0, 2, 2);
+    """);
+
+    // Imagen del camarero como patrón dentro del círculo
+    Circle imagenCamarero = new Circle(45); // Ajustar tamaño del círculo interior
+    Image image = new Image("resources/persona-no-autorizada.png", false);
+    imagenCamarero.setFill(new ImagePattern(image)); // Pintar la imagen dentro del círculo
+
+    // Agregar fondo e imagen al marco
+    StackPane contenedorImagen = new StackPane(fondo3D, imagenCamarero);
+    marcoCircular.getChildren().add(contenedorImagen);
+
+    // Contenedor para la información
+    VBox infoBox = new VBox();
+    infoBox.setStyle("-fx-alignment: center; -fx-spacing: 8;");
+
+    // Etiqueta para el nombre
+    Label nombreLabel = new Label(camarero.getNombreEmpleado());
+    nombreLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #6B4226;"); 
+
+    // Etiqueta para la edad
+    Label edadLabel = new Label(camarero.getEdad() + " años");
+    edadLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #7B3E1D;");
+
+    // Etiqueta para el teléfono
+    Label telefonoLabel = new Label(camarero.getTelefono());
+    telefonoLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #7B3E1D;");
+
+    // Divisor decorativo
+    Separator separator = new Separator();
+    separator.setStyle("-fx-background-color: #FFD9A3; -fx-opacity: 0.6;");
+    separator.setPrefWidth(160);
+
+    // Agregar elementos al contenedor de información
+    infoBox.getChildren().addAll(nombreLabel, separator, edadLabel, telefonoLabel);
+
+    // Combinar el marco circular y la información en la tarjeta
+    card.getChildren().addAll(marcoCircular, infoBox);
+
+    card.setOnMouseClicked(event -> {
+    mostrarDialogoInformacionCamarero(camarero.getIdEmpleados()); // Pasar el idEmpleados
+});
+
+    return card;
+}
+
+private void mostrarDialogoInformacionCamarero(String idEmpleado) {
+    // Obtener la información completa del camarero desde el DAO
+    Employees camarero = new EmployeesDao().obtenerCamareroPorId(idEmpleado);
+
+    if (camarero != null) {
+        // Crear un diálogo personalizado
+        Dialog<Void> dialog = new Dialog<>();
+        dialog.setTitle("Detalles del Camarero");
+        dialog.setHeaderText(null); // Eliminamos el encabezado predeterminado
+
+        // Personalizar el diseño principal
+        VBox contenido = new VBox(15); // Espaciado entre elementos
+        contenido.setPadding(new Insets(20));
+        contenido.setStyle("-fx-background-color: #fef9e7; -fx-border-color: #d4ac0d; "
+                + "-fx-border-radius: 20; -fx-background-radius: 20;");
+
+        // Crear un encabezado con un ícono de camarero
+        HBox encabezado = new HBox(10);
+        encabezado.setAlignment(Pos.CENTER_LEFT);
+
+        Label titulo = new Label("Detalles del Camarero");
+        titulo.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #d35400;");
+
+        // Ícono de camarero (puedes reemplazar con un recurso gráfico o emoji)
+        Label iconoCamarero = new Label("\uD83C\uDF7F"); // Emoji de camarero (puedes cambiarlo por otro)
+        iconoCamarero.setStyle("-fx-font-size: 24px;");
+
+        encabezado.getChildren().addAll(iconoCamarero, titulo);
+
+        // Crear etiquetas estilizadas para los detalles del camarero
+        Label nombreLabel = crearEtiquetaDetalle("Nombre: ", camarero.getNombreEmpleado());
+        Label rolLabel = crearEtiquetaDetalle("Rol: ", camarero.getRol());
+        Label edadLabel = crearEtiquetaDetalle("Edad: ", String.valueOf(camarero.getEdad()));
+        Label telefonoLabel = crearEtiquetaDetalle("Teléfono: ", camarero.getTelefono());
+        Label direccionLabel = crearEtiquetaDetalle("Dirección: ", camarero.getDireccion());
+        Label emailLabel = crearEtiquetaDetalle("Email: ", camarero.getEmail());
+        Label salarioLabel = crearEtiquetaDetalle("Salario: ", String.format("$%.2f", camarero.getSalario()));
+
+        // Agregar detalles al contenedor principal
+        contenido.getChildren().addAll(encabezado, nombreLabel, rolLabel, edadLabel, telefonoLabel, direccionLabel, emailLabel, salarioLabel);
+
+        // Botón personalizado para cerrar el diálogo
+        ButtonType aceptarBotonTipo = new ButtonType("Aceptar", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().add(aceptarBotonTipo);
+
+        // Estilizar el botón
+        Button aceptarBoton = (Button) dialog.getDialogPane().lookupButton(aceptarBotonTipo);
+        aceptarBoton.setStyle("-fx-background-color: #d35400; -fx-text-fill: white; -fx-font-size: 14px; "
+                + "-fx-background-radius: 20; -fx-border-radius: 20; -fx-padding: 5 15;");
+
+        // Aplicar el diseño personalizado al contenido del diálogo
+        dialog.getDialogPane().setContent(contenido);
+
+        // Mostrar el diálogo
+        dialog.showAndWait();
+    } else {
+        // Si no se encuentra el camarero, mostrar un mensaje de error
+        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+        errorAlert.setTitle("Error");
+        errorAlert.setHeaderText("Camarero no encontrado");
+        errorAlert.setContentText("No se ha encontrado un camarero con el ID proporcionado.");
+        errorAlert.showAndWait();
     }
+}
+
+
+
+
+
+
+
+
+
+
+
+
     
     
     
@@ -2979,7 +3114,7 @@ private String obtenerColorEstado(String estado) {
         alerta.showAndWait();
     }
 
-    @FXML
+    /*@FXML
     private void actualizarEstadoPedido(String idPedido, String nuevoEstado) {
         Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
         confirmacion.setTitle("Confirmar actualización");
@@ -3000,7 +3135,7 @@ private String obtenerColorEstado(String estado) {
                 mostrarAlertaError("Error", "Hubo un problema al actualizar el estado del pedido: " + e.getMessage());
             }
         }
-    }
+    }*/
 
     /*--------------------------------------------------------------------------*/
  /* *********************FIN DEL MODULO DE CAJA************************** */

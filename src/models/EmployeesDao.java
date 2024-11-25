@@ -518,5 +518,42 @@ public class EmployeesDao {
     return camareros;
 }
 
+    
+    public Employees obtenerCamareroPorId(String idEmpleado) {
+    Employees camarero = null;
+    String query = "SELECT e.idEmpleados, e.nombreEmpleado, e.rol, e.fechaContratacion, e.salario, " +
+                   "e.edad, e.telefono, e.direccion, e.email, e.usuario, s.usuario " +
+                   "FROM empleados e " +
+                   "JOIN sesiones s ON e.usuario = s.usuario " +
+                   "WHERE e.idEmpleados = ?";
+    try (Connection conn = cn.getConnection();
+         PreparedStatement ps = conn.prepareStatement(query)) {
+
+        ps.setString(1, idEmpleado);
+
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            // Crear el objeto Employees y asignar los valores
+            camarero = new Employees();
+            camarero.setIdEmpleados(rs.getString("idEmpleados"));
+            camarero.setNombreEmpleado(rs.getString("nombreEmpleado"));
+            camarero.setRol(rs.getString("rol"));
+            camarero.setFechaContratacion(rs.getDate("fechaContratacion"));
+            camarero.setSalario(rs.getFloat("salario"));
+            camarero.setEdad(rs.getInt("edad"));
+            camarero.setTelefono(rs.getString("telefono"));
+            camarero.setDireccion(rs.getString("direccion"));
+            camarero.setEmail(rs.getString("email"));
+            camarero.setUsuario(rs.getString("usuario"));
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return camarero;
+}
+
+    
+    
+    
 
 }
