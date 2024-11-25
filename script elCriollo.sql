@@ -63,8 +63,10 @@ create database if not exists ElCriollo;
 		foreign key (mesasId) references mesas(idMesas)
 	);
     
+    select * from pedidos;
+    
       -- CREADA 13/09/2024
-    create table if not exists tipoMenu( 
+    create table if not exists tipoMenu(  	
 		idTipoMenu int not null primary key AUTO_INCREMENT,
         nombreMenu varchar(50)
 	);
