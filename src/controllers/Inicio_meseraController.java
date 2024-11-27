@@ -286,7 +286,7 @@ public class Inicio_meseraController implements Initializable {
     }
 
     @FXML
-    private void agregarMesaAGridPane(String nuevoId) {
+    private void agregarMesaAGridPane(String mesaId) {
         StackPane mesaContainer = new StackPane();
         mesaContainer.setAlignment(Pos.CENTER);
 
@@ -295,8 +295,8 @@ public class Inicio_meseraController implements Initializable {
         mesaImage.setFitWidth(106);
         mesaImage.setFitHeight(98);
 
-        // Obtener el número de la mesa a partir del ID
-        int numeroMesa = mesaCounter; // `mesaCounter` ya lleva el conteo secuencial
+        // Aquí usamos el ID de la mesa real
+        int numeroMesa = mesaCounter; // Usa el contador para la visualización si es necesario
 
         // Crear el número de la mesa y colocarlo encima de la imagen
         Label lblMesaNumero = new Label(String.valueOf(numeroMesa));
@@ -305,16 +305,14 @@ public class Inicio_meseraController implements Initializable {
 
         // Agregar la imagen y el número al contenedor
         mesaContainer.getChildren().addAll(mesaImage, lblMesaNumero);
-        
-        
 
         // Calcular la posición de la nueva mesa en el GridPane
         int maxColumns = 4;
         int row = (mesaCounter - 1) / maxColumns;
         int col = (mesaCounter - 1) % maxColumns;
 
-        // Asignar evento de clic al StackPane
-        mesaContainer.setOnMouseClicked(event -> handleMesaClickAndShowPopup(String.valueOf(numeroMesa)));
+        // Asignar evento de clic al StackPane con el ID de la mesa real
+        mesaContainer.setOnMouseClicked(event -> handleMesaClickAndShowPopup(mesaId)); // Usamos el ID real de la mesa
         mesaContainer.setOnMouseEntered(event -> mesaContainer.setCursor(Cursor.HAND));
         mesaContainer.setOnMouseExited(event -> mesaContainer.setCursor(Cursor.DEFAULT));
 
@@ -486,9 +484,10 @@ public class Inicio_meseraController implements Initializable {
     }
 
     @FXML
-    private void handleMesaClickAndShowPopup(String mesa) {
+    private void handleMesaClickAndShowPopup(String mesaId) {
+        System.out.println("Mesa clickeada: " + mesaId);
 
-        String tableNumber = "Mesa " + mesa;
+        String tableNumber = "Mesa " + mesaId;
 
         popupLabel.setText(tableNumber);
 
@@ -512,10 +511,6 @@ public class Inicio_meseraController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public Employees getSelectedMesera() {
-        return (Employees) comboBoxselecMesera.getValue();
     }
 
     private void initComboBox() {
@@ -557,6 +552,10 @@ public class Inicio_meseraController implements Initializable {
 
     }
 
+    public Employees getSelectedMesera() {
+        return (Employees) comboBoxselecMesera.getValue();
+    }
+
     @FXML
     private void handlePedidoClick() {
         try {
@@ -572,7 +571,18 @@ public class Inicio_meseraController implements Initializable {
                 mensajePedidoController.setMenuSeleccionado(menuSeleccionado);
                 mensajePedidoController.mostrarNumeroMesa(popupLabel.getText());
                 Employees meseraSeleccionada = getSelectedMesera();
-                //mensajePedidoController.setMeseraSeleccionada(meseraSeleccionada);
+
+                // Obtener el ID de la mesa
+                String idMesa = popupLabel.getText(); // o el método que uses para obtener el ID de la mesa
+
+                // Pasar el ID de la mesa al controlador
+                mensajePedidoController.setIdMesa(idMesa);
+                if (meseraSeleccionada != null) {
+                    // Pasar el ID de la mesera al controlador de Mensaje_Pedido
+                    mensajePedidoController.setIdMesera(meseraSeleccionada.getIdEmpleados());
+                } else {
+                    System.out.println("Debe seleccionar una mesera.");
+                }
 
                 Scene scene = new Scene(root);
                 Stage stage = (Stage) btn_tomarPedido.getScene().getWindow();
@@ -813,85 +823,5 @@ public class Inicio_meseraController implements Initializable {
 
     // ---------------------------------
 
-    /*@FXML
-    private void agregarPlato() {
-        String categoriaSeleccionada = listViewCategorias.getSelectionModel().getSelectedItem();
-        if (categoriaSeleccionada == null || categoriaSeleccionada.isEmpty()) {
-            mostrarAlerta("Debe seleccionar una categoría válida antes de agregar un plato.");
-            return;
-        }
-
-        // Obtener el ID de la categoría seleccionada
-        String idCategoria = platosDao.obtenerIdCategoriaPorNombre(categoriaSeleccionada);
-        if (idCategoria == null) {
-            mostrarAlerta("La categoría seleccionada no es válida o no existe en la base de datos.");
-            return;
-        }
-
-        // Capturar los valores de los TextFields
-        String nombrePlato = txtNombrePlato.getText().trim();
-        String precioTexto = txtPrecioPlato.getText().trim();
-
-        if (nombrePlato.isEmpty()) {
-            mostrarAlerta("Debe ingresar un nombre para el plato.");
-            return;
-        }
-
-        double precioPlato;
-        try {
-            precioPlato = Double.parseDouble(precioTexto);
-        } catch (NumberFormatException e) {
-            mostrarAlerta("Debe ingresar un precio válido para el plato.");
-            return;
-        }
-
-        // Generar un nuevo ID para el plato
-        String nuevoId = platosDao.generarNuevoIdPlato();
-        if (nuevoId == null) {
-            mostrarAlerta("No se pudo generar un nuevo ID para el plato.");
-            return;
-        }
-
-        // Crear el objeto Platos
-        Platos nuevoPlato = new Platos(
-                nuevoId, // ID generado
-                nombrePlato, // Nombre del plato ingresado
-                precioPlato, // Precio del plato ingresado
-                idCategoria, // ID de categoría obtenido de la base de datos
-                new CheckBox() // CheckBox para "esMini"
-        );
-
-        // Insertar el plato en la base de datos
-        if (platosDao.insertarPlato(nuevoPlato)) {
-            tablaPlatosDia.getItems().add(nuevoPlato); // Agregar el plato a la tabla
-            mostrarAlerta("Plato agregado correctamente.");
-            limpiarCampos(); // Limpiar los TextFields después de agregar el plato
-        } else {
-            mostrarAlerta("Error al agregar el plato a la base de datos.");
-        }
-    }
-
-// Método para limpiar los TextFields después de agregar un plato
-    private void limpiarCampos() {
-        txtNombrePlato.clear();
-        txtPrecioPlato.clear();
-    }
-
-    private void eliminarPlato() {
-        Platos platoSeleccionado = tablaPlatosDia.getSelectionModel().getSelectedItem();
-        if (platoSeleccionado != null) {
-            platosDao.eliminarPlato(platoSeleccionado.getIdPlatos());
-            listaPlatos.remove(platoSeleccionado);
-        } else {
-            mostrarAlerta("Seleccione un plato para eliminar.");
-        }
-    }
-
-    private void mostrarAlerta(String mensaje) {
-        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
-        alerta.setTitle("Información");
-        alerta.setHeaderText(null);
-        alerta.setContentText(mensaje);
-        alerta.showAndWait();
-    }*/
+   
 }

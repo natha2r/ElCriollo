@@ -84,13 +84,16 @@ public class Mensaje_PedidoController implements Initializable {
     private CategoriaPlatosDao categoriaPlatosDao = new CategoriaPlatosDao();
     private PlatosDao platosDao = new PlatosDao();
     private PrincipioDao principiosDao = new PrincipioDao();
+    private PedidosDao pedidosDao = new PedidosDao();
     private String nombreMenuSeleccionado;
     private String PrincipioSeleccionado;
-    private String meseraSeleccionadaId; // ID de la mesera seleccionada
+    private Employees meseraSeleccionada;
+    private String mesaSeleccionada;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cargarCategorias();
+        //btn_enviarCocina.setOnAction(event -> enviarPedidoACocina());
         btn_Back.setOnAction(event -> showCategories());
         btn_Back.setVisible(false);
         glassPane1.setVisible(false);
@@ -106,9 +109,22 @@ public class Mensaje_PedidoController implements Initializable {
 
     }
 
-    // Método para mostrar el número de mesa
-    public void mostrarNumeroMesa(String numeroMesa) {
-        txt_mesa.setText(numeroMesa);
+    private String idMesa;
+
+    private String idMesera;
+
+    // Método para recibir el ID de la mesera
+    public void setIdMesera(String idMesera) {
+        this.idMesera = idMesera;
+
+        // Imprimir el ID para verificar que se está recibiendo correctamente
+        System.out.println("ID de la mesera recibido: " + this.idMesera);
+    }
+
+    // Setter para el ID de la mesa
+    public void setIdMesa(String idMesa) {
+        this.idMesa = idMesa;
+        System.out.println("ID de la mesa recibido: " + this.idMesa);
     }
 
     @FXML
@@ -406,10 +422,30 @@ public class Mensaje_PedidoController implements Initializable {
         labelTotal.setText("Total: $" + String.format("%.2f", totalPedido));
     }
 
-    private void eliminarPedido(VBox pedidoVBox, double precio) {
-        gridPanePedidos.getChildren().remove(pedidoVBox);
-        totalPedido -= precio;
-        labelTotal.setText("Total: $" + String.format("%.2f", totalPedido));
+    private void eliminarPedido(VBox pedidoVBox, double precioUnitario) {
+        // Obtener la cantidad actual del plato desde el label
+        Label labelPlato = (Label) pedidoVBox.lookup(".label"); // Suponiendo que es el primer Label del VBox
+        if (labelPlato != null) {
+            String textoPlato = labelPlato.getText();
+            int cantidadActual = Integer.parseInt(textoPlato.split(" ")[0]); // Obtener cantidad desde "5 Plato"
+
+            // Calcular el precio total del pedido
+            double precioTotal = cantidadActual * precioUnitario;
+
+            // Actualizar el total del pedido
+            totalPedido -= precioTotal;
+
+            // Asegurar que no haya valores negativos
+            if (totalPedido < 0) {
+                totalPedido = 0;
+            }
+
+            // Actualizar el Label del total
+            labelTotal.setText("Total: $" + String.format("%.2f", totalPedido));
+
+            // Eliminar el VBox del GridPane
+            gridPanePedidos.getChildren().remove(pedidoVBox);
+        }
     }
 
 // Método auxiliar para obtener el precio del plato
@@ -421,8 +457,6 @@ public class Mensaje_PedidoController implements Initializable {
         return precio.isEmpty() ? "$0" : "$" + precio;
     }
 
-    
-
     private void mostrarAlerta(String mensaje) {
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);
         alerta.setTitle("Información");
@@ -430,4 +464,48 @@ public class Mensaje_PedidoController implements Initializable {
         alerta.setContentText(mensaje);
         alerta.showAndWait();
     }
+
+    public void mostrarNumeroMesa(String numeroMesa) {
+        System.out.println(idMesa);
+    }
+
+    public void mostrarMesera(String nombreMesera) {
+        System.out.println(idMesera);
+    }
+
+    @FXML
+    private void handleEnviarCocinaClick(ActionEvent event) {
+        // Verifica si los campos necesarios están completos
+        if (listViewPlatos.getItems().isEmpty()) {
+            // Mostrar un mensaje de error si no hay platos seleccionados
+            return;
+        } 
+
+        // Crear un objeto Pedido con los datos necesarios
+        Pedidos pedido = new Pedidos();
+        Pedidos.setIdMesa(idMesa);   // ID de la mesa
+        Pedidos.setIdMesera(idMesera); // ID de la mesera
+        Pedidos.setPlatosSeleccionados(listViewPlatos.getItems()); // Aquí pasas los platos seleccionados
+
+        // Agregar cualquier otro dato necesario, como comentarios, principios, tamaños, etc.
+        String comentario = textAreaComentario.getText();
+        Pedidos.setComentario(comentario);
+        Pedidos.setConsumoMesa(checkBoxConsumoMesa.isSelected());
+
+        // Enviar el pedido a la base de datos o procesar el pedido
+        // Si estás usando un DAO para la base de datos, asegúrate de incluir estos valores
+        PedidosDao pedidoDao = new PedidosDao();
+        boolean exito = pedidoDao.enviarPedidoACocina(Pedidos);
+
+        if (exito) {
+            // Mostrar mensaje de éxito o realizar alguna otra acción
+            System.out.println("Pedido enviado a cocina.");
+        } else {
+            // Manejo de errores si el envío falla
+            System.out.println("Error al enviar el pedido.");
+        }
+    }
+
 }
+
+

@@ -1,4 +1,5 @@
 package models;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,8 +15,6 @@ public class PedidosDao {
     Connection conn = cn.getConnection();
     PreparedStatement pst;
     ResultSet rs;
-
-    
 
     // Obtener información básica del pedido
     public Pedidos getPedido(String idPedido) throws SQLException {
@@ -45,8 +44,6 @@ public class PedidosDao {
         }
         return pedido;
     }
-
-    
 
     // Obtener detalles del pedido
     public List<DetallesPedidos> getDetallesPedido(String idPedido) throws SQLException {
@@ -97,36 +94,33 @@ public class PedidosDao {
         }
         return pedidosList;
     }
-    
+
     // Obtener pedidos del día actual
-public List<Pedidos> getPedidosDelDia() throws SQLException {
-    List<Pedidos> pedidosList = new ArrayList<>();
-    String query = "SELECT p.idPedidos, p.fechaPedido, p.estadoPedido, p.precioTotal, "
-            + "e.nombreEmpleado AS nombreEmpleado, m.numeroMesa "
-            + "FROM pedidos p "
-            + "JOIN empleados e ON p.empleadosId = e.idEmpleados "
-            + "JOIN mesas m ON p.mesasId = m.idMesas "
-            + "WHERE DATE(p.fechaPedido) = CURDATE()";
+    public List<Pedidos> getPedidosDelDia() throws SQLException {
+        List<Pedidos> pedidosList = new ArrayList<>();
+        String query = "SELECT p.idPedidos, p.fechaPedido, p.estadoPedido, p.precioTotal, "
+                + "e.nombreEmpleado AS nombreEmpleado, m.numeroMesa "
+                + "FROM pedidos p "
+                + "JOIN empleados e ON p.empleadosId = e.idEmpleados "
+                + "JOIN mesas m ON p.mesasId = m.idMesas "
+                + "WHERE DATE(p.fechaPedido) = CURDATE()";
 
-    try (PreparedStatement stmt = conn.prepareStatement(query); ResultSet rs = stmt.executeQuery()) {
+        try (PreparedStatement stmt = conn.prepareStatement(query); ResultSet rs = stmt.executeQuery()) {
 
-        while (rs.next()) {
-            Pedidos pedido = new Pedidos(
-                    rs.getString("idPedidos"),
-                    rs.getString("nombreEmpleado"), // Suponiendo que has modificado la clase Pedidos
-                    rs.getString("numeroMesa"),     // Suponiendo que has modificado la clase Pedidos
-                    rs.getDate("fechaPedido"),
-                    rs.getString("estadoPedido"),
-                    rs.getDouble("precioTotal")
-            );
-            pedidosList.add(pedido);
+            while (rs.next()) {
+                Pedidos pedido = new Pedidos(
+                        rs.getString("idPedidos"),
+                        rs.getString("nombreEmpleado"), // Suponiendo que has modificado la clase Pedidos
+                        rs.getString("numeroMesa"), // Suponiendo que has modificado la clase Pedidos
+                        rs.getDate("fechaPedido"),
+                        rs.getString("estadoPedido"),
+                        rs.getDouble("precioTotal")
+                );
+                pedidosList.add(pedido);
+            }
         }
+        return pedidosList;
     }
-    return pedidosList;
-}
-
-    
-    
 
     // Obtener todos los pedidos activos
     public List<Pedidos> getActivePedidos() throws SQLException {
@@ -149,7 +143,7 @@ public List<Pedidos> getPedidosDelDia() throws SQLException {
         }
         return pedidosList;
     }
-    
+
     //ESTO ES DE JAIRITO, BESITOS RAFITA JAJA
     public List<Pedidos> obtenertodosPedidos() throws SQLException {
         List<Pedidos> pedidosList = new ArrayList<>();
@@ -165,7 +159,7 @@ public List<Pedidos> getPedidosDelDia() throws SQLException {
                 Pedidos pedido = new Pedidos(
                         rs.getString("idPedidos"),
                         rs.getString("nombreEmpleado"), // Nombre del empleado
-                        rs.getString("numeroMesa"),    // Número de mesa
+                        rs.getString("numeroMesa"), // Número de mesa
                         rs.getDate("fechaPedido"),
                         rs.getString("estadoPedido"),
                         rs.getDouble("precioTotal")
@@ -184,11 +178,7 @@ public List<Pedidos> getPedidosDelDia() throws SQLException {
             return stmt.executeUpdate() > 0;
         }
     }
-    
-    
-    
-    
-    
+
     public void updatePedidoEstado(int pedidoId, String nuevoEstado) throws SQLException {
         String sql = "UPDATE pedidos SET estado = ? WHERE id_pedido = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -197,7 +187,7 @@ public List<Pedidos> getPedidosDelDia() throws SQLException {
             pstmt.executeUpdate();
         }
     }
-    
+
     public List<Pedidos> obtenerPedidosPorDia(Date fecha) throws SQLException {
         List<Pedidos> pedidosList = new ArrayList<>();
 
@@ -223,58 +213,80 @@ public List<Pedidos> getPedidosDelDia() throws SQLException {
 
         return pedidosList;
     }
-    
+
     public List<Pedidos> getAllPedidosLlevar() throws SQLException {
         List<Pedidos> pedidosList = new ArrayList<>();
         String query = "SELECT p.idPedidos, p.fechaPedido, p.estadoPedido, p.precioTotal, "
-            + "e.nombreEmpleado "
-            + "FROM pedidos p "
-            + "JOIN empleados e ON p.empleadosId = e.idEmpleados "
-            + "WHERE p.mesasId IS NULL"; // Asumiendo que pedidos para llevar no tienen mesa
+                + "e.nombreEmpleado "
+                + "FROM pedidos p "
+                + "JOIN empleados e ON p.empleadosId = e.idEmpleados "
+                + "WHERE p.mesasId IS NULL"; // Asumiendo que pedidos para llevar no tienen mesa
 
         try (PreparedStatement stmt = conn.prepareStatement(query); ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 Pedidos pedido = new Pedidos(
-                    rs.getString("idPedidos"),
-                    rs.getString("nombreEmpleado"),
-                    null, // Sin mesa
-                    rs.getDate("fechaPedido"),
-                    rs.getString("estadoPedido"),
-                    rs.getDouble("precioTotal")
+                        rs.getString("idPedidos"),
+                        rs.getString("nombreEmpleado"),
+                        null, // Sin mesa
+                        rs.getDate("fechaPedido"),
+                        rs.getString("estadoPedido"),
+                        rs.getDouble("precioTotal")
                 );
                 pedidosList.add(pedido);
             }
         }
         return pedidosList;
     }
-    
-    
-    public String generarNuevoIdPedido() {
-    String query = "SELECT idPedidos FROM pedidos ORDER BY idPedidos DESC LIMIT 1";
 
-    try (Connection conn = cn.getConnection(); 
-         PreparedStatement pst = conn.prepareStatement(query); 
-         ResultSet rs = pst.executeQuery()) {
+    // Generar nuevo ID de pedido
+    public String generarNuevoIdPedido() throws SQLException {
+        String nuevoId = "pedido001";
+        String query = "SELECT idPedidos FROM pedidos ORDER BY idPedidos DESC LIMIT 1";
 
-        if (rs.next()) {
-            String ultimoId = rs.getString("idPedidos"); // Por ejemplo, "pedido005"
-            // Extraer el número y generar el siguiente ID
-            int numero = Integer.parseInt(ultimoId.substring(6)); // Obtiene "005" como número
-            String nuevoId = String.format("pedido%03d", numero + 1); // Incrementa y formatea con ceros
-            return nuevoId;
+        try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query); ResultSet rs = pst.executeQuery()) {
+
+            if (rs.next()) {
+                String ultimoId = rs.getString("idPedidos");
+                int numero = Integer.parseInt(ultimoId.replaceAll("[^\\d]", ""));
+                nuevoId = String.format("pedido%03d", numero + 1);
+            }
         }
-
-    } catch (SQLException e) {
-        e.printStackTrace();
+        return nuevoId;
     }
 
-    // Si no hay registros, comienza desde "pedido001"
-    return "pedido001";
+    // Guardar un pedido en la base de datos
+    public void guardarPedido(Pedidos pedido) throws SQLException {
+        String query = "INSERT INTO pedidos (idPedidos, empleadosId, mesasId, fechaPedido, estadoPedido, precioTotal) VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query); ResultSet rs = pst.executeQuery()) {
+
+            pst.setString(1, pedido.getIdPedidos());
+            pst.setString(2, pedido.getEmpleadosId());
+            pst.setString(3, pedido.getMesasId());
+            pst.setDate(4, new java.sql.Date(pedido.getFechaPedido().getTime()));
+            pst.setString(5, pedido.getEstadoPedido());
+            pst.setDouble(6, pedido.getPrecioTotal());
+
+            pst.executeUpdate();
+        }
+    }
+
+    // Guardar detalles del pedido
+    // Guardar detalles del pedido
+    public void guardarDetallesPedido(String pedidosId, List<DetallesPedidos> detalles) throws SQLException {
+        String query = "INSERT INTO detallesPedido (pedidosId, platosId, cantidad, precioUnitario) VALUES (?, ?, ?, ?)";
+
+        try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
+
+            for (DetallesPedidos detalle : detalles) {
+                pst.setString(1, pedidosId);
+                pst.setString(2, detalle.getPlatosId());
+                pst.setInt(3, detalle.getCantidad());
+                pst.setBigDecimal(4, detalle.getPrecioUnitario());
+                pst.addBatch();
+            }
+            pst.executeBatch(); // Ejecutar todas las inserciones en un batch
+        }
+    }
+
 }
-
-
-}
-
-    
-    
-  
