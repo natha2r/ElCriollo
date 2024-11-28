@@ -45,6 +45,26 @@ public class PlatosDao {
 
         return platos;
     }
+    
+    public List<Platos> getAllPlatosList() throws SQLException {
+        List<Platos> platos = new ArrayList<>();
+        String query = "SELECT * FROM platos";  // Consulta SQL para obtener todos los platos
+
+        // Conexión a la base de datos y ejecución de la consulta
+        try (Connection conn = cn.getConnection(); 
+             PreparedStatement pst = conn.prepareStatement(query);
+             ResultSet rs = pst.executeQuery()) {
+
+            // Iterar a través de los resultados de la consulta
+            while (rs.next()) {
+                Platos plato = new Platos();
+                plato.setIdPlatos(rs.getString("idPlatos"));  // Asumiendo que "idPlatos" es una columna
+                plato.setNombrePlato(rs.getString("nombrePlato"));  // Asumiendo que "nombrePlato" es una columna
+                platos.add(plato);  // Agregar el plato a la lista
+            }
+        }
+        return platos;
+    }
 
     // Obtener productos por categoría
     public List<Platos> getPlatosByCategoria(String idCategoriaPlatos) {

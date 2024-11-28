@@ -3,6 +3,8 @@ package controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.sql.SQLException;
+
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
@@ -141,6 +143,9 @@ public class Inicio_meseraController implements Initializable {
     private ListView<String> listViewCategorias;
     @FXML
     private ListView<String> listViewCategoriasC;
+
+    @FXML
+    private ListView<String> listViewMenuPlatos;
     @FXML
     private Label popupLabel;
     @FXML
@@ -181,7 +186,7 @@ public class Inicio_meseraController implements Initializable {
     private TableView<Platos> tablaActual;
     private ListView<String> listViewCategoriasActual;
     private ObservableList<Platos> listaPlatosActual;
-    private String mesaSeleccionada; 
+    private String mesaSeleccionada;
 
     private int mesaCounter = 1; // Inicia en 17 ya que tienes hasta la 16
 
@@ -240,7 +245,7 @@ public class Inicio_meseraController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        cargarPlatosEnListView();
         //btnAgregarPlato.setOnAction(e -> agregarPlato());
         //btnEliminarPlato.setOnAction(e -> eliminarPlato());
         glassPane.setVisible(false);
@@ -820,6 +825,37 @@ public class Inicio_meseraController implements Initializable {
     }
 
     // ---------------------------------
+// Método para cargar los platos en el ListView
+    private void cargarPlatosEnListView() {
+        try {
+            PlatosDao platosDao = new PlatosDao();
+            List<Platos> platos = platosDao.getAllPlatosList();  // Obtener los platos desde la base de datos
 
-   
+            ObservableList<String> platosNombres = FXCollections.observableArrayList();
+
+            // Agregar los nombres de los platos al ObservableList
+            for (Platos plato : platos) {
+                platosNombres.add(plato.getNombrePlato());
+            }
+
+            // Asignar el ObservableList al ListView
+            listViewMenuPlatos.setItems(platosNombres);
+
+            // (Opcional) Personalizar la visualización de las celdas
+            listViewMenuPlatos.setCellFactory(param -> new ListCell<String>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setText(null);
+                    } else {
+                        setText(item); // Mostrar solo el nombre del plato
+                    }
+                }
+            });
+
+        } catch (SQLException e) {
+            e.printStackTrace();  // Manejar excepciones de SQL si ocurre un error
+        }
+    }
 }
