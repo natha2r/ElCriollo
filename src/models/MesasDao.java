@@ -83,6 +83,30 @@ public class MesasDao {
         }
 
         return idMesa;  // Retornamos el idMesas encontrado o null si no existe
+
+    }
+
+    public String obtenerIdMesaPorNumero(int numeroMesa) throws SQLException {
+        String idMesas = null;
+        String query = "SELECT idMesas FROM mesas WHERE numeroMesa = ?";
+
+        try (Connection conn = cn.getConnection(); // Asegúrate de que cn.getConnection() esté bien configurado
+                 PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            // Establecer el número de la mesa como parámetro (ahora es int)
+            stmt.setInt(1, numeroMesa); // Usamos setInt porque numeroMesa es un int en la base de datos
+
+            try (ResultSet resultSet = stmt.executeQuery()) {
+                if (resultSet.next()) {
+                    idMesas = resultSet.getString("idMesas"); // Asegúrate de que "idMesas" sea correcto
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Esto imprimirá el error de manera más detallada en la consola
+            System.out.println("Error al ejecutar la consulta: " + e.getMessage());
+        }
+
+        return idMesas;
     }
 
 }

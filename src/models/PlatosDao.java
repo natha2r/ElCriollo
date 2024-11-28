@@ -84,24 +84,40 @@ public class PlatosDao {
 
     // Método para obtener los platos según la categoría seleccionada
     public ObservableList<String> getCategoriasByMenuM(String nombreMenu) {
-    ObservableList<String> categorias = FXCollections.observableArrayList();
-    String query = "SELECT cp.nombreCategoriaPlatos " +
-                   "FROM CategoriaPlatos cp " +
-                   "JOIN TipoMenu tm ON cp.idTipoMenu = tm.idTipoMenu " +
-                   "WHERE tm.nombreMenu = ?";
+        ObservableList<String> categorias = FXCollections.observableArrayList();
+        String query = "SELECT cp.nombreCategoriaPlatos "
+                + "FROM CategoriaPlatos cp "
+                + "JOIN TipoMenu tm ON cp.idTipoMenu = tm.idTipoMenu "
+                + "WHERE tm.nombreMenu = ?";
+        try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
+            pst.setString(1, nombreMenu);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                categorias.add(rs.getString("nombreCategoriaPlatos"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return categorias;
+
+    }
+
+    public String obtenerIdPlatoPorNombre(String nombrePlato) {
+    String query = "SELECT idPlatos FROM Platos WHERE nombrePlato = ?";
     try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
-        pst.setString(1, nombreMenu);
+        pst.setString(1, nombrePlato);
         ResultSet rs = pst.executeQuery();
-        while (rs.next()) {
-            categorias.add(rs.getString("nombreCategoriaPlatos"));
+        if (rs.next()) {
+            return rs.getString("idPlatos"); // Cambia a getString para obtener el ID como texto
         }
     } catch (SQLException e) {
         e.printStackTrace();
     }
-    return categorias;
-    
+    return null; // Devuelve null si no se encuentra el plato o hay un error
 }
-     // Método para obtener los platos según la categoría seleccionada
+
+
+    // Método para obtener los platos según la categoría seleccionada
     public ObservableList<String> getPlatosByCategoriaM(String nombreCategoria) {
         ObservableList<String> platos = FXCollections.observableArrayList();
 
@@ -138,8 +154,6 @@ public class PlatosDao {
 
         return platos;
     }
-    
-
 
     // ************************************************** 07/11/24 *******************************************************
     // Método para obtener el precio de un plato por su nombre
@@ -318,8 +332,7 @@ public class PlatosDao {
             e.printStackTrace();
         }
     }
-    
-    
+
     public boolean eliminarPlato(String idPlato) {
         String query = "DELETE FROM platos WHERE idPlatos = ?";
         try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
@@ -366,32 +379,29 @@ public class PlatosDao {
 
         return idCategoria;
     }
-    
+
     public boolean esMiniPorNombre(String nombrePlato) {
-    boolean esMini = false; // Valor predeterminado (si no se encuentra el plato, asumimos que no es mini)
-    String query = "SELECT esMini FROM platos WHERE nombrePlato = ?";
+        boolean esMini = false; // Valor predeterminado (si no se encuentra el plato, asumimos que no es mini)
+        String query = "SELECT esMini FROM platos WHERE nombrePlato = ?";
 
-    try (Connection conn = cn.getConnection(); 
-         PreparedStatement pst = conn.prepareStatement(query)) {
+        try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
 
-        // Establecer el parámetro para la consulta
-        pst.setString(1, nombrePlato);
+            // Establecer el parámetro para la consulta
+            pst.setString(1, nombrePlato);
 
-        // Ejecutar la consulta
-        try (ResultSet rs = pst.executeQuery()) {
-            if (rs.next()) {
-                // Obtener el valor de la columna esMini
-                esMini = rs.getBoolean("esMini");
+            // Ejecutar la consulta
+            try (ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
+                    // Obtener el valor de la columna esMini
+                    esMini = rs.getBoolean("esMini");
+                }
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Manejo adecuado de excepciones (puedes lanzar una excepción o loguear el error)
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
-        // Manejo adecuado de excepciones (puedes lanzar una excepción o loguear el error)
+
+        return esMini; // Retorna si el plato es Mini o no
     }
-
-    return esMini; // Retorna si el plato es Mini o no
-}
-
-    
 
 }

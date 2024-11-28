@@ -277,22 +277,4 @@ public class PedidosDao {
 }
 
 
-    // Guardar detalles del pedido
-    // Guardar detalles del pedido
-    public void guardarDetallesPedido(String pedidosId, List<DetallesPedidos> detalles) throws SQLException {
-        String query = "INSERT INTO detallesPedido (pedidosId, platosId, cantidad, precioUnitario) VALUES (?, ?, ?, ?)";
-
-        try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
-
-            for (DetallesPedidos detalle : detalles) {
-                pst.setString(1, pedidosId);
-                pst.setString(2, detalle.getPlatosId());
-                pst.setInt(3, detalle.getCantidad());
-                pst.setBigDecimal(4, detalle.getPrecioUnitario());
-                pst.addBatch();
-            }
-            pst.executeBatch(); // Ejecutar todas las inserciones en un batch
-        }
-    }
-
 }

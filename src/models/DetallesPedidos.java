@@ -16,15 +16,19 @@ public class DetallesPedidos {
     private String platosId;
     private int cantidad;
     private BigDecimal precioUnitario;
+    private String principio;
+    private String comentario;
 
     public DetallesPedidos() {
     }
 
-    public DetallesPedidos(String pedidosId, String platosId, int cantidad, BigDecimal precioUnitario) {
+    public DetallesPedidos(String pedidosId, String platosId, int cantidad, BigDecimal precioUnitario, String principio, String comentario) {
         this.pedidosId = pedidosId;
         this.platosId = platosId;
         this.cantidad = cantidad;
         this.precioUnitario = precioUnitario;
+        this.principio = principio;
+        this.comentario = comentario;
     }
 
     public String getPedidosId() {
@@ -58,5 +62,27 @@ public class DetallesPedidos {
     public void setPrecioUnitario(BigDecimal precioUnitario) {
         this.precioUnitario = precioUnitario;
     }
+
+    public String getPrincipio() {
+        return principio;
+    }
+
+    public void setPrincipio(String principio) {
+        this.principio = principio;
+    }
+
+    public String getComentario() {
+        return comentario;
+    }
+
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
+    }
+
+    public void setPrecioUnitario(double precio) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    
 
 }

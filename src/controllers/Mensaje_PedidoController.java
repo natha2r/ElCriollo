@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import java.net.URL;
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -32,6 +34,8 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import models.CategoriaPlatosDao;
+import models.DetallesPedidos;
+import models.DetallesPedidosDao;
 import models.Employees;
 import models.Pedidos;
 import models.PedidosDao;
@@ -250,19 +254,30 @@ public class Mensaje_PedidoController implements Initializable {
         cargarCategorias();
     }
 
+    private String idPlatoSeleccionado; // Cambiar a String para almacenar el ID del plato
+
     @FXML
     private void handlePlatoSeleccionado() {
         String platoSeleccionado = listViewPlatos.getSelectionModel().getSelectedItem();
 
         if (platoSeleccionado != null) {
-            // Verificar si el plato es Mini
-            boolean esMini = platosDao.esMiniPorNombre(platoSeleccionado);
-            System.out.println("Plato seleccionado: " + platoSeleccionado);
-            System.out.println("¿Es Mini?: " + esMini);
+            // Obtener el ID del plato seleccionado
+            idPlatoSeleccionado = platosDao.obtenerIdPlatoPorNombre(platoSeleccionado);
 
-            // Habilitar o deshabilitar el ComboBox de tamaño según el resultado
-            ComboBoxTamaño.setDisable(!esMini); // Si no es Mini, deshabilitar
-            System.out.println("ComboBox Tamaño deshabilitado: " + ComboBoxTamaño.isDisabled());
+            if (idPlatoSeleccionado != null) { // Verificar que el ID sea válido
+                System.out.println("ID del plato seleccionado: " + idPlatoSeleccionado);
+
+                // Verificar si el plato es Mini
+                boolean esMini = platosDao.esMiniPorNombre(platoSeleccionado);
+                System.out.println("Plato seleccionado: " + platoSeleccionado);
+                System.out.println("¿Es Mini?: " + esMini);
+
+                // Habilitar o deshabilitar el ComboBox de tamaño según el resultado
+                ComboBoxTamaño.setDisable(!esMini); // Si no es Mini, deshabilitar
+                System.out.println("ComboBox Tamaño deshabilitado: " + ComboBoxTamaño.isDisabled());
+            } else {
+                System.out.println("No se pudo obtener el ID del plato.");
+            }
         }
     }
 
@@ -449,7 +464,7 @@ public class Mensaje_PedidoController implements Initializable {
         alerta.setContentText(mensaje);
         alerta.showAndWait();
     }
-    
+
     private String idMesa;
     private String idMesera;
 
@@ -462,7 +477,7 @@ public class Mensaje_PedidoController implements Initializable {
     }
 
     // Setter para el ID de la mesa
-     private String idMesas;
+    private String idMesas;
 
     public void setIdMesas(String idMesas) {
         this.idMesas = idMesas;
@@ -470,36 +485,92 @@ public class Mensaje_PedidoController implements Initializable {
         // Realizar acciones con el ID de la mesa
         System.out.println("ID de la mesa recibido: " + idMesas);
     }
-    
+
     @FXML
-    private void handleEnviarCocinaClick() {
-        try {
-            PedidosDao pedidoDao = new PedidosDao();
-            String nuevoId = pedidoDao.generarNuevoIdPedido(); // Generar nuevo ID
+private void handleEnviarCocinaClick() {
+    try {
+        PedidosDao pedidoDao = new PedidosDao();
+        DetallesPedidosDao detallesPedidosDao = new DetallesPedidosDao();
 
-            // Crear una instancia de Pedidos y asignar los valores
-            Pedidos pedido = new Pedidos();
-            pedido.setIdPedidos(nuevoId); // Asignar el nuevo ID generado
-            pedido.setEmpleadosId(idMesera); // ID de la mesera
-            pedido.setMesasId(idMesa); // ID de la mesa
-            pedido.setFechaPedido(new Date()); // Fecha actual
-            pedido.setEstadoPedido("En Proceso"); // Estado inicial del pedido
-            pedido.setPrecioTotal(totalPedido); // Método para calcular el precio total
+        // Generar nuevo ID para el pedido
+        String nuevoId = pedidoDao.generarNuevoIdPedido();
 
-            // Registrar el pedido
-            boolean exito = pedidoDao.guardarPedido(pedido);
+        // Crear una instancia de Pedidos y asignar los valores
+        Pedidos pedido = new Pedidos();
+        pedido.setIdPedidos(nuevoId); // Asignar el nuevo ID generado
+        pedido.setEmpleadosId(idMesera); // ID de la mesera
+        pedido.setMesasId(idMesa); // ID de la mesa
+        pedido.setFechaPedido(new Date()); // Fecha actual
+        pedido.setEstadoPedido("En Proceso"); // Estado inicial del pedido
+        pedido.setPrecioTotal(totalPedido); // Método para calcular el precio total
 
-            if (exito) {
-                System.out.println("Pedido enviado exitosamente con ID: " + nuevoId);
-            } else {
-                System.out.println("Error al enviar el pedido.");
+        // Registrar el pedido
+        boolean exito = pedidoDao.guardarPedido(pedido);
+
+        if (exito) {
+            System.out.println("Pedido enviado exitosamente con ID: " + nuevoId);
+
+            // Guardar los detalles del pedido
+            for (Node node : gridPanePedidos.getChildren()) {
+                if (node instanceof VBox) {
+                    VBox vbox = (VBox) node;
+
+                    // Obtener información desde el VBox
+                    Label labelPlato = (Label) vbox.lookup(".label");
+                    Label labelPrincipio = (Label) vbox.getChildren().get(1); // Principio como segundo elemento
+                    Label labelComentario = vbox.getChildren().size() > 2 ? (Label) vbox.getChildren().get(2) : null;
+
+                    // Procesar información del VBox
+                    String textoPlato = labelPlato.getText(); // Ejemplo: "2 Plato"
+                    int cantidad = Integer.parseInt(textoPlato.split(" ")[0]); // Extraer cantidad
+                    String platoNombre = textoPlato.substring(2).trim(); // Nombre del plato
+
+                    String principio = labelPrincipio.getText();
+                    String comentario = labelComentario != null ? labelComentario.getText() : "";
+
+                    // Obtener información adicional
+                    String platoId = platosDao.obtenerIdPlatoPorNombre(platoNombre);
+                    BigDecimal precioUnitario = new BigDecimal(obtenerPrecioPlato(platoNombre).replaceAll("[^\\d.]", ""));
+
+                    // Crear instancia de DetallesPedidos
+                    DetallesPedidos detalle = new DetallesPedidos();
+                    detalle.setPedidosId(nuevoId); // Asignar el ID del pedido
+                    detalle.setPlatosId(platoId);
+                    detalle.setCantidad(cantidad);
+                    detalle.setPrecioUnitario(precioUnitario);
+                    detalle.setPrincipio(principio);
+                    detalle.setComentario(comentario);
+
+                    // Guardar el detalle en la base de datos
+                    boolean detalleExito = detallesPedidosDao.guardarDetallePedido(detalle);
+                    if (!detalleExito) {
+                        System.out.println("Error al guardar un detalle del pedido.");
+                    }
+                }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Error al generar el ID del pedido.");
-        }
-    }
 
+            System.out.println("Detalles del pedido guardados exitosamente.");
+
+            // Cerrar la ventana actual
+            Stage currentStage = (Stage) gridPanePedidos.getScene().getWindow();
+            currentStage.close();
+
+            // Cargar la vista de inicio_mesera.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/Inicio_mesera.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Inicio Mesera");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } else {
+            System.out.println("Error al enviar el pedido.");
+        }
+    } catch (SQLException | IOException e) {
+        e.printStackTrace();
+        System.out.println("Error al procesar el pedido.");
+    }
+}
 
 
 }
