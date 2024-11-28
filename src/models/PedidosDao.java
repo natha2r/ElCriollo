@@ -255,21 +255,27 @@ public class PedidosDao {
     }
 
     // Guardar un pedido en la base de datos
-    public void guardarPedido(Pedidos pedido) throws SQLException {
-        String query = "INSERT INTO pedidos (idPedidos, empleadosId, mesasId, fechaPedido, estadoPedido, precioTotal) VALUES (?, ?, ?, ?, ?, ?)";
+    public boolean guardarPedido(Pedidos pedido) {
+    String query = "INSERT INTO pedidos (idPedidos, empleadosId, mesasId, fechaPedido, estadoPedido, precioTotal) VALUES (?, ?, ?, ?, ?, ?)";
 
-        try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query); ResultSet rs = pst.executeQuery()) {
+    try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
 
-            pst.setString(1, pedido.getIdPedidos());
-            pst.setString(2, pedido.getEmpleadosId());
-            pst.setString(3, pedido.getMesasId());
-            pst.setDate(4, new java.sql.Date(pedido.getFechaPedido().getTime()));
-            pst.setString(5, pedido.getEstadoPedido());
-            pst.setDouble(6, pedido.getPrecioTotal());
+        pst.setString(1, pedido.getIdPedidos());
+        pst.setString(2, pedido.getEmpleadosId());
+        pst.setString(3, pedido.getMesasId());
+        pst.setDate(4, new java.sql.Date(pedido.getFechaPedido().getTime()));
+        pst.setString(5, pedido.getEstadoPedido());
+        pst.setDouble(6, pedido.getPrecioTotal());
 
-            pst.executeUpdate();
-        }
+        int rowsInserted = pst.executeUpdate();
+        return rowsInserted > 0; // Retorna true si se insertó al menos una fila, de lo contrario false
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false; // Retorna false si ocurrió una excepción
     }
+}
+
 
     // Guardar detalles del pedido
     // Guardar detalles del pedido

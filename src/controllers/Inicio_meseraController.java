@@ -181,6 +181,7 @@ public class Inicio_meseraController implements Initializable {
     private TableView<Platos> tablaActual;
     private ListView<String> listViewCategoriasActual;
     private ObservableList<Platos> listaPlatosActual;
+    private String mesaSeleccionada; 
 
     private int mesaCounter = 1; // Inicia en 17 ya que tienes hasta la 16
 
@@ -491,10 +492,6 @@ public class Inicio_meseraController implements Initializable {
 
         popupLabel.setText(tableNumber);
 
-        if (mensajePedidoController != null) {
-            mensajePedidoController.mostrarNumeroMesa(tableNumber);
-        }
-
         showPopup();
     }
 
@@ -569,14 +566,15 @@ public class Inicio_meseraController implements Initializable {
                 Mensaje_PedidoController mensajePedidoController = loader.getController();
 
                 mensajePedidoController.setMenuSeleccionado(menuSeleccionado);
-                mensajePedidoController.mostrarNumeroMesa(popupLabel.getText());
+                //mensajePedidoController.mostrarNumeroMesa(popupLabel.getText());
                 Employees meseraSeleccionada = getSelectedMesera();
+                //mensajePedidoController.setIdMesas(mesaId); 
 
                 // Obtener el ID de la mesa
                 String idMesa = popupLabel.getText(); // o el método que uses para obtener el ID de la mesa
 
                 // Pasar el ID de la mesa al controlador
-                mensajePedidoController.setIdMesa(idMesa);
+                mensajePedidoController.setIdMesas(idMesa);
                 if (meseraSeleccionada != null) {
                     // Pasar el ID de la mesera al controlador de Mensaje_Pedido
                     mensajePedidoController.setIdMesera(meseraSeleccionada.getIdEmpleados());

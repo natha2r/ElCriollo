@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import java.sql.SQLException;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -93,7 +95,7 @@ public class Mensaje_PedidoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cargarCategorias();
-        //btn_enviarCocina.setOnAction(event -> enviarPedidoACocina());
+        btn_enviarCocina.setOnAction(event -> handleEnviarCocinaClick());
         btn_Back.setOnAction(event -> showCategories());
         btn_Back.setVisible(false);
         glassPane1.setVisible(false);
@@ -107,24 +109,6 @@ public class Mensaje_PedidoController implements Initializable {
                 (observable, oldValue, newValue) -> handlePlatoSeleccionado()
         );
 
-    }
-
-    private String idMesa;
-
-    private String idMesera;
-
-    // Método para recibir el ID de la mesera
-    public void setIdMesera(String idMesera) {
-        this.idMesera = idMesera;
-
-        // Imprimir el ID para verificar que se está recibiendo correctamente
-        System.out.println("ID de la mesera recibido: " + this.idMesera);
-    }
-
-    // Setter para el ID de la mesa
-    public void setIdMesa(String idMesa) {
-        this.idMesa = idMesa;
-        System.out.println("ID de la mesa recibido: " + this.idMesa);
     }
 
     @FXML
@@ -420,6 +404,7 @@ public class Mensaje_PedidoController implements Initializable {
         // Actualizar el total del pedido
         totalPedido += precio;
         labelTotal.setText("Total: $" + String.format("%.2f", totalPedido));
+        System.out.println(totalPedido);
     }
 
     private void eliminarPedido(VBox pedidoVBox, double precioUnitario) {
@@ -464,49 +449,57 @@ public class Mensaje_PedidoController implements Initializable {
         alerta.setContentText(mensaje);
         alerta.showAndWait();
     }
+    
+    private String idMesa;
+    private String idMesera;
 
-    public void mostrarNumeroMesa(String numeroMesa) {
-        System.out.println(idMesa);
+    // Método para recibir el ID de la mesera
+    public void setIdMesera(String idMesera) {
+        this.idMesera = idMesera;
+
+        // Imprimir el ID para verificar que se está recibiendo correctamente
+        System.out.println("ID de la mesera recibido: " + this.idMesera);
     }
 
-    public void mostrarMesera(String nombreMesera) {
-        System.out.println(idMesera);
-    }
+    // Setter para el ID de la mesa
+     private String idMesas;
 
+    public void setIdMesas(String idMesas) {
+        this.idMesas = idMesas;
+
+        // Realizar acciones con el ID de la mesa
+        System.out.println("ID de la mesa recibido: " + idMesas);
+    }
+    
     @FXML
-    private void handleEnviarCocinaClick(ActionEvent event) {
-        // Verifica si los campos necesarios están completos
-        if (listViewPlatos.getItems().isEmpty()) {
-            // Mostrar un mensaje de error si no hay platos seleccionados
-            return;
-        } 
+    private void handleEnviarCocinaClick() {
+        try {
+            PedidosDao pedidoDao = new PedidosDao();
+            String nuevoId = pedidoDao.generarNuevoIdPedido(); // Generar nuevo ID
 
-        // Crear un objeto Pedido con los datos necesarios
-        Pedidos pedido = new Pedidos();
-        /*Pedidos.setIdMesa(idMesa);   // ID de la mesa
-        Pedidos.setIdMesera(idMesera); // ID de la mesera
-        Pedidos.setPlatosSeleccionados(listViewPlatos.getItems()); // Aquí pasas los platos seleccionados
+            // Crear una instancia de Pedidos y asignar los valores
+            Pedidos pedido = new Pedidos();
+            pedido.setIdPedidos(nuevoId); // Asignar el nuevo ID generado
+            pedido.setEmpleadosId(idMesera); // ID de la mesera
+            pedido.setMesasId(idMesa); // ID de la mesa
+            pedido.setFechaPedido(new Date()); // Fecha actual
+            pedido.setEstadoPedido("En Proceso"); // Estado inicial del pedido
+            pedido.setPrecioTotal(totalPedido); // Método para calcular el precio total
 
-        // Agregar cualquier otro dato necesario, como comentarios, principios, tamaños, etc.
-        String comentario = textAreaComentario.getText();
-        Pedidos.setComentario(comentario);
-        Pedidos.setConsumoMesa(checkBoxConsumoMesa.isSelected());
+            // Registrar el pedido
+            boolean exito = pedidoDao.guardarPedido(pedido);
 
-        // Enviar el pedido a la base de datos o procesar el pedido
-        // Si estás usando un DAO para la base de datos, asegúrate de incluir estos valores
-        PedidosDao pedidoDao = new PedidosDao();
-        boolean exito = pedidoDao.enviarPedidoACocina(Pedidos);
-
-        if (exito) {
-            // Mostrar mensaje de éxito o realizar alguna otra acción
-            System.out.println("Pedido enviado a cocina.");
-        } else {
-            // Manejo de errores si el envío falla
-            System.out.println("Error al enviar el pedido.");
+            if (exito) {
+                System.out.println("Pedido enviado exitosamente con ID: " + nuevoId);
+            } else {
+                System.out.println("Error al enviar el pedido.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error al generar el ID del pedido.");
         }
-    }*/
+    }
+
+
 
 }
-}
-
-
