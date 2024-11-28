@@ -483,7 +483,7 @@ public class Mensaje_PedidoController implements Initializable {
 
         // Crear un objeto Pedido con los datos necesarios
         Pedidos pedido = new Pedidos();
-        Pedidos.setIdMesa(idMesa);   // ID de la mesa
+        /*Pedidos.setIdMesa(idMesa);   // ID de la mesa
         Pedidos.setIdMesera(idMesera); // ID de la mesera
         Pedidos.setPlatosSeleccionados(listViewPlatos.getItems()); // Aquí pasas los platos seleccionados
 
@@ -504,8 +504,9 @@ public class Mensaje_PedidoController implements Initializable {
             // Manejo de errores si el envío falla
             System.out.println("Error al enviar el pedido.");
         }
-    }
+    }*/
 
+}
 }
 
 
